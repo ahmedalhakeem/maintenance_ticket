@@ -30,32 +30,6 @@ def login_master(request):
 
                 login(request, login_user)
                 return HttpResponseRedirect(reverse('manager_profile',args=(login_user.id,)))
-                
-    
-            elif login_user.groups.filter(name="department_manager").exists():
-                login(request, login_user)
-                return HttpResponseRedirect(reverse('dept_mgr_profile',args=(login_user.id,)))
-                #return render(request, 'eticket/dep_mgr_profile.html')
-
-            elif login_user.groups.filter(name="section manager").exists():
-                login(request, login_user)
-                return HttpResponseRedirect(reverse('sec_mgr_profile',args=(login_user.id,)))
-                #return render(request, "eticket/sec_mgr_profile.html")
-
-            elif login_user.groups.filter(name="tech").exists():
-                login(request, login_user)
-                return HttpResponseRedirect(reverse('it_profile',args=(login_user.id,)))
-                #return render(request, "eticket/it_profile.html")
-
-            elif login_user.groups.filter(name="employee").exists():
-                login(request, login_user)
-                return HttpResponseRedirect(reverse('profile_emp',args=(login_user.id,)))
-                #return render(request, "eticket/profile_emp.html")
-            
-            else: 
-                return render(request, "eticket/error.html",{
-                    "message": "You have no privilge access"
-                })
     # if get method!
     else:
         loginform= LoginForm()
@@ -77,30 +51,9 @@ def register_emp(request):
             email = new_user.cleaned_data['email']
             username = new_user.cleaned_data['username']
             password = new_user.cleaned_data['password']
-            pc_code = new_user.cleaned_data['pc_code']
+            # pc_code = new_user.cleaned_data['pc_code']
             department = new_user.cleaned_data['department']
             section = new_user.cleaned_data['section']
-
-            user = User.objects.create_user(first_name=first_name, last_name=last_name, email=email, 
-            username=username, password=password,pc_code=pc_code, department=department, section=section)
-            
-            it_section = Section.objects.get(section_name="IT")
-            print(it_section)
-            if user.section != it_section:
-                x=True
-                user.groups.add(5)
-            else:
-                x=False
-                user.groups.add(4)
-            print(x)
-            return HttpResponseRedirect(reverse('login_master'))
-           
-
-    else:
-        new_user=Register_empForm()
-        return render(request, 'eticket/register_emp.html',{
-            "user": new_user
-        })
 
 
 # Profile page for each employee 
@@ -120,7 +73,7 @@ def profile_emp(request, emp_id):
         })
 # profile page for manager
 @login_required
-def manager_profile(request, user_id):
+def maintentenance_profile(request, user_id):
     tickets = Tickets.objects.filter(ticket_status="accomplished")
     user = User.objects.get(pk=user_id)
     return render(request, "eticket/manager_profile.html",{
@@ -128,49 +81,8 @@ def manager_profile(request, user_id):
         "all_tickets": tickets,
         "ticket_form" : TicketForm()
     })
-# profile page for it team
-@login_required
-def it_profile(request, user_id):
-    it_user = User.objects.get(pk=user_id)
-    # Show all converted ticket to this user
-    ticket = Tickets.objects.filter(it_user=it_user).order_by('-date')
-    #ticket = TicketForm()
-    return render (request, "eticket/it_profile.html",{
-        "user": it_user,
-        "ticket": ticket
-        #"ticket" : ticket
-    })
-# profile page for department manager
-@login_required
-def dept_mgr_profile(request, user_id):
-    user = User.objects.get(pk=user_id)
-    done_tickets = Tickets.objects.filter(ticket_status='accomplished')
-    undone_tickets = Tickets.objects.filter(ticket_status='unaccomplished')
-    return render(request, "eticket/dept_mgr_profile.html",{
-        "user": user,
-        "done_tickets": done_tickets,
-        "undone_tickets" : undone_tickets
-    })
-# profile page for section manager
-@login_required
-def sec_mgr_profile(request, user_id):
-    user = User.objects.get(pk=user_id)
-    tech_group = Group.objects.get(name="tech")
-    it_users = User.objects.filter(groups=tech_group)
-    
-    tickets = Tickets.objects.all().order_by('-date')
-    paginator = Paginator(tickets, 10)
-    page_number = request.GET.get('page')
-    tickets  = paginator.get_page(page_number)
-    #tickets = tickets.order_by('-date').all()
-    #for item in tickets:
-    #    print(item.id)
-    return render(request, 'eticket/sec_mgr_profile.html',{
-        "user": user,
-        "it_users": it_users,
-        "tickets": tickets 
-        #"ticket_form": TicketForm()
-    })
+
+
 @csrf_exempt
 def tickets(request, emp_id):
     if request.method != "POST":

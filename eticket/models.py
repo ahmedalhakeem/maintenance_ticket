@@ -18,7 +18,7 @@ class Department(models.Model):
    section = models.ManyToManyField(Section, related_name="sections", blank=True, verbose_name="الشعب")
 
    def __str__(self):
-      return f"{self.department_name}, {self.section}"
+      return f"{self.department_name}"
 
 class User(AbstractUser):
    department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name="dept_name", default=None, null=True)
@@ -39,10 +39,15 @@ class Tickets(models.Model):
 
 class Drivers(models.Model):
    driver_name= models.CharField(max_length=100, null=True, blank=True)
+   
+   def __str__(self):
+      return f"{self.driver_name}"
 
 class Cars(models.Model):
    car_type = models.CharField(max_length=100, blank=True, null=True)
 
+   def __str__(self):
+      return f"{self.car_type}"
 class Ticket_Reply(models.Model):
    ticket = models.ForeignKey(Tickets, on_delete= models.CASCADE, related_name='tickets')
    driver_name = models.ForeignKey(Drivers, on_delete=models.CASCADE, blank=True, null=True, related_query_name="drivers")
