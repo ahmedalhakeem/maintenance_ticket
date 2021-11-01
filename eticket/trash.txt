@@ -1,0 +1,19 @@
+'''class ProblemType(models.Model):
+   software = 'SW'
+   hardware = 'HW'
+   
+   select_type = [
+      (software, 'software'),
+      (hardware, 'hardware'),
+   ]
+   problem_type = models.CharField(max_length=2, choices=select_type, default=software,)
+   description = models.CharField(max_length=100, null=True, default=None)
+   def __str__(self):
+      return f'{self.problem_type}: {self.description}'
+
+class Problems(models.Model):
+   p_type = models.ForeignKey(ProblemType, on_delete=models.CASCADE, related_name='type')
+   user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="has_problem", default=None)
+   user_solver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="has_solution", default=None)
+   status = models.BooleanField(default=False)
+   date = models.DateTimeField(default=None, blank=True, null=True)

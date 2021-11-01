@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /*body{
+            width: 100%;
+            scroll-behavior: n;
+        }*/
+        .header {
+            display: flex;
+            justify-content: space-between;
+            /*border: 1px solid black;*/
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            border-top: 0.5px solid burlywood;
+            border-left: 0.5px solid burlywood;
+            border-right: 0.5px solid burlywood;
+
+        }
+        .header div {
+            text-align: center;
+            padding: 15px;
+            
+            /*border: 1px solid black;*/
+        }
+        .header div > p{
+            margin-top:auto;
+            margin-bottom: auto;
+            font-size: 45px;
+            overflow: hidden;
+            word-wrap: none;
+            
+            
+            
+        }
+        .line{
+            height: 25px;
+            width: 80%;
+            background-color: burlywood;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 20px;
+            border: 0.5px solid burlywood;
+        }
+        .wrapper {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            grid-template-rows: repeat(2, 200px 80px);
+            grid-column-gap: 50px;
+            grid-row-gap: 20px;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid burlywood;
+            border-radius: 25px;
+            padding: 10px;
+        }
+        .wrapper > div {
+            /*border: 1px solid black;*/
+            text-align: center;
+
+
+        }
+        @media(max-width: 900px){
+            .header{
+                /*display: none;*/
+                flex-direction: column;
+            }
+            .wrapper {
+                grid-template-columns: auto auto;
+            }
+            .first, .second, .third, .s7th, .e8th, .n9th{
+                display: none;
+            }
+        }
+        @media(max-width: 600px){
+            .header{
+                display: none;
+            }
+        }
+        
+        /*.fourth, .fifth, .sixth, .first {
+            text-align: center;
+            border: 1px solid black;
+        }*/
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="name">
+            <p>هيئة الاعلام والاتصالات</p>
+            <p>مكتب الفرات الاوسط</p>
+        </div>
+        <div class="logo">
+            <img src="cmc-logo.png" alt="CMC logo" style="width: 350px; height: 200px;">
+        </div>
+        <div class="appname">
+            <p>نظام التذاكر الالكتروني </p>
+
+        </div>
+    </div>
+    <div class="line">
+
+    </div>
+    <div class="wrapper">
+        
+            <div class="first">
+                <img src="manager.png" alt="مدير الدائرة"  title="مدير المكتب" style="width: 200px; height: 200px;">
+            </div>
+            <div class="second">
+                <img src="manager.png" alt="رئيس القسم" title="رئيس القسم" style="width: 200px; height: 200px;" >
+            </div>
+            <div class="third"><img src="manager.png" alt="مسؤول الشعبة" title="مسؤول الشعبة" style="width: 200px; height: 200px;"></div>
+            <div class="fourth"><h3>مدير الدائرة</h3></div>
+            <div class="fifth"><h3>رئيس قسم الاتصالات</h3></div>
+            <div class="sixth"><h3>مسؤول شعبة تكنلوجيا المعلومات</h3></div>
+            <div class="s7th"><img src="emp.png" alt="موظفي المكتب" title="الموظفين" style="width: 200px; height: 200px;"></div>
+            <div class="e8th"><img src="emp.png" alt="مهندسي الحاسبات" title="مهندسي الحاسبات" style="width: 200px; height: 200px;"></div>
+            <div class="n9th"><img src="emp.png" alt="ادمن الصفحة" style="width: 200px; height: 200px;"></div>
+            <div class="t10th"><h3>الموظفين</h3></div>
+            <div class="e11th"><h3>مهندس التقنية</h3></div>
+            <div class="tw12th"><h3>ادمن الصفحة</h3></div>
+
+
+            
+
+    </div>
+</body>
+</html>

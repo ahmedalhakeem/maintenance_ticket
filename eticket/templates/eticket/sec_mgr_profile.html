@@ -1,0 +1,85 @@
+{% extends "eticket/layout_profile.html" %}
+{% load static %}
+{% block title%}مسؤول شعبة تكنلوجيا المعلومات{% endblock %}
+{% block body %}
+<br>
+    <h1>مسؤول شعبة تكنلوجيا المعلومات</h1>
+    <a href="{% url 'logout_page' %}" class="btn btn-primary">تسجيل خروج</a>
+    <br>
+    
+    <div id="convert-ticket">
+        <form class="convert-form" method="POST">
+            {% csrf_token %}
+            Ticket Number : <input type="number" id="ticket-number">
+                            <select  id="selected-solver">
+                                <option value="" disabled selected>Select IT Person</option>
+                                {% for it_user in it_users %}
+                                <option id="it-user" value="{{it_user.username}}">{{it_user.username}}</option>
+                                {% endfor %}
+                            </select>
+                            
+            Change Status  : <select id="select-status">
+                                <option class="accomplishment" value="accomplished">accomplished</option>
+                                <option value="unaccomplished">unaccomplished</option>
+
+                             </select>
+                             <input type="submit" value="convert ticket" id="submit">
+        </form>
+    </div>
+    <br>
+    <div class="all_tickets">
+        
+        <table class="table table-bordered table-hover" id="tableid">
+            <thead class="table-dark">
+                <tr>
+                    <th>ticket no.</th>
+                    <th>ticket title</th>
+                    <th>ticket type</th>
+                    <th>ticket_priority</th>
+                    <th>ticket_status</th>
+                    <th>ticket date</th>
+                    <th>ticket sender</th>
+                    <th>ticket sender secttion</th>
+                    <th>ticket Solution</th>
+                    <!--<th>ticket solver</th>-->
+                </tr>
+            </thead>
+            {% for ticket in tickets %}
+                <tr class="row-ticket">
+                    <td id="{{ticket.id}}" class="number">{{ticket.id}}</td>
+                    <td>{{ ticket.title }}</td>
+                    <td>{{ticket.ticket_type}}</td>
+                    <td>{{ticket.ticket_priority}}</td>
+                    <td>{{ticket.ticket_status}}</td>
+                    <td>{{ticket.date}}</td>
+                    <td>{{ticket.employee}}</td>
+                    <td>{{ticket.employee.section}}</td>
+                    <td>{{ticket.solution}}</td>
+  
+
+                </tr>
+            {% endfor %}
+            </table>
+    </div>
+  
+    <div class="pagination">
+        <span class="step-links">
+            {% if tickets.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{tickets.previous_page_number}}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ tickets.number }} of {{ tickets.paginator.num_pages}}
+            </span>
+            {% if tickets.has_next %}
+                <a href="?page={{ tickets.next_page_number }}">next</a>
+                <a href="?page={{ tickets.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+{% endblock %}
+{% block script %}
+    <script src="{% static 'eticket/index2.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "eticket/layout_login.html" %}
+
+{% block title %}
+    Login_manager
+{% endblock %}
+{% block body %}
+    <!--<h1>تسجيل دخول المدير</h1>-->
+    {% if message %}
+        <h3>{{ message }}</h3>
+    {% endif %}
+    <form action="{% url 'login_master' %}" method="POST">
+        <div class="form-group">
+            {% csrf_token %}
+            {{ loginform }}
+        </div>
+        <button class="btn">reg</button>
+    </form>
+{% endblock %}

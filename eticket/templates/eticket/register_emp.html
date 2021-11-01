@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الموظفين</title>
+</head>
+<body>
+    <h1>تسجيل موظف جديد</h1>
+    <br>
+    <form action="{% url 'register_emp' %}" method="POST">
+        {% csrf_token %}
+        {{ user }}
+        <button>تسجيل</button>
+    </form>
+</body>
+</html>
