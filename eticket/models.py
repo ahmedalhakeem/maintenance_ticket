@@ -11,7 +11,7 @@ class Section(models.Model):
    section_name = models.CharField(max_length=64, null=True, blank=True)
 
    def __str__(self):
-      return f"{self.section_name}"
+      return f"{self.id} ,{self.section_name}"
 
 class Department(models.Model):
    department_name = models.CharField(max_length=64, null=True, blank=True)
@@ -25,9 +25,16 @@ class User(AbstractUser):
    section = models.ForeignKey(Section, on_delete=models.CASCADE, related_name="sect_name", default=None, null=True) 
    # pc_code = models.CharField(max_length=10, null=True, blank=True)
 
+class Tour_Name(models.Model):
+   tour_name = models.CharField(max_length=100, null=True, blank=True)
+   
+   def __str__(self):
+      return f"{self.tour_name}"
+
 class Tickets(models.Model):
    employee = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
-   tour_type = models.CharField(max_length=100, null=True, blank=True)
+   tour_type = models.CharField(max_length=20, choices=[('internal', 'internal'),('external','external')] ,null=True, blank=True)
+   tour_name = models.ForeignKey(Tour_Name, on_delete=models.CASCADE, related_name='tourname', null=True, blank=True)
    tour_date = models.DateField(auto_now_add=False, null=True)
    memorandum = models.CharField(max_length=100, null=True, blank=True)
    status = models.BooleanField(default=False)
@@ -36,6 +43,7 @@ class Tickets(models.Model):
 
    def __str__(self):
       return f" {self.id}, {self.employee}, {self.tour_type}, {self.tour_date}, {self.memorandum} "
+
 
 class Drivers(models.Model):
    driver_name= models.CharField(max_length=100, null=True, blank=True)

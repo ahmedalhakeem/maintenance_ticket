@@ -1,7 +1,7 @@
 {% extends 'eticket/layout.html' %}
 {% load static %}
 {% block title %}
-    تسجيل الموظفين
+    تسجيل موظفي الصيانة
 {% endblock %}
 {% block content %}
     {% if alert %}
@@ -10,8 +10,8 @@
     {% if error %}
         <h1>{{error}}</h1>
     {% endif %}
-    <h1>صفحة تسجيل الموظفين</h1>
-    <form action="{% url 'register_emp' %}" method="post">
+    <h1>صفحة تسجيل موظفي الصيانة</h1>
+    <form action="{% url 'register_maintenance' %}" method="post">
         {% csrf_token %}
         {{ form }}
         <input type="submit" value="حفظ" class="btn btn-primary">

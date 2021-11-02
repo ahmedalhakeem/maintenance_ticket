@@ -1,78 +1,8 @@
+{% extends 'eticket/layout.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="{% static 'eticket/homestyle.css' %}">
-    
-</head>
-<body>
-    <div class="header">
-        <div class="name">
-            <p>هيئة الاعلام والاتصالات</p>
-            <p>مكتب الفرات الاوسط</p>
-        </div>
-        <div class="logo">
-            <img src="{% static 'eticket/images/cmc-logo.png' %}" alt="CMC logo" style="width: 350px; height: 200px;">
-        </div>
-        <div class="appname">
-            <p>نظام التذاكر الالكتروني </p>
-
-        </div>
-    </div>
-    <div class="line">
-
-    </div>
-    <div class="wrapper">
-        
-            <div class="first">
-                <img src="{% static 'eticket/images/manager.png'%}" alt="مدير الدائرة"  title="مدير المكتب" style="width: 200px; height: 200px;">
-            </div>
-            <div class="second">
-                <img src="{% static 'eticket/images/manager.png'%}" alt="رئيس القسم" title="رئيس القسم" style="width: 200px; height: 200px;" >
-            </div>
-            <div class="third"><img src="{% static 'eticket/images/manager.png'%}" alt="مسؤول الشعبة" title="مسؤول الشعبة" style="width: 200px; height: 200px;"></div>
-            {% if user.is_authenticated %}
-                <div> <a href="{% url 'manager_profile' user.id %}">مدير الدائرة</a></div>
-            {% else %}
-                <div class="fourth"><h3><a href="{% url 'login_master' %}">مدير الدائرة</a></h3></div>
-            {% endif %}
-            {% if user.is_authenticated %}
-            <div> <a href="{% url 'dept_mgr_profile' user.id %}">مدير القسم</a></div>
-            {% else %}
-
-                <div class="fifth"><h3><a href="{% url 'login_master' %}">مسؤول قسم الاتصالات</a></h3></div>
-            {% endif %}
-            {% if user.is_authenticated %}
-                <div> <a href="{% url 'sec_mgr_profile' user.id %}">مسؤول شعبة تكنلوجياالمعلومات</a></div>
-            {% else %}
-                <div class="sixth"><h3><a href="{% url 'login_master' %}">مسؤول شعبة تكنلوجيا المعلومات</a></h3></div>
-            {% endif %}
-            
-            <div class="s7th"><img src="{% static 'eticket/images/emp.png' %}" alt="موظفي المكتب" title="الموظفين" style="width: 200px; height: 200px;"></div>
-            <div class="e8th"><img src="{% static 'eticket/images/emp.png' %}" alt="مهندسي الحاسبات" title="مهندسي الحاسبات" style="width: 200px; height: 200px;"></div>
-            <div class="n9th"><img src="{% static 'eticket/images/emp.png' %}" alt="ادمن الصفحة" style="width: 200px; height: 200px;"></div>
-            {% if user.is_authenticated %}
-                <div> <a href="{% url 'profile_emp' user.id %}">الموظفين</a></div>
-            {% else %}
-
-                <div class="t10th"><h3><a href="{% url 'login_master' %}">الموظفين</a></h3></div>
-            {% endif %}
-            {% if user.is_authenticated %}
-                <div> <a href="{% url 'it_profile' user.id %}"> مهندسي شعبة تكنلوجياالمعلومات</a></div>
-            {% else %}
-
-                <div class="e11th"><h3><a href="{% url 'login_master' %}">مهندسي تكنلوجياالمعلومات</a></h3></div>
-                
-            {% endif %}
-            
-            <div class="tw12th"><h3> <a href="#">ادمن الصفحة</a></h3></div>
-
-
-            
-
-    </div>
-</body>
-</html>
+{% block title %}
+    الصفحة الرئيسية
+{% endblock %}
+{% block content %}
+    <h1>الصفحة الرئيسية</h1>
+{% endblock %}
