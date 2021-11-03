@@ -1,0 +1,13 @@
+{% extends 'eticket/layout.html' %}
+{% load static %}
+{% block title %}
+    تحويل تذكرة
+{% endblock %}
+{% block content %}
+    <h1>تحويل تذكرة</h1>
+    <form action="{% url 'convert_ticket' %}" method="post">
+        {% csrf_token %}
+        {{form}}
+        <input type="submit" value="تحويل">
+    </form>
+{% endblock %}

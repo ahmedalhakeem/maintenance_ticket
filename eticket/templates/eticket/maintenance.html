@@ -1,0 +1,33 @@
+{% extends 'eticket/layout.html' %}
+{% load static %}
+{% block title %}
+    صفحة شعبة الصيانة
+{% endblock %}
+{% block content %}
+    <h1>صفحة شعبة الصيانة</h1>
+    <h2>تسجيل دخول بأسم {{user.username}}</h2>
+   
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">رقم الجولة</th>
+                    <th scope="col">اسم الجولة</th>
+                    <th scope="col">نوع الجولة</th>
+                    <th scope="col">تاريخ الجولة</th>
+                </tr>
+                
+                <tbody>
+                    {% for tour in tours %}
+                    <tr>
+                        <td>{{tour.id}}</td>
+                        <td>{{tour.tour_name}}</td>
+                        <td>{{tour.tour_type}}</td>
+                        <td>{{tour.tour_date}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </thead>
+        </table>
+        
+   
+{% endblock %}

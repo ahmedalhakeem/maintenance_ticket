@@ -25,7 +25,7 @@
                     <li class="nav-item dropdown ">
                         <a href="" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">التذاكر</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a href="" class="dropdown-item">تحويل تذكرة</a>
+                            <a href="{% url 'convert_ticket' %}" class="dropdown-item">تحويل تذكرة</a>
                             <a href="" class="dropdown-item">التذاكر المنجزة</a>
                             <a href="" class="dropdown-item">التذاكر قيد الانجاز</a>
     
@@ -49,11 +49,11 @@
                 
             </div>
             <div class="log-in-out">
-              
-              <a href="" class="btn btn-success btn-lg" style="margin-left: 20px;">تسجيل دخول</a>
-              
-              <!-- <a href="" class="btn btn-warning btn-lg" style="margin-left: 20px;">تسجيل خروج</a> -->
-              
+              {% if not user.is_authenticated %}
+              <a href="{% url 'login_master'%}" class="btn btn-success btn-lg" style="margin-left: 20px;">تسجيل دخول</a>
+              {% else %}
+              <a href="{% url 'logout_page'%}" class="btn btn-warning btn-lg" style="margin-left: 20px;">تسجيل خروج</a>
+              {% endif %}
             </div>
         </nav>
     

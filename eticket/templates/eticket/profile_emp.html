@@ -1,92 +1,16 @@
-{% extends "eticket/layout_profile.html" %}
+{% extends "eticket/layout.html" %}
 {% load static %}
     {% block title %}
         صفحة الموظفين
     {% endblock %}
-    {% block body %}
+    {% block content %}
     <br>
     <h2>{{user.first_name}} {{ user.last_name }}</h2>
     <h2>{{user.email}}</h2>
-    <br>
-    <br>
-   
-    <!--<form action="{% url 'index' %}" method="POST">
-        {% csrf_token %}
-        {{ticketform.as_table }}
-        <button>Send</button>
-    </form>-->
-    <div class="form-container" id="{{request.user.id}}">
-        <form id="compose-ticket" method="POST">
-            {% csrf_token %}
-           
-            <div class="form-group">
-                <input disabled class="form-control" id="sender" value="{{ request.user.username }}">
-            </div>
-            <div class="form-group">
-                  <input type="text"  id="title" placeholder="Title">
-            </div>
-            <select id="priority">
-                <option value="high-priority">High-priority</option>
-                <option value="normal-priority">Normal-priority</option>
-                <option value="low-priority">Low-priority</option>
-            </select>
-            
-            <div class="form-group">
-                <textarea  id="description" cols="30" rows="10" placeholder="Enter Ticket details"></textarea>
-            </div>
-            <input type="submit" class="btn btn-primary">
-        </form>
-    </div>
-        
     
-    <br>
-    <div class="all_tickets">
-        
-        <table class="table table-hover table-bordered">
-            <thead class="table-dark">
-            <tr>
-                <th>ticket no.</th>
-                <th>ticket title</th>
-                <th>ticket type</th>
-                <th>ticket_priority</th>
-                <th>ticket_status</th>
-                <th>ticket date</th>
-                <th>ticket sender</th>
-                <th>ticket sender secttion</th>
-                <th>ticket sender department</th>
-                <th>ticket solver</th>
-            </tr>
-        </thead>
 
-        {% for item in ticket %}
-            <tr>
-                <td>{{item.id}}</td>
-                <td>{{ item.title }}</td>
-                <td>{{item.ticket_type}}</td>
-                <td>{{item.ticket_priority}}</td>    
-                <td>{{item.ticket_status}}</td>
-                <td>{{item.date}}</td>
-                <td>{{item.employee}}</td>
-                <td>{{item.employee.section}}</td>
-                <td>{{item.employee.department}}</td>
-                <td>{{item.it_user}}</td>
-            </tr>
-        {% endfor %}
-        </table>
-    </div>
     <a href="{% url 'logout_page' %}">تسجيل خروج</a>
-    <!--<div class="wrapper">
-        <div class="ticket-details">
-
-            <h2>ticket no.</h2>
-            <p> descriptions</p>
-            <h2>status</h2>
-            <h2>user</h2>
-            <h2>it-person</h2>
-            <p>date</p>
-            
-        </div>
-    </div>-->
+   
     {% endblock %}
     {% block script %}
         <script src="{% static 'eticket/index.js' %}"></script>

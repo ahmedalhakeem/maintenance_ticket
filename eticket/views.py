@@ -10,10 +10,24 @@ from django.contrib.auth.models import Group
 from .models import User, Section, Department, Tickets
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
+# from django.db.models.expressions import Exists
 # Create your views here.
-def index(request):
 
-    return render(request, 'eticket/index.html')
+def index(request):
+    user = User.objects.get(username=request.user)
+    if request.user.is_authenticated:
+        if user.groups.filter(name='Employees').exists():
+            return render(request, 'eticket\profile_emp.html',{'user': user})
+        elif user.groups.filter(name='Maintenance').exists():
+            return render(request, 'eticket\maintenance.html', {'user': user, 'tours': Tickets.objects.all()})
+        else:
+            return HttpResponse('dd')
+        # if user.groups.filter(name='Employees').exists():
+
+
+    return render(request, 'eticket/login_master.html',{
+        'form': LoginForm()
+    })
     
 def login_master(request):
     # if post method!
@@ -22,14 +36,10 @@ def login_master(request):
         if loginform.is_valid():
             username = loginform.cleaned_data['username']
             password = loginform.cleaned_data['password']
-            
-            
+
             login_user = authenticate(request, username=username, password=password)
-
-            if login_user.groups.filter(name="manager").exists():
-
-                login(request, login_user)
-                return HttpResponseRedirect(reverse('manager_profile',args=(login_user.id,)))
+            login(request, login_user)
+            return HttpResponseRedirect(reverse('index'))
     # if get method!
     else:
         loginform= LoginForm()
@@ -39,7 +49,7 @@ def login_master(request):
 
 def logout_page(request):
     logout(request)
-    return HttpResponseRedirect(reverse("index"))
+    return HttpResponseRedirect(reverse("login_master"))
 
 def register_emp(request):
     # if method is post!
@@ -90,6 +100,34 @@ def register_maintenance(request):
                 return render(request, 'eticket/register_maintenance.html',{'alert': 'تم ادخال اسم المستخدم مسبقا', 'form': Register_Maintenance()})
 
     return render(request, 'eticket/register_maintenance.html',{'form': Register_Maintenance()})
+@login_required()
+def employee(request, user_id):
+    user = User.objects.get(pk=user_id)
+    
+
+    return render(request, 'eticket/employee.html')
+
+# def maintenance(request):
+#     all_tickets = Tickets.objects.all()
+
+@login_required()
+def convert_ticket(request):
+    employee = User.objects.get(username=request.user)
+    form = Ticket_Form(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            tour_type = form.cleaned_data['tour_type']
+            tour_name = form.cleaned_data['tour_name']
+            tour_date = form.cleaned_data['tour_date']
+
+            tour = Tickets(employee=employee, tour_type=tour_type, tour_name=tour_name, tour_date=tour_date)
+            tour.save()
+            return HttpResponse('f')
+    return render(request, 'eticket\convert_ticket.html',{
+        'form': Ticket_Form()
+    })
+
+    
 
 # Profile page for each employee 
 # @login_required  
@@ -98,7 +136,6 @@ def register_maintenance(request):
 #     ticket = Tickets.objects.filter(employee=user).all()
 #     ticket = ticket.order_by('-date')
     #print(ticket)
-    ticketform = TicketForm()
     #user_tickets = Problems.objects.filter(pk=user)
     # if user is not None:
     #     return render(request, "eticket/profile_emp.html",{

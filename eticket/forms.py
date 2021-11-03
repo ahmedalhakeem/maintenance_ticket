@@ -1,10 +1,10 @@
 from django import forms
-from django.forms import ModelForm
-from eticket.models import User, Department, Section, Tickets
+from django.forms import fields, widgets
+from eticket.models import *
 
 class LoginForm(forms.Form):
-    username = forms.CharField(label="",  required=True,widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your username',}))
-    password = forms.CharField(label="", required=True, widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password',}))
+    username = forms.CharField(label="اسم المستخدم",  required=True,widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your username',}))
+    password = forms.CharField(label="كلمة المرور", required=True, widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password',}))
 
 
 class Register_empForm(forms.Form):
@@ -33,16 +33,11 @@ class Register_Maintenance(forms.Form):
 #     class Meta:
 #         model = Tickets
 #         fields = ['ticket_type', 'ticket_priority', 'ticket_status', 'title', 'description', 'employee', 'it_user']
-class TicketFormsss(forms.Form):
-    ticket_type = forms.CharField(label="", required=True, widget=forms.Select(attrs={'class': 'form-control',}))
-    ticket_priority = forms.CharField(label="", required=True, widget=forms.Select(attrs={'class': 'form-control',}))
-    ticket_status = forms.CharField(label="", required=True, widget=forms.Select(attrs={'class':'form-control',}))
-    title = forms.CharField(label="", required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter ticket title', })) 
-    description= forms.CharField(label="", required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder':'Enter details if any',}))
-    #date = forms.DateField(label="", widget=forms.DateTimeField())
-    employee = forms.ModelChoiceField(label="", required=True, queryset=User.objects.all(), widget=forms.Select(attrs={'class': 'form-control',}))
-    it_user = forms.ModelChoiceField(label="", required=False, queryset=User.objects.all(), widget=forms.Select(attrs={'class': 'form-control',}))
-      
+class Ticket_Form(forms.Form):
+    tour_type = forms.ChoiceField(label='نوع الجولة', widget=forms.Select(attrs={'class':'form-control'}), choices=[('internal', 'داخلية'),('external','خارجية')])
+    tour_name = forms.ModelChoiceField(label="اختر اسم الجولة", widget= forms.Select(attrs={'class': 'form-control'}), queryset=Tour_Name.objects.all())
+    tour_date = forms.DateField(label='تاريخ الجولة', widget=widgets.DateInput(attrs={'type':'date'}))
+    
 
 #class Tech_issuesForm(forms.Form):
  #   p_type = forms.ModelChoiceField(label="المشكلة", required=True,queryset=ProblemType.objects.all(), widget=forms.Select(attrs={'class': 'form-control',}))

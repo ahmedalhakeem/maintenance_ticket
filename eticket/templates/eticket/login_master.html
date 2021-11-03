@@ -1,10 +1,10 @@
-{% extends "eticket/layout_login.html" %}
+{% extends "eticket/layout.html" %}
 
 {% block title %}
     Login_manager
 {% endblock %}
-{% block body %}
-    <!--<h1>تسجيل دخول المدير</h1>-->
+{% block content %}
+    <h1>صفحة تسجيل الدخول</h1>
     {% if message %}
         <h3>{{ message }}</h3>
     {% endif %}
@@ -13,6 +13,6 @@
             {% csrf_token %}
             {{ loginform }}
         </div>
-        <button class="btn">reg</button>
+        <button class="btn">تسجيل الدخول</button>
     </form>
 {% endblock %}

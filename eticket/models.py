@@ -33,7 +33,7 @@ class Tour_Name(models.Model):
 
 class Tickets(models.Model):
    employee = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
-   tour_type = models.CharField(max_length=20, choices=[('internal', 'internal'),('external','external')] ,null=True, blank=True)
+   tour_type = models.CharField(max_length=20, choices=[('internal', 'داخلية'),('external','خارجية')] ,null=True, blank=True)
    tour_name = models.ForeignKey(Tour_Name, on_delete=models.CASCADE, related_name='tourname', null=True, blank=True)
    tour_date = models.DateField(auto_now_add=False, null=True)
    memorandum = models.CharField(max_length=100, null=True, blank=True)
