@@ -9,10 +9,12 @@
         <h3>{{ message }}</h3>
     {% endif %}
     <form action="{% url 'login_master' %}" method="POST">
+        {% csrf_token %}
         <div class="form-group">
             {% csrf_token %}
             {{ loginform }}
         </div>
+        
         <button class="btn">تسجيل الدخول</button>
     </form>
 {% endblock %}

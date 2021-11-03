@@ -25,17 +25,19 @@ class User(AbstractUser):
    section = models.ForeignKey(Section, on_delete=models.CASCADE, related_name="sect_name", default=None, null=True) 
    # pc_code = models.CharField(max_length=10, null=True, blank=True)
 
-class Tour_Name(models.Model):
-   tour_name = models.CharField(max_length=100, null=True, blank=True)
+# class Tour_Name(models.Model):
+#    tour_name = models.CharField(max_length=100, null=True, blank=True)
    
-   def __str__(self):
-      return f"{self.tour_name}"
+   # def __str__(self):
+   #    return f"{self.tour_name}"
 
 class Tickets(models.Model):
    employee = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
    tour_type = models.CharField(max_length=20, choices=[('internal', 'داخلية'),('external','خارجية')] ,null=True, blank=True)
-   tour_name = models.ForeignKey(Tour_Name, on_delete=models.CASCADE, related_name='tourname', null=True, blank=True)
+   tour_name = models.CharField(max_length=100,null=True, blank=True)
    tour_date = models.DateField(auto_now_add=False, null=True)
+   tour_duration = models.IntegerField(default=1, blank=True, null=True)
+   expected_end_tour = models.DateField(auto_now_add=False, null=True, blank=True)
    memorandum = models.CharField(max_length=100, null=True, blank=True)
    status = models.BooleanField(default=False)
    ticket_date = models.DateField(auto_now_add=True)

@@ -35,7 +35,7 @@ class Register_Maintenance(forms.Form):
 #         fields = ['ticket_type', 'ticket_priority', 'ticket_status', 'title', 'description', 'employee', 'it_user']
 class Ticket_Form(forms.Form):
     tour_type = forms.ChoiceField(label='نوع الجولة', widget=forms.Select(attrs={'class':'form-control'}), choices=[('internal', 'داخلية'),('external','خارجية')])
-    tour_name = forms.ModelChoiceField(label="اختر اسم الجولة", widget= forms.Select(attrs={'class': 'form-control'}), queryset=Tour_Name.objects.all())
+    tour_name = forms.CharField(label='عنوان الجولة', widget=forms.TextInput(attrs={'class': 'form-control'}))
     tour_date = forms.DateField(label='تاريخ الجولة', widget=widgets.DateInput(attrs={'type':'date'}))
     
 

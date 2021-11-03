@@ -12,22 +12,19 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 # from django.db.models.expressions import Exists
 # Create your views here.
-
+@login_required
 def index(request):
-    user = User.objects.get(username=request.user)
+    user = User.objects.get(username= request.user)
     if request.user.is_authenticated:
         if user.groups.filter(name='Employees').exists():
             return render(request, 'eticket\profile_emp.html',{'user': user})
         elif user.groups.filter(name='Maintenance').exists():
             return render(request, 'eticket\maintenance.html', {'user': user, 'tours': Tickets.objects.all()})
-        else:
-            return HttpResponse('dd')
+            
         # if user.groups.filter(name='Employees').exists():
 
-
-    return render(request, 'eticket/login_master.html',{
-        'form': LoginForm()
-    })
+    
+    return render(request, 'eticket/login_master.html')
     
 def login_master(request):
     # if post method!
@@ -37,14 +34,20 @@ def login_master(request):
             username = loginform.cleaned_data['username']
             password = loginform.cleaned_data['password']
 
-            login_user = authenticate(request, username=username, password=password)
-            login(request, login_user)
-            return HttpResponseRedirect(reverse('index'))
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect(reverse('index'))
+            
+            return render(request, 'eticket/login_master.html',{
+                'form': LoginForm(),
+                'message':'خطأ في اسم المستخدم او كلمة المرور'
+            })
     # if get method!
-    else:
-        loginform= LoginForm()
-        return render(request, 'eticket/login_master.html',{
-            "loginform": loginform
+    
+    
+    return render(request, 'eticket/login_master.html',{
+        "loginform": LoginForm()
         })
 
 def logout_page(request):
