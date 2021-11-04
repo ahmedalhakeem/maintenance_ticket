@@ -41,6 +41,7 @@ class Tickets(models.Model):
    memorandum = models.CharField(max_length=100, null=True, blank=True)
    status = models.BooleanField(default=False)
    ticket_date = models.DateField(auto_now_add=True)
+   notes = models.CharField(max_length=100, null=True, blank=True)
 
 
    def __str__(self):

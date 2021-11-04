@@ -1,4 +1,5 @@
 import json
+from django import http
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -106,9 +107,12 @@ def register_maintenance(request):
 @login_required()
 def employee(request, user_id):
     user = User.objects.get(pk=user_id)
-    
+    user_tickets = Tickets.objects.filter(employee=user).all()
 
-    return render(request, 'eticket/employee.html')
+    return render(request, 'eticket/profile_emp.html',{
+        'user': user,
+        'tickets': user_tickets
+    })
 
 # def maintenance(request):
 #     all_tickets = Tickets.objects.all()
@@ -122,10 +126,12 @@ def convert_ticket(request):
             tour_type = form.cleaned_data['tour_type']
             tour_name = form.cleaned_data['tour_name']
             tour_date = form.cleaned_data['tour_date']
+            tour_duration = form.cleaned_data['tour_duration']
 
-            tour = Tickets(employee=employee, tour_type=tour_type, tour_name=tour_name, tour_date=tour_date)
-            tour.save()
-            return HttpResponse('f')
+            tour = Tickets(employee=employee, tour_type=tour_type, tour_name=tour_name, tour_date=tour_date, tour_duration=tour_duration)
+            if tour is not None:
+                tour.save()
+                return HttpResponseRedirect(reverse('employee', args=(request.user.id,)))
     return render(request, 'eticket\convert_ticket.html',{
         'form': Ticket_Form()
     })

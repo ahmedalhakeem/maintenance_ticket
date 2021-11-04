@@ -34,10 +34,10 @@ class Register_Maintenance(forms.Form):
 #         model = Tickets
 #         fields = ['ticket_type', 'ticket_priority', 'ticket_status', 'title', 'description', 'employee', 'it_user']
 class Ticket_Form(forms.Form):
-    tour_type = forms.ChoiceField(label='نوع الجولة', widget=forms.Select(attrs={'class':'form-control'}), choices=[('internal', 'داخلية'),('external','خارجية')])
+    tour_type = forms.ChoiceField(label='نوع الجولة', widget=forms.Select(attrs={'class':'form-control'}), choices=[('داخلية', 'داخلية'),('خارجية','خارجية')])
     tour_name = forms.CharField(label='عنوان الجولة', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    tour_date = forms.DateField(label='تاريخ الجولة', widget=widgets.DateInput(attrs={'type':'date'}))
-    
+    tour_date = forms.DateField(label='تاريخ الجولة', widget=widgets.DateInput(attrs={'type':'date', 'id':"start"}))
+    tour_duration = forms.IntegerField(label='عدد ايام الجولة', widget=widgets.NumberInput(attrs={'class':'form-control'}))  
 
 #class Tech_issuesForm(forms.Form):
  #   p_type = forms.ModelChoiceField(label="المشكلة", required=True,queryset=ProblemType.objects.all(), widget=forms.Select(attrs={'class': 'form-control',}))

@@ -7,6 +7,37 @@
     <br>
     <h2>{{user.first_name}} {{ user.last_name }}</h2>
     <h2>{{user.email}}</h2>
+    <h2>تسجيل دخول بأسم: <span>{{user.username}}</span>
+   
+        <div class="container" >
+            <h1>الجولات السابقة</h1>
+            <table class="table" style="border: 1px solid black;">
+                <thead>
+                    <tr>
+                        <th scope="col">رقم الجولة</th>
+                        <th scope="col">اسم الجولة</th>
+                        <th scope="col">نوع الجولة</th>
+                        <th scope="col">تاريخ الجولة</th>
+                        <th scope="col">مدة الجولة</th>
+    
+                    </tr>
+                    
+                    <tbody>
+                        {% for ticket in tickets  %}
+                        <tr>
+                            <td>{{ticket.id}}</td>
+                            <td>{{ticket.tour_name}}</td>
+                            <td>{{ticket.tour_type}}</td>
+                            <td>{{ticket.tour_date}}</td>
+                            <td>{{ticket.tour_duration}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </thead>
+            </table>
+        </div>
+        
+    
     
 
     <a href="{% url 'logout_page' %}">تسجيل خروج</a>
