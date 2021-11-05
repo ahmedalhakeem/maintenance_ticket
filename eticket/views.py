@@ -16,9 +16,10 @@ from django.core.paginator import Paginator
 @login_required
 def index(request):
     user = User.objects.get(username= request.user)
+    user_tickets = Tickets.objects.filter(employee=user).all()
     if request.user.is_authenticated:
         if user.groups.filter(name='Employees').exists():
-            return render(request, 'eticket\profile_emp.html',{'user': user})
+            return render(request, 'eticket\profile_emp.html',{'user': user,'tickets': user_tickets})
         elif user.groups.filter(name='Maintenance').exists():
             return render(request, 'eticket\maintenance.html', {'user': user, 'tours': Tickets.objects.all()})
             

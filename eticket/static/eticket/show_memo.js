@@ -1,12 +1,19 @@
 document.addEventListener('DOMContentLoaded', function(){
     const start = document.querySelector('#start');
-    start.addEventListener('change', (e)=>{
-        // console.log(e.target.value);
-        const date = new Date(e.target.value)
-        date.setDate(date.getDate() + 3);
-        console.log(date);
-
+    const tour_days = document.querySelector('#tour-days');
+    const end = document.querySelector('#end');
+ 
+    tour_days.addEventListener('focusout', (e)=>{
+        const days = e.target.value
+        const num = Number(days)
+        console.log(`type of ${typeof(num)}`);
+        const end_date = new Date(start.value)
+        end_date.setDate(end_date.getDate()+ num)
+        console.log(end_date);
+        const x_format = end_date.getFullYear()+ '-'+ (end_date.getMonth()+1)+ '-'+ end_date.getDate();
+        end.value = x_format
     })
+    
     // console.log();
     const ticket_form = document.querySelector('#ticket-form')
     console.log(ticket_form.children);
