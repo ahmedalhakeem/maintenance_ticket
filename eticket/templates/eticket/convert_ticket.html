@@ -9,7 +9,7 @@
         {% csrf_token %}
         {{form}}
         <span>هل توجد مذكرة رسمية؟ </span><input type="checkbox" onclick="show_memo()">
-        <textarea id='memo_info' class="form-control" placeholder="الرجاء كتابة رقم المذكرة والتاريخ"></textarea>
+        <textarea id='memo_info' name="memo" class="form-control" placeholder="الرجاء كتابة رقم المذكرة والتاريخ"></textarea>
         <label for="">ملاحظات</label>
         <input type="text" class="form-control" name='notes' placeholder="ملاحظات اخرى">
         <input type="submit" value="تحويل">

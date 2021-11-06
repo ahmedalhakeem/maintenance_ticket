@@ -27,23 +27,11 @@ class Register_Maintenance(forms.Form):
     confirm = forms.CharField(label="اعادة كتابة الرمز", required=True, widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder': 'Enter your password', }))
     
 
-
-
-# class TicketForm(ModelForm):
-#     class Meta:
-#         model = Tickets
-#         fields = ['ticket_type', 'ticket_priority', 'ticket_status', 'title', 'description', 'employee', 'it_user']
 class Ticket_Form(forms.Form):
-    tour_type = forms.ChoiceField(label='نوع الجولة', widget=forms.Select(attrs={'class':'form-control'}), choices=[('داخلية', 'داخلية'),('خارجية','خارجية')])
-    tour_name = forms.CharField(label='عنوان الجولة', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    tour_date = forms.DateField(label='تاريخ بدايةالجولة', widget=widgets.DateInput(attrs={'type':'date', 'id':"start"}))
-    tour_duration = forms.IntegerField(label='عدد ايام الجولة', widget=widgets.NumberInput(attrs={'class':'form-control', 'id':'tour-days'}))  
-    expected_end_tour = forms.CharField(disabled=True,label='تاريخ نهاية الجولة المتوقع', widget=widgets.TextInput(attrs={'class': 'form-control', 'id': 'end'}))
-    # expected_end_tour = forms.DateField(label='تاريخ نهاية الجولة', widget=widgets.DateInput(attrs={'type':'date', 'id':"end"}))
-#class Tech_issuesForm(forms.Form):
- #   p_type = forms.ModelChoiceField(label="المشكلة", required=True,queryset=ProblemType.objects.all(), widget=forms.Select(attrs={'class': 'form-control',}))
-  #  user = forms.ModelChoiceField(label="اسم المستخدم", required=True, queryset=User.objects.all(), widget=forms.Select(attrs={'class':'form-control', }))
-
-
-
+    tour_type = forms.ChoiceField(required=True,label='نوع الجولة', widget=forms.Select(attrs={'class':'form-control'}), choices=[('داخلية', 'داخلية'),('خارجية','خارجية')])
+    tour_name = forms.CharField( required=True,label='عنوان الجولة', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    tour_date = forms.DateField(required=True,label='تاريخ بدايةالجولة', widget=widgets.DateInput(attrs={'type':'date', 'id':"start"}))
+    tour_duration = forms.IntegerField(required=True,label='عدد ايام الجولة', widget=widgets.NumberInput(attrs={'class':'form-control', 'id':'tour-days'}))  
+    expected_end_tour = forms.CharField(required=True,label='تاريخ نهاية الجولة المتوقع', widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'end'}))
+    
 

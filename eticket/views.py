@@ -121,108 +121,29 @@ def employee(request, user_id):
 @login_required()
 def convert_ticket(request):
     employee = User.objects.get(username=request.user)
-    form = Ticket_Form(request.POST or None)
     if request.method == 'POST':
+        memorandum = request.POST['memo']
+        notes = request.POST['notes']
+        print(memorandum)
+        form = Ticket_Form(request.POST or None)
+        print(form.errors)
         if form.is_valid():
             tour_type = form.cleaned_data['tour_type']
             tour_name = form.cleaned_data['tour_name']
             tour_date = form.cleaned_data['tour_date']
             tour_duration = form.cleaned_data['tour_duration']
+            expected_end_tour = form.cleaned_data['expected_end_tour']
+            # print(f"expected{expected_end_tour}")
+            tour = Tickets(employee=employee, tour_type=tour_type, tour_name=tour_name, tour_date=tour_date, tour_duration=tour_duration, expected_end_tour=expected_end_tour)        
+            print(tour)
+        
+            tour.save()
+        # return HttpResponseRedirect(reverse('convert_ticket'))
+        return HttpResponseRedirect(reverse('employee', args=(request.user.id,)))
 
-            tour = Tickets(employee=employee, tour_type=tour_type, tour_name=tour_name, tour_date=tour_date, tour_duration=tour_duration)
-            if tour is not None:
-                tour.save()
-                return HttpResponseRedirect(reverse('employee', args=(request.user.id,)))
     return render(request, 'eticket\convert_ticket.html',{
         'form': Ticket_Form()
     })
 
     
 
-# Profile page for each employee 
-# @login_required  
-# def profile_emp(request, emp_id):
-#     user = User.objects.get(pk=emp_id)
-#     ticket = Tickets.objects.filter(employee=user).all()
-#     ticket = ticket.order_by('-date')
-    #print(ticket)
-    #user_tickets = Problems.objects.filter(pk=user)
-    # if user is not None:
-    #     return render(request, "eticket/profile_emp.html",{
-    #         "user": user,
-    #         "ticket": ticket,
-    #         "ticketform": ticketform            
-    #     })
-# profile page for manager
-# @login_required
-# def maintentenance_profile(request, user_id):
-#     tickets = Tickets.objects.filter(ticket_status="accomplished")
-#     user = User.objects.get(pk=user_id)
-#     return render(request, "eticket/manager_profile.html",{
-#         "user": user,
-#         "all_tickets": tickets,
-#         "ticket_form" : TicketForm()
-#     })
-
-
-# @csrf_exempt
-# def tickets(request, emp_id):
-#     if request.method != "POST":
-#         return JsonResponse({"error": "POST method is required"})
-    
-#     data = json.loads(request.body)
-
-#     user = User.objects.get(username=data['sender'])
-#     print(user)
-    #it_user = User.objects.get(username="")
-    # title = data.get('title')
-    # print(title)
-    # description = data['description']
-    # priority = data['priority']
-    # reciever = User.objects.get(username="haiderk")
-
-    # new_ticket = Tickets(title=title, ticket_priority=priority, description=description, employee=user, it_user=reciever)
-    # new_ticket.save()
-    #print(sender)
-
-    # return JsonResponse({'success': "responded successfully"})
-
-# @csrf_exempt
-# def convert_ticket(request, user_id):
-#     if request.method=='GET':
-#         return HttpResponse("PuT method is required")
-    #return JsonResponse({"error": "POST method is required"})
-
-    # if request.method == 'PUT':
-
-    #     data = json.loads(request.body)
-    #     #query the converted ticket
-    #     if data.get('id') is not None:
-    #         ticket = Tickets.objects.get(pk=data['id'])
-        
-    #     it_user = User.objects.get(username = data.get('it_user'))
-    #     ticket.it_user = it_user
-    #     ticket.ticket_status = data.get('status')
-    #     ticket.save()
-
-    
-    #it_user = User.objects.get(username=data['it_user'])
-    #print(it_user)
-        # print(ticket)
-
-        # return JsonResponse({'success': "successfully converted"})
-# submit function from IT user.
-# @csrf_exempt        
-# def submit_ticket(request, user_id):
-#     if request.method == 'GET':
-#         return JsonResponse({'Error': 'This function requires PUT method!'})
-#     if request.method == 'PUT':
-#         data = json.loads(request.body)
-#         if data.get('id') is not None:
-#             ticket = Tickets.objects.get(pk=data.get('id'))
-        
-#         ticket.ticket_status = data.get('status')
-#         ticket.solution = data.get('solution')
-#         ticket.save()
-#         print(ticket)
-#         return JsonResponse({'success': 'successfully submitted'})

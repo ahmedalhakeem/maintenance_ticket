@@ -37,7 +37,7 @@ class Tickets(models.Model):
    tour_name = models.CharField(max_length=100,null=True, blank=True)
    tour_date = models.DateField(auto_now_add=False, null=True)
    tour_duration = models.IntegerField(default=1, blank=True, null=True)
-   expected_end_tour = models.DateField(auto_now_add=False, null=True, blank=True)
+   expected_end_tour = models.CharField(max_length=30, blank=True, null=True)
    memorandum = models.CharField(max_length=100, null=True, blank=True)
    status = models.BooleanField(default=False)
    ticket_date = models.DateField(auto_now_add=True)
