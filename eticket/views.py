@@ -135,10 +135,13 @@ def convert_ticket(request):
             expected_end_tour = form.cleaned_data['expected_end_tour']
             # print(f"expected{expected_end_tour}")
             tour = Tickets(employee=employee, tour_type=tour_type, tour_name=tour_name, tour_date=tour_date, tour_duration=tour_duration, expected_end_tour=expected_end_tour)        
-            print(tour)
+            if len(memorandum):
+                tour.memorandum= memorandum
+            if len(notes):
+                tour.notes= notes
         
             tour.save()
-        # return HttpResponseRedirect(reverse('convert_ticket'))
+        
         return HttpResponseRedirect(reverse('employee', args=(request.user.id,)))
 
     return render(request, 'eticket\convert_ticket.html',{
