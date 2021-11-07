@@ -8,7 +8,7 @@ from .forms import *
 from django.db import IntegrityError
 from django.urls import reverse
 from django.contrib.auth.models import Group
-from .models import User, Section, Department, Tickets
+from .models import User, Section, Department, Tickets, Ticket_Reply
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 # from django.db.models.expressions import Exists
@@ -21,7 +21,7 @@ def index(request):
         if user.groups.filter(name='Employees').exists():
             return render(request, 'eticket\profile_emp.html',{'user': user,'tickets': user_tickets})
         elif user.groups.filter(name='Maintenance').exists():
-            return render(request, 'eticket\maintenance.html', {'user': user, 'tours': Tickets.objects.all()})
+            return render(request, 'eticket\maintenance.html', {'user': user, 'tours': Tickets.objects.all().order_by('-ticket_date')})
             
         # if user.groups.filter(name='Employees').exists():
 
@@ -150,21 +150,22 @@ def convert_ticket(request):
 
 def allocate_tour(request, tour_id):
     tour = Tickets.objects.get(pk=tour_id)
+    print(tour.tour_name)
     if request.method =='POST':
-        allocate_form = Ticket_Reply(request.POST or None)
+        allocate_form = Ticket_Reply_Form(request.POST or None)
         if allocate_form.is_valid():
             driver = allocate_form.cleaned_data['driver']
             car = allocate_form.cleaned_data['car']
             memo_status = allocate_form.cleaned_data['memo_statue']
             notes = allocate_form.cleaned_data['notes']
-            ticket_reply = Ticket_Reply(ticket=tour, driver_name=driver, car=car, notes=notes, memorandum_statue=memo_status)
+            ticket_reply = Ticket_Reply(ticket= tour,driver_name=driver, car=car, notes=notes, memorandum_statue=memo_status)
             if ticket_reply is not None:
                 ticket_reply.save()
         return HttpResponseRedirect(reverse('index'))      
     return render(request, 'eticket/allocate_tour.html',{
         'tour': tour,
-        'reply_form': Ticket_Reply()
+        'reply_form': Ticket_Reply_Form()
     })
-    
+
     
 

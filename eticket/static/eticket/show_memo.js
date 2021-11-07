@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function(){
  
     tour_days.addEventListener('focusout', (e)=>{
         const start = document.querySelector('#start');
-        const tour_days = document.querySelector('#tour-days');
+        // const tour_days = document.querySelector('#tour-days');
         const end = document.querySelector('#end');
         const days = e.target.value
         const num = Number(days)
@@ -22,7 +22,9 @@ document.addEventListener('DOMContentLoaded', function(){
             console.log(end_date);
         
             const x_format = end_date.getFullYear()+ '-'+ (end_date.getMonth()+1)+ '-'+ end_date.getDate();
+            // console.log(typeof(x_format));
             end.value = x_format
+            // end.value = x_format
         }else{
             x_format = end_date.getFullYear()+ '-'+ (end_date.getMonth()+1)+ '-'+ end_date.getDate();
             end.value = x_format;
