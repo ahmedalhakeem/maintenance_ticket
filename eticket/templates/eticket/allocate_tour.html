@@ -1,0 +1,18 @@
+{% extends 'eticket/layout.html' %}
+{% load static %}
+
+{% block title %}
+صفحة تخصيص الجولات
+{% endblock %}
+{% block content %}
+    <h1>تخصيص جولات </h1>
+    <p>:تخصيص عجلة للجولة {{tour.tour_name}}</span></p><span>
+    
+    <form action="{% url 'allocate_tour' tour.id %}" method="post">
+        {% csrf_token %}
+        {{reply_form}}
+        <input type="submit" value="تخصيص">
+    </form>
+
+
+{% endblock %}

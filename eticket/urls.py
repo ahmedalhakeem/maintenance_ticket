@@ -9,7 +9,9 @@ urlpatterns =[
     path("register_emp", views.register_emp, name="register_emp"),
     path("register_maintenance/", views.register_maintenance, name="register_maintenance"),
     path("employee/<int:user_id>", views.employee, name="employee"),
-    path("convert_ticket/", views.convert_ticket, name="convert_ticket")
+    path("convert_ticket/", views.convert_ticket, name="convert_ticket"),
+    path("allocate_tour/<int:tour_id>", views.allocate_tour, name="allocate_tour"),
+    # path('reply_ticket/', views.reply_ticket, name="reply_ticket")
     
     # path("profile_emp/<int:emp_id>", views.profile_emp, name="profile_emp"),
     # path("manager_profile/<int:user_id>", views.manager_profile, name="manager_profile"),

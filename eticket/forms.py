@@ -32,6 +32,11 @@ class Ticket_Form(forms.Form):
     tour_name = forms.CharField( required=True,label='عنوان الجولة', widget=forms.TextInput(attrs={'class': 'form-control'}))
     tour_date = forms.DateField(required=True,label='تاريخ بدايةالجولة', widget=widgets.DateInput(attrs={'type':'date', 'id':"start"}))
     tour_duration = forms.IntegerField(required=True,label='عدد ايام الجولة', widget=widgets.NumberInput(attrs={'class':'form-control', 'id':'tour-days'}))  
-    expected_end_tour = forms.CharField(required=True,label='تاريخ نهاية الجولة المتوقع', widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'end'}))
+    expected_end_tour = forms.CharField(required=False,disabled=True,label='تاريخ نهاية الجولة المتوقع', widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'end'}))
     
 
+class Ticket_Reply(forms.Form):
+    driver = forms.ModelChoiceField(required=True,  queryset=Drivers.objects.all(), label="اسم السائق", widget=forms.Select(attrs={'class':'form-control'}))
+    car = forms.ModelChoiceField(required=True, label="اسم المركبة", widget=forms.Select(attrs={'class':'form-control'}), queryset=Cars.objects.all())
+    memo_statue= forms.ChoiceField(required=True, label='حالة المذكرة', widget=forms.Select(attrs={'class': 'form-control'}),choices=[("memo_received", "memo received"), ("memo_not_received", "memo_not_received"),("wrong_memo", "wrong_memo")])
+    notes = forms.CharField(required=False, label='ملاحطات', widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'اكتب ملاحظات اخرى ان وجدت!'}))

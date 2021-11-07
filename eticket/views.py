@@ -148,5 +148,23 @@ def convert_ticket(request):
         'form': Ticket_Form()
     })
 
+def allocate_tour(request, tour_id):
+    tour = Tickets.objects.get(pk=tour_id)
+    if request.method =='POST':
+        allocate_form = Ticket_Reply(request.POST or None)
+        if allocate_form.is_valid():
+            driver = allocate_form.cleaned_data['driver']
+            car = allocate_form.cleaned_data['car']
+            memo_status = allocate_form.cleaned_data['memo_statue']
+            notes = allocate_form.cleaned_data['notes']
+            ticket_reply = Ticket_Reply(ticket=tour, driver_name=driver, car=car, notes=notes, memorandum_statue=memo_status)
+            if ticket_reply is not None:
+                ticket_reply.save()
+        return HttpResponseRedirect(reverse('index'))      
+    return render(request, 'eticket/allocate_tour.html',{
+        'tour': tour,
+        'reply_form': Ticket_Reply()
+    })
+    
     
 
