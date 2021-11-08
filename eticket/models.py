@@ -23,13 +23,13 @@ class User(AbstractUser):
    section = models.ForeignKey(Section, on_delete=models.CASCADE, related_name="sect_name", default=None, null=True) 
   
 
-class Tickets(models.Model):
+class Tickets(models.Model ):
    employee = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
    tour_type = models.CharField(max_length=20, choices=[('internal', 'داخلية'),('external','خارجية')] ,null=True, blank=True)
    tour_name = models.CharField(max_length=100,null=True, blank=True)
    tour_date = models.DateField(auto_now_add=False, null=True)
    tour_duration = models.IntegerField(default=1, blank=True, null=True)
-   expected_end_tour = models.CharField(max_length=30, blank=True, null=True)
+   expected_end_tour = models.DateField(auto_now_add=False, blank=True, null=True)
    memorandum = models.CharField(max_length=100, null=True, blank=True)
    status = models.BooleanField(default=False)
    ticket_date = models.DateField(auto_now_add=True)
@@ -37,7 +37,7 @@ class Tickets(models.Model):
 
 
    def __str__(self):
-      return f" {self.id}, {self.employee}, {self.tour_type}, {self.tour_date}, {self.memorandum} "
+      return f" {self.id}, {self.employee}, {self.tour_type}, {self.tour_date}, {self.memorandum}, {self.expected_end_tour} "
 
 
 class Drivers(models.Model):

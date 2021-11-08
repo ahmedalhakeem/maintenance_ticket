@@ -16,6 +16,7 @@
                     <th scope="col">نوع الجولة</th>
                     <th scope="col">تاريخ الجولة</th>
                     <th scope="col">عدد أيام الجولة</th>
+                    <th scope="col">تاريخ نهاية الجولة المتوقع</th>
                     <th>تخصيص جولات</th>
                 </tr>
                 
@@ -28,6 +29,7 @@
                         <td>{{tour.tour_type}}</td>
                         <td>{{tour.tour_date}}</td>
                         <td>{{tour.tour_duration}}</td>
+                        <td>{{tour.expected_end_tour}}</td>
                         <td><a href="{% url 'allocate_tour' tour.id %}">تخصيص</a></td>
                     </tr>
                     {% endfor %}
@@ -35,5 +37,8 @@
             </thead>
         </table>
         
+    
+        <script type="text/javascript" src="{% static "eticket/ticket_reply.js" %}"></script>
+
    
 {% endblock %}

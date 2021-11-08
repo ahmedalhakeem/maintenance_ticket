@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function(){
         // console.log(`type of ${typeof(num)}`);
         const end_date = new Date(start.value)
         if(num > 1){
-            end_date.setDate(end_date.getDate()+ num)
+            end_date.setDate(end_date.getDate()+ num-1)
             console.log(end_date);
         
             const x_format = end_date.getFullYear()+ '-'+ (end_date.getMonth()+1)+ '-'+ end_date.getDate();
