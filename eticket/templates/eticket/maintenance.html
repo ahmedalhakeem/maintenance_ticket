@@ -7,7 +7,7 @@
     <h1>صفحة شعبة الصيانة</h1>
     <h2>تسجيل دخول بأسم {{user.username}}</h2>
    
-        <table class="table">
+        <table class="table" id="tableid">
             <thead>
                 <tr>
                     <th scope="col">رقم الجولة</th>
@@ -27,16 +27,19 @@
                         <td>{{tour.employee}}</td>
                         <td>{{tour.tour_name}}</td>
                         <td>{{tour.tour_type}}</td>
-                        <td>{{tour.tour_date}}</td>
-                        <td>{{tour.tour_duration}}</td>
-                        <td>{{tour.expected_end_tour}}</td>
-                        <td><a href="{% url 'allocate_tour' tour.id %}">تخصيص</a></td>
+                        <td id="start-tour">{{tour.tour_date}}</td>
+                        <td id="tour-duration">{{tour.tour_duration}}</td>
+                        <td id="end-tour">{{tour.expected_end_tour}}</td>
+                        <td><a href="" class="allocate-btn">تخصيص</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </thead>
         </table>
-        
+        <div class="container" id="wrap">
+            container
+            
+        </div>
     
         <script type="text/javascript" src="{% static "eticket/ticket_reply.js" %}"></script>
 

@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function(){
             console.log(end_date);
         
             const x_format = end_date.getFullYear()+ '-'+ (end_date.getMonth()+1)+ '-'+ end_date.getDate();
-            // console.log(typeof(x_format));
+            console.log(typeof(x_format));
             end.value = x_format
             // end.value = x_format
         }else{
