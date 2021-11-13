@@ -7,16 +7,17 @@
     <h1>صفحة شعبة الصيانة</h1>
     <h2>تسجيل دخول بأسم {{user.username}}</h2>
    
-        <table class="table" id="tableid">
+        <table class="table table-bordered" id="tableid">
             <thead>
-                <tr>
-                    <th scope="col">رقم الجولة</th>
+                <tr class="table-primary">
+                    <th  scope="col">رقم الجولة</th>
                     <th scope="col"> اسم الموظف</th>
                     <th scope="col">اسم الجولة</th>
                     <th scope="col">نوع الجولة</th>
                     <th scope="col">تاريخ الجولة</th>
                     <th scope="col">عدد أيام الجولة</th>
                     <th scope="col">تاريخ نهاية الجولة المتوقع</th>
+                    <th scope="col"> ملاحظات الموظف</th>
                     <th>تخصيص جولات</th>
                     <th>select</th>
                 </tr>
@@ -24,13 +25,14 @@
                 <tbody>
                     {% for tour in tours %}
                     <tr>
-                        <td>{{tour.id}}</td>
+                        <td class="table-secondary">{{tour.id}}</td>
                         <td>{{tour.employee}}</td>
                         <td>{{tour.tour_name}}</td>
                         <td>{{tour.tour_type}}</td>
                         <td id="start-tour">{{tour.tour_date}}</td>
                         <td id="tour-duration">{{tour.tour_duration}}</td>
                         <td id="end-tour">{{tour.expected_end_tour}}</td>
+                        <td> {{tour.notes}}</td>
                         <td><button class="allocate-btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">تخصيص</button></td>
                         <td><input type="checkbox" class="chk" /></td>
                     </tr>
@@ -49,14 +51,17 @@
 
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title" id="exampleModalLabel">تخصيص جولة</h5>
+          <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="float:right"></button> -->
         </div>
         <div class="modal-body">
-          ...
+          <h3>يرجى ادخال الجولات وحسب عدد الايام</h3>
+          <div class="tour_wrapper" style="border: 1px solid black;">
+
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

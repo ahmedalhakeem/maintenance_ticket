@@ -167,5 +167,12 @@ def allocate_tour(request, tour_id):
         'reply_form': Ticket_Reply_Form()
     })
 
+def get_allocations(request):
+    ticket = Tickets.objects.get(pk=request.GET.get('id'))
+    drivers = list(Drivers.objects.all().values())
+    cars = list(Cars.objects.all().values())
+    # reply = list(Ticket_Reply.objects.filter(ticket=ticket).values())
+    # print(reply)
+    return JsonResponse({'cars': cars, 'drivers':drivers}, safe=False)
     
 
