@@ -183,8 +183,12 @@ def send_memo_status(request, id):
     ticket.save()
     memo_state = request.GET.get('memo_state')
     memo_note = request.GET.get('memo_note')
+    ticket_reply = Ticket_Reply(ticket=ticket, memorandum_statue= memo_state, notes= memo_note)
+    ticket_reply.save()
+    deliverd_ticket_reply = list(Ticket_Reply.objects.filter(id = ticket_reply.id).values())
+    # ticket_reply = list(ticket_reply).values()
     print(memo_state, memo_note)
     print(ticket)
     
-    return JsonResponse({'data': 'ok'})
+    return JsonResponse({'data': deliverd_ticket_reply[0]}, safe=False)
 

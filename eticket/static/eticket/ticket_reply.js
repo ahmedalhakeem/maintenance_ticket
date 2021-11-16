@@ -40,9 +40,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
             const assign_btn= document.createElement('button')
             assign_btn.className = 'btn btn-primary allocated' 
             assign_btn.innerHTML = 'تخصيص'
-            assign_btn.addEventListener('click', (e)=>{
-                allocate_per_day()
-            })
+            
             // console.log(assign_btn.innerHTML);
             const input_date = document.createElement('input')
             input_date.type = 'date'
@@ -127,7 +125,9 @@ $('.send-memo-status').on('click', function(){
             })
         })
         .then((data)=>{
-            console.log(data);
+            console.log(data.data.id)
+            allocate_per_day(data.data.id)
+        
         })
         // console.log(currentRow.children);
         currentRow.css("background-color", "green")
@@ -135,37 +135,10 @@ $('.send-memo-status').on('click', function(){
         // console.log(col8);
         // check_delivery(currentRow)
     })
-    
+    const allocate = document.querySelector('.allocated')
+console.log(allocate);
+
 })
 
 
-// $('.send-memo-status').on('click', function(){
-//     const current_Row = $(this).closest('tr');
-//     const id = current_Row.find('td:eq(0)').text()
-//     const save = document.querySelector('.send')
-//     const int = Number(id)
-//     console.log($(this).text());
-//     $('#send-form').on('submit', function(){
-//         const memo_note = document.querySelector('.memo-note').value;
-//         const select_memo_status = document.querySelector('.memo-select').value;
-
-//         const data = {'id': int, 'memo_note': memo_note, 'select_memo_status': select_memo_status}
-//         fetch(`./memo_status`,{
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify(data)
-//         })
-//         .then(response=> response.json())
-//         .then(data=>{
-//             console.log(data)
-//         }) 
-//     })
-//     $(this).html('تم استلام مذكرة') 
-    
-     
-    
-//     return false 
-
-// })
+// 
