@@ -26,8 +26,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 div.innerHTML +=  `اليوم ${i}`
                 tour_wrapper.append(div)
             }
-
-            
             get_allocations(id, num)
         })
 
@@ -38,7 +36,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
             const cont = document.querySelector(`.day${i}`)
             cont.style.display='flex'
             cont.style.margin= '50px'
-            // cont.style.grid-template-column('1fr 1fr 1fr 1fr')
             // ADD Car and Driver select, add input type date, and add assign btn
             const assign_btn= document.createElement('button')
             assign_btn.className = 'btn btn-primary allocated' 
@@ -83,25 +80,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
             cont.appendChild(assign_btn) 
 
         })
-        cont.appendChild(input_date)
-
-
-
-
-            
+        cont.appendChild(input_date)            
         }
-      
-        
     }
-    // console.log(assign_btn);
-   
-
-    function allocate_per_day(){
-        console.log('worked');
-    }
-    $('#choose-day').on('change', function(){
-        alert('changed')
-    })
           
     $('#get-data').on('click', function(){
         const arr = []
@@ -122,5 +103,69 @@ document.addEventListener('DOMContentLoaded', ()=>{
         })
         console.log(arr);
     });
-
+    
+   
 });
+$('.send-memo-status').on('click', function(){
+    const currentRow = $(this).closest('tr');
+    const col1 = currentRow.find('td:eq(0)').text()
+    const notes = currentRow.find('td:eq(7)').text()
+    
+    const id = Number(col1)
+    console.log(id);
+    // when submit
+    $('.send').on('click', function(){
+        const memo_state = document.querySelector('#memo-select').value;
+        const memo_note = document.querySelector('#memo-note').value;
+               
+        fetch(`./send_memo_status/${id}?memo_state=${memo_state}&memo_note=${memo_note}`)
+        .then((res)=>{
+            if(res.ok) return res.json();
+            return res.json()
+            .then((error)=>{
+                console.log(error);
+            })
+        })
+        .then((data)=>{
+            console.log(data);
+        })
+        // console.log(currentRow.children);
+        currentRow.css("background-color", "green")
+        currentRow.find('td:eq(8)').text('dd')
+        // console.log(col8);
+        // check_delivery(currentRow)
+    })
+    
+})
+
+
+// $('.send-memo-status').on('click', function(){
+//     const current_Row = $(this).closest('tr');
+//     const id = current_Row.find('td:eq(0)').text()
+//     const save = document.querySelector('.send')
+//     const int = Number(id)
+//     console.log($(this).text());
+//     $('#send-form').on('submit', function(){
+//         const memo_note = document.querySelector('.memo-note').value;
+//         const select_memo_status = document.querySelector('.memo-select').value;
+
+//         const data = {'id': int, 'memo_note': memo_note, 'select_memo_status': select_memo_status}
+//         fetch(`./memo_status`,{
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify(data)
+//         })
+//         .then(response=> response.json())
+//         .then(data=>{
+//             console.log(data)
+//         }) 
+//     })
+//     $(this).html('تم استلام مذكرة') 
+    
+     
+    
+//     return false 
+
+// })

@@ -11,6 +11,7 @@ from django.contrib.auth.models import Group
 from .models import User, Section, Department, Tickets, Ticket_Reply
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
+from django.views.decorators.csrf import csrf_protect
 # from django.db.models.expressions import Exists
 # Create your views here.
 @login_required
@@ -174,5 +175,16 @@ def get_allocations(request):
     # reply = list(Ticket_Reply.objects.filter(ticket=ticket).values())
     # print(reply)
     return JsonResponse({'cars': cars, 'drivers':drivers}, safe=False)
+
+@csrf_exempt  
+def send_memo_status(request, id):
+    ticket = Tickets.objects.get(pk=id)
+    ticket.status = True
+    ticket.save()
+    memo_state = request.GET.get('memo_state')
+    memo_note = request.GET.get('memo_note')
+    print(memo_state, memo_note)
+    print(ticket)
     
+    return JsonResponse({'data': 'ok'})
 

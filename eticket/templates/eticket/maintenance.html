@@ -18,6 +18,7 @@
                     <th scope="col">عدد أيام الجولة</th>
                     <th scope="col">تاريخ نهاية الجولة المتوقع</th>
                     <th scope="col"> ملاحظات الموظف</th>
+                    <th scope="col">أستلام المذكرة</th>
                     <th>تخصيص جولات</th>
                     <th>select</th>
                 </tr>
@@ -33,6 +34,12 @@
                         <td id="tour-duration">{{tour.tour_duration}}</td>
                         <td id="end-tour">{{tour.expected_end_tour}}</td>
                         <td> {{tour.notes}}</td>
+                        {% if tour.status %}
+                        <td>تم التسليم</td>
+                        {% else %}
+                        <td><button type="button" class="send-memo-status btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">ارسال حالة المذكرة</button></td>
+                        {% endif%}
+
                         <td><button class="allocate-btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">تخصيص</button></td>
                         <td><input type="checkbox" class="chk" /></td>
                     </tr>
@@ -44,12 +51,37 @@
         <div class="container" id="wrap">
             <select id="choose-day" class="form-select">
                 <option value="0" selected> choose day</option>
-
             </select>
         </div>
-        <!-- Button trigger modal -->
+        
+ 
 
-  <!-- Modal -->
+
+
+<!-- Memo_confirm_model -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel1">ارسال حالة المذكرة</h5>
+      </div>
+      <div class="modal-body">
+          <select id="memo-select" class="form-control">
+            <option value="memo_received">memo_received</option>
+            <option value="memo_not_received">memo_not_received</option>
+            <option value="wrong_memo">wrong_memo</option>
+          </select>
+          <textarea name="notes" id="memo-note" class="form-control" cols="30" rows="10"></textarea>
+          <input type="submit" class="send btn btn-primary" value="submit" data-bs-dismiss="modal">
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button"  class="send btn btn-primary" data-bs-dismiss="modal">Send</button> -->
+      <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" value="close">Close</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Allocation Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -70,7 +102,10 @@
       </div>
     </div>
   </div>
-    
+
+  <!-- modal toggle -->
+  
+  
         <script type="text/javascript" src="{% static "eticket/ticket_reply.js" %}"></script>
 
    

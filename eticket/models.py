@@ -54,11 +54,11 @@ class Cars(models.Model):
 
 class Ticket_Reply(models.Model):
    ticket = models.ForeignKey(Tickets, on_delete= models.CASCADE, related_name='tickets')
-   car= models.ForeignKey(Cars, on_delete=models.CASCADE,related_name="cars")
    notes = models.CharField(max_length=100, blank=True, null=True)
    memorandum_statue = models.CharField(max_length=20, choices=[('memo_received', "memo received"), ('memo_not_received', 'memo_not_received'), ('wrong_memo', 'wrong_memo')], default=False)
 
 class Allocation(models.Model):
    reply= models.ForeignKey(Ticket_Reply, on_delete=models.CASCADE, related_name='tick_reply', blank=True, null=True)
    driver_name = models.ForeignKey(Drivers, on_delete=models.CASCADE, blank=True, null=True, related_query_name="drivers")
+   car= models.ForeignKey(Cars, on_delete=models.CASCADE,related_name="cars", null=True, blank=True)
    allocate_date = models.DateField(auto_now_add=False, blank=True, null=True)
