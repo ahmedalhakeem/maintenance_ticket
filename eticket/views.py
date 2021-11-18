@@ -8,7 +8,7 @@ from .forms import *
 from django.db import IntegrityError
 from django.urls import reverse
 from django.contrib.auth.models import Group
-from .models import User, Section, Department, Tickets, Ticket_Reply
+from .models import User, Section, Department, Tickets, Ticket_Reply, Allocation
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_protect
@@ -191,4 +191,16 @@ def send_memo_status(request, id):
     print(ticket)
     
     return JsonResponse({'data': deliverd_ticket_reply[0]}, safe=False)
+
+def get_reply_ticket(request, id):
+    ticket = Tickets.objects.get(pk=id)
+    ticket_reply = Ticket_Reply.objects.get(ticket=ticket)
+    date = request.GET.get('date')
+    car = Cars.objects.get(car_type= request.GET.get('car'))
+    print(car)
+    driver = Drivers.objects.get(driver_name= request.GET.get('driver'))
+
+    allocation = Allocation(reply= ticket_reply, driver_name= driver, car=car, allocate_date= date)
+    allocation.save()
+    return JsonResponse({'success': 'success'})
 

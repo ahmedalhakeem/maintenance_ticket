@@ -12,7 +12,8 @@ urlpatterns =[
     path("convert_ticket/", views.convert_ticket, name="convert_ticket"),
     path("allocate_tour/<int:tour_id>", views.allocate_tour, name="allocate_tour"),
     path('get_allocations', views.get_allocations, name="get_allocations"),
-    path("send_memo_status/<int:id>", views.send_memo_status, name="send_memo_status")
+    path("send_memo_status/<int:id>", views.send_memo_status, name="send_memo_status"),
+    path('get_reply_ticket/<int:id>', views.get_reply_ticket, name='get_reply_ticket')
     # path('reply_ticket/', views.reply_ticket, name="reply_ticket")
     
     # path("profile_emp/<int:emp_id>", views.profile_emp, name="profile_emp"),
