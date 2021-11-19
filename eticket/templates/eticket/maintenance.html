@@ -16,6 +16,7 @@
                     <th scope="col">نوع الجولة</th>
                     <th scope="col">تاريخ الجولة</th>
                     <th scope="col">عدد أيام الجولة</th>
+                    <th scope="col">الايام غير المخصصة</th>
                     <th scope="col">تاريخ نهاية الجولة المتوقع</th>
                     <th scope="col"> ملاحظات الموظف</th>
                     <th scope="col">أستلام المذكرة</th>
@@ -32,6 +33,7 @@
                         <td>{{tour.tour_type}}</td>
                         <td id="start-tour">{{tour.tour_date}}</td>
                         <td id="tour-duration">{{tour.tour_duration}}</td>
+                        <td style="background-color:yellowgreen;">{{tour.unallocated_days}}</td>
                         <td id="end-tour">{{tour.expected_end_tour}}</td>
                         <td> {{tour.notes}}</td>
                         {% if tour.status %}
@@ -95,7 +97,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-primary close-allocation_page">غلق واجهة التخصيص</button>
         </div>
       </div>
     </div>

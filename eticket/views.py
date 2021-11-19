@@ -135,7 +135,7 @@ def convert_ticket(request):
             tour_duration = form.cleaned_data['tour_duration']
             expected_end_tour = form.cleaned_data['expected_end_tour']
             # print(f"expected{expected_end_tour}")
-            tour = Tickets(employee=employee, tour_type=tour_type, tour_name=tour_name, tour_date=tour_date, tour_duration=tour_duration, expected_end_tour=expected_end_tour)        
+            tour = Tickets(employee=employee, tour_type=tour_type, tour_name=tour_name, tour_date=tour_date, tour_duration=tour_duration, expected_end_tour=expected_end_tour, unallocated_days= tour_duration)        
             if len(memorandum):
                 tour.memorandum= memorandum
             if len(notes):
@@ -176,7 +176,7 @@ def get_allocations(request):
     # print(reply)
     return JsonResponse({'cars': cars, 'drivers':drivers}, safe=False)
 
-@csrf_exempt  
+ 
 def send_memo_status(request, id):
     ticket = Tickets.objects.get(pk=id)
     ticket.status = True
@@ -192,15 +192,22 @@ def send_memo_status(request, id):
     
     return JsonResponse({'data': deliverd_ticket_reply[0]}, safe=False)
 
-def get_reply_ticket(request, id):
+def allocate_per_day(request, id):
     ticket = Tickets.objects.get(pk=id)
     ticket_reply = Ticket_Reply.objects.get(ticket=ticket)
     date = request.GET.get('date')
     car = Cars.objects.get(car_type= request.GET.get('car'))
-    print(car)
     driver = Drivers.objects.get(driver_name= request.GET.get('driver'))
-
-    allocation = Allocation(reply= ticket_reply, driver_name= driver, car=car, allocate_date= date)
+    allocation = Allocation(reply= ticket_reply, driver_name= driver, car=car, allocate_date= date, state=True)
+    ticket.unallocated_days= ticket.unallocated_days - 1
+    ticket.save()
     allocation.save()
-    return JsonResponse({'success': 'success'})
+    return JsonResponse({'data': 'success'},safe=False)
 
+def check_allocation_status(request, id):
+    ticket= Tickets.objects.get(pk=id)
+    ticket_reply = Ticket_Reply.objects.get(ticket=ticket)
+    allocations = list(Allocation.objects.filter(reply=ticket_reply).values())
+    
+
+    return JsonResponse(allocations, safe=False)

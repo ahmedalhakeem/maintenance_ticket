@@ -4,6 +4,7 @@ from django.db import models
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.urls.base import translate_url
 
 class Section(models.Model):
    section_name = models.CharField(max_length=64, null=True, blank=True)
@@ -29,6 +30,7 @@ class Tickets(models.Model ):
    tour_name = models.CharField(max_length=100,null=True, blank=True)
    tour_date = models.DateField(auto_now_add=False, null=True)
    tour_duration = models.IntegerField(default=1, blank=True, null=True)
+   unallocated_days = models.IntegerField(default=1, blank=True, null=True)
    expected_end_tour = models.DateField(auto_now_add=False, blank=True, null=True)
    memorandum = models.CharField(max_length=100, null=True, blank=True)
    status = models.BooleanField(default=False)
@@ -37,7 +39,7 @@ class Tickets(models.Model ):
 
 
    def __str__(self):
-      return f" {self.id}, {self.employee}, {self.tour_type}, {self.tour_date}, {self.memorandum}, {self.expected_end_tour} "
+      return f" {self.id}, {self.employee}, {self.tour_type}, {self.tour_date}, {self.memorandum}, {self.expected_end_tour}, {self.unallocated_days} "
 
 
 class Drivers(models.Model):
@@ -62,3 +64,4 @@ class Allocation(models.Model):
    driver_name = models.ForeignKey(Drivers, on_delete=models.CASCADE, blank=True, null=True, related_query_name="drivers")
    car= models.ForeignKey(Cars, on_delete=models.CASCADE,related_name="cars", null=True, blank=True)
    allocate_date = models.DateField(auto_now_add=False, blank=True, null=True)
+   state = models.BooleanField(default=False)
