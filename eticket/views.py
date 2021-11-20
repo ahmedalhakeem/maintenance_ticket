@@ -185,7 +185,7 @@ def send_memo_status(request, id):
     memo_note = request.GET.get('memo_note')
     ticket_reply = Ticket_Reply(ticket=ticket, memorandum_statue= memo_state, notes= memo_note)
     ticket_reply.save()
-    deliverd_ticket_reply = list(Ticket_Reply.objects.filter(id = ticket_reply.id).values())
+    deliverd_ticket_reply = list(Ticket_Reply.objects.filter(id=ticket_reply.id).values())
     # ticket_reply = list(ticket_reply).values()
     print(memo_state, memo_note)
     print(ticket)
@@ -211,3 +211,22 @@ def check_allocation_status(request, id):
     
 
     return JsonResponse(allocations, safe=False)
+def show_replied_ticket(request, id):
+    ticket = Tickets.objects.get(pk=id)
+    memo_replied = Ticket_Reply.objects.get(ticket=ticket)
+    if memo_replied is None:
+        return render(request, 'eticket/ticket_profile.html',{
+            "state": "لم يتم استلام المذكرة .. انتظر حالة المذكرة !"
+        })
+
+    allocation = Allocation.objects.filter(reply = memo_replied)
+    if allocation is None:
+        return render(request, 'eticket/ticket_profile.html',{
+            "status": "لم يتم تخصيص اي عجلة لحد الان"
+        })
+
+    return render(request, 'eticket/ticket_profile.html',{
+        "allocations": allocation,
+        'memo_replied': memo_replied,
+        'ticket' :ticket
+    })

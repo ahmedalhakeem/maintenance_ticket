@@ -36,7 +36,7 @@ class Ticket_Form(forms.Form):
     expected_end_tour = forms.DateField(required=False,label='تاريخ نهاية الجولة المتوقع', widget=widgets.DateInput(attrs={'type': 'date','class': 'form-control', 'id': 'end'}))
     
 class Send_memo_confirm(forms.Form):
-    memo_statue= forms.ChoiceField(required=True, label='حالة المذكرة', widget=forms.Select(attrs={'class': 'memo-select form-control'}),choices=[("memo_received", "memo received"), ("memo_not_received", "memo_not_received"),("wrong_memo", "wrong_memo")])
+    memo_statue= forms.ChoiceField(required=True, label='حالة المذكرة', widget=forms.Select(attrs={'class': 'memo-select form-control'}),choices=[('تم الاستلام', "تم الاستلام"), ('لم يتم استلام المذكرة', 'لم يتم استلام المذكرة'), ('خطأ في المذكرة', 'خطأ في المذكرة')])
     notes = forms.CharField(required=False, label='ملاحطات', widget=forms.Textarea(attrs={'id': 'memos','class': 'memo-note form-control', 'placeholder': 'اكتب ملاحظات اخرى ان وجدت!'}))
 
 class Ticket_Reply_Form(forms.Form):

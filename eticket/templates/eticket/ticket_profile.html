@@ -1,0 +1,38 @@
+{% extends 'eticket/layout.html' %}
+{% load static %}
+{% block title %}
+    التخصيص 
+{% endblock %}
+{% block content %}
+<h1>تذكرة رقم : {{ticket.id}}</h1>
+<h1>عنوان التذكرة: {{ticket.tour_name}}</h1>
+<h1>مدة الجولة : {{ticket.tour_duration}} ايام</h1>
+
+<h2>حالة المذكرة: <span style="color: brown;">{{memo_replied.memorandum_statue}}</span></h2>
+{% if state %}
+<h1>حالة المذكرة معلقة</h1>
+{% endif %}
+<div class="container">
+    <table class="table">
+        <thead>
+            <th scope="col">اليوم</th>
+            <th scope="col">التاريخ</th>
+            <th scope="col">اسم السائق</th>
+            <th scope="col">العجلة المخصصة</th>
+        </thead>
+        <tbody>
+            {% for item in allocations %}
+            <tr>
+                <td>{{item.id}}</td>
+                <td>{{item.allocate_date}}</td>
+                <td>{{item.driver_name}}</td>
+                <td>{{item.car}}</td>    
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if status %}
+        <h1>لم يتم التخصيص الى الان</h1>
+    {% endif %}
+</div>
+{% endblock %}

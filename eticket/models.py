@@ -57,7 +57,7 @@ class Cars(models.Model):
 class Ticket_Reply(models.Model):
    ticket = models.ForeignKey(Tickets, on_delete= models.CASCADE, related_name='tickets')
    notes = models.CharField(max_length=100, blank=True, null=True)
-   memorandum_statue = models.CharField(max_length=20, choices=[('memo_received', "memo received"), ('memo_not_received', 'memo_not_received'), ('wrong_memo', 'wrong_memo')], default=False)
+   memorandum_statue = models.CharField(max_length=30, choices=[('تم الاستلام', "تم الاستلام"), ('لم يتم استلام المذكرة', 'لم يتم استلام المذكرة'), ('خطأ في المذكرة', 'خطأ في المذكرة')], default=False)
 
 class Allocation(models.Model):
    reply= models.ForeignKey(Ticket_Reply, on_delete=models.CASCADE, related_name='tick_reply', blank=True, null=True)

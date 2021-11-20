@@ -14,7 +14,8 @@ urlpatterns =[
     path('get_allocations', views.get_allocations, name="get_allocations"),
     path("send_memo_status/<int:id>", views.send_memo_status, name="send_memo_status"),
     path('allocate_per_day/<int:id>', views.allocate_per_day, name='allocate_per_day'),
-    path("check_allocation_status/<int:id>", views.check_allocation_status, name="check_allocation_status")
+    path("check_allocation_status/<int:id>", views.check_allocation_status, name="check_allocation_status"),
+    path('show_replied_ticket/<int:id>', views.show_replied_ticket, name='show_replied_ticket')
     # path('reply_ticket/', views.reply_ticket, name="reply_ticket")
     
     # path("profile_emp/<int:emp_id>", views.profile_emp, name="profile_emp"),
