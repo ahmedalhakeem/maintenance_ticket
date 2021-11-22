@@ -65,3 +65,7 @@ class Allocation(models.Model):
    car= models.ForeignKey(Cars, on_delete=models.CASCADE,related_name="cars", null=True, blank=True)
    allocate_date = models.DateField(auto_now_add=False, blank=True, null=True)
    state = models.BooleanField(default=False)
+   allocation_time = models.DateTimeField(auto_now=True)
+   
+   def __str__(self):
+      return f" {self.allocation_time}"

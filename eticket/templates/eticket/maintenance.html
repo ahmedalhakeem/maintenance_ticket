@@ -26,7 +26,8 @@
                 
                 <tbody>
                     {% for tour in tours %}
-                    <tr>
+                    <tr {% if not tour.status %} style="background-color: brown;"{% endif %}>
+
                         <td class="table-secondary">{{tour.id}}</td>
                         <td>{{tour.employee}}</td>
                         <td>{{tour.tour_name}}</td>
@@ -75,8 +76,7 @@
           <input type="submit" class="send btn btn-primary" value="submit" data-bs-dismiss="modal">
       </div>
       <div class="modal-footer">
-        <!-- <button type="button"  class="send btn btn-primary" data-bs-dismiss="modal">Send</button> -->
-      <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" value="close">Close</button> -->
+
       </div>
     </div>
   </div>

@@ -4,10 +4,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     wrap.style.display = 'none'
     // console.log(tour_wrapper);
     const tour_wrapper = document.querySelector('.tour_wrapper')
-    console.log(tour_wrapper.children);
-
-
-    
+    console.log(tour_wrapper.children);    
 });
 $('.close-allocation_page').on('click', function(){
     location.reload()
@@ -17,15 +14,17 @@ $('.send-memo-status').on('click', function(){
     const currentRow = $(this).closest('tr');
     const col1 = currentRow.find('td:eq(0)').text()
     const notes = currentRow.find('td:eq(7)').text()
+    const col9 = currentRow.find('td:eq(9)').text()
     // const col9 = currentRow.find('td:eq(9)').attr('id')
     
     const id = Number(col1)
     console.log(id);
+
     // when submit
     $('.send').on('click', function(){
         const memo_state = document.querySelector('#memo-select').value;
         const memo_note = document.querySelector('#memo-note').value;
-               
+        
         fetch(`./send_memo_status/${id}?memo_state=${memo_state}&memo_note=${memo_note}`)
         .then((res)=>{
             if(res.ok) return res.json();
@@ -40,7 +39,7 @@ $('.send-memo-status').on('click', function(){
             
             
         })
-        location.reload();
+        // location.reload();
              
     })
  
@@ -105,8 +104,6 @@ for(i=1;i<=num;i++){
     input_date.defaultValue = str_start_date_value
     input_date.setAttribute('min', str_start_date_value)
     input_date.setAttribute('max', str_end_date_value+3)
-    // input_date.setAttribute('min',parent_tr.children[4].innerHTML)
-    // input_date.setAttribute('max',parent_tr.children[7].innerHTML)
     const car_select= document.createElement('select')
     const driver_select = document.createElement('select')
     input_date.className= 'enter-date'

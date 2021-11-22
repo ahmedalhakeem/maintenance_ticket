@@ -12,17 +12,21 @@ from .models import User, Section, Department, Tickets, Ticket_Reply, Allocation
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_protect
+import datetime
 # from django.db.models.expressions import Exists
 # Create your views here.
 @login_required
 def index(request):
+    # print(datetime.time)
+    time = datetime.datetime.now().time()
+    print(time)
     user = User.objects.get(username= request.user)
     user_tickets = Tickets.objects.filter(employee=user).all()
     if request.user.is_authenticated:
         if user.groups.filter(name='Employees').exists():
             return render(request, 'eticket\profile_emp.html',{'user': user,'tickets': user_tickets})
         elif user.groups.filter(name='Maintenance').exists():
-            return render(request, 'eticket\maintenance.html', {'user': user, 'tours': Tickets.objects.all().order_by('-ticket_date')})
+            return render(request, 'eticket\maintenance.html', {'user': user, 'tours': Tickets.objects.all().order_by('-tour_date')})
             
         # if user.groups.filter(name='Employees').exists():
 
@@ -175,22 +179,23 @@ def get_allocations(request):
     # reply = list(Ticket_Reply.objects.filter(ticket=ticket).values())
     # print(reply)
     return JsonResponse({'cars': cars, 'drivers':drivers}, safe=False)
-
  
 def send_memo_status(request, id):
     ticket = Tickets.objects.get(pk=id)
-    ticket.status = True
-    ticket.save()
     memo_state = request.GET.get('memo_state')
     memo_note = request.GET.get('memo_note')
-    ticket_reply = Ticket_Reply(ticket=ticket, memorandum_statue= memo_state, notes= memo_note)
-    ticket_reply.save()
-    deliverd_ticket_reply = list(Ticket_Reply.objects.filter(id=ticket_reply.id).values())
-    # ticket_reply = list(ticket_reply).values()
-    print(memo_state, memo_note)
-    print(ticket)
-    
-    return JsonResponse({'data': deliverd_ticket_reply[0]}, safe=False)
+    memo_ack = Ticket_Reply(ticket=ticket, notes=memo_note, memorandum_statue = memo_state)
+    memo_ack.save()
+    if memo_state == "لم يتم استلام المذكرة":
+        return JsonResponse({'msg': 'حالة المذكرة معلقة'}, safe=False)
+    elif memo_state == "خطأ في المذكرة":
+        return JsonResponse({"msg": 'خطأ في المذكرة'})
+    memo_ack = Ticket_Reply(ticket=ticket, notes=memo_note, memorandum_statue = memo_state)
+    memo_ack.save()
+    ticket.status = True
+    ticket.save()  
+    list_memo_state = list(Ticket_Reply.objects.filter(id= memo_ack.id).values())  
+    return JsonResponse({'data': list_memo_state}, safe=False)
 
 def allocate_per_day(request, id):
     ticket = Tickets.objects.get(pk=id)
@@ -213,20 +218,22 @@ def check_allocation_status(request, id):
     return JsonResponse(allocations, safe=False)
 def show_replied_ticket(request, id):
     ticket = Tickets.objects.get(pk=id)
-    memo_replied = Ticket_Reply.objects.get(ticket=ticket)
-    if memo_replied is None:
+    try:
+        memo_replied = Ticket_Reply.objects.get(ticket=ticket)
+        allocation = Allocation.objects.filter(reply = memo_replied)
+    
+        
         return render(request, 'eticket/ticket_profile.html',{
-            "state": "لم يتم استلام المذكرة .. انتظر حالة المذكرة !"
+            "allocations": allocation,
+            'memo_replied': memo_replied,
+            'ticket' :ticket
         })
 
-    allocation = Allocation.objects.filter(reply = memo_replied)
-    if allocation is None:
+        
+    except 	Ticket_Reply.DoesNotExist:
         return render(request, 'eticket/ticket_profile.html',{
-            "status": "لم يتم تخصيص اي عجلة لحد الان"
+            'ticket': ticket,
+            "state": "لم  يتم تأكيد استلام المذكرة. يرجى انتظار تأكيدها"
         })
-
-    return render(request, 'eticket/ticket_profile.html',{
-        "allocations": allocation,
-        'memo_replied': memo_replied,
-        'ticket' :ticket
-    })
+   
+   
