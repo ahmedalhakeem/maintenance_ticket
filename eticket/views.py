@@ -13,7 +13,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_protect
 import datetime
-# from django.db.models.expressions import Exists
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from io import StringIO, BytesIO
 # Create your views here.
 @login_required
 def index(request):
@@ -236,4 +238,34 @@ def show_replied_ticket(request, id):
             "state": "لم  يتم تأكيد استلام المذكرة. يرجى انتظار تأكيدها"
         })
    
-   
+def show_pdf(request, id):
+    ticket = Tickets.objects.get(id=id)
+    reply = Ticket_Reply.objects.get(ticket=ticket)
+    allocations = Allocation.objects.filter(reply = reply)
+    template_path = 'eticket/report.html'
+    context = {'ticket': ticket, 'reply': reply, 'allocations': allocations}
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="report.pdf"'
+    
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(BytesIO(html.encode('UTF-8')), dest=response)
+    print(pisa_status)
+    # if error then show some funy view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+def specify_period(request):
+
+    return render(request, 'eticket/specify_period.html')
+def show_specified(request):
+    type= request.GET.get('type')
+    start = request.GET.get('start')
+    end = request.GET.get('end')
+    tickets = list(Tickets.objects.filter(tour_type= type).filter(tour_date__range=[start, end]).values())
+    print(tickets)
+    return JsonResponse({'data':tickets}, safe=False)

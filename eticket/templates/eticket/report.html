@@ -1,0 +1,66 @@
+{% load static %}
+<!doctype html>
+<html lang="ar" dir="rtl">
+    
+  <head>
+    <!-- Required meta tags -->
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'eticket/bootstrap.rtl.min.css'%}">
+    <title>Show Report</title>
+    <style>
+        @font-face {
+            font-family: Amiri-Regular; 
+            src: url('E:\\maintenanceapp\\eticket\\static\\fonts\\Amiri-Regular.ttf');
+                 
+        }
+        body{
+            font-family: Amiri-Regular;
+        }
+    </style>
+  </head>
+  <body>
+    <pdf:language name="arabic"/>
+    <h1>pdf report</h1>
+    <h2>رقم الجولة: {{ticket.id}}</h2>
+    <h2>نوع الجولة: {{ticket.tour_type}}</h2>
+    <h2>عنوان الجولة: {{ticket.tour_name}}</h2>
+    <h2>عدد ايام الجولة: {{ticket.tour_duration}}</h2>
+    <h1>تفاصيل المذكرة</h1>
+    <h2>حالة المذكرة : {{reply.memorandum_statue}}</h2>
+    <h2>ملاحظات : {{reply.notes}}</h2>
+
+    <div class="contatiner">
+        <h1>التخصيص</h1>
+        <table class="table table-bordered  ">
+            <thead>
+              <tr>
+                <th scope="col" class="col md-8">اليوم</th>
+                <th scope="col">تاريخ الواجب</th>
+                <th scope="col">اسم السائق</th>
+                <th scope="col">نوع المركبة</th>
+                <th scope="col">وقت التخصيص</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for allocation in allocations %}
+              <tr class="col md-8">
+                <td>{{allocation.id}}</td>
+                <td>{{allocation.allocate_date}}</td>
+                <td>{{allocation.driver_name}}</td>
+                <td>{{allocation.car}}</td>
+                <td>{{allocation.allocation_time}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table> 
+    </div>
+
+
+
+    <script src="{% static 'eticket/bootstrap.bundle.min.js' %}"></script>
+
+  </body>
+</html>

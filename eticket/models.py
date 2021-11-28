@@ -22,7 +22,8 @@ class Department(models.Model):
 class User(AbstractUser):
    department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name="dept_name", default=None, null=True)
    section = models.ForeignKey(Section, on_delete=models.CASCADE, related_name="sect_name", default=None, null=True) 
-  
+   def __str__(self):
+      return f'{self.username}'
 
 class Tickets(models.Model ):
    employee = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")

@@ -1,0 +1,42 @@
+{% extends 'eticket/layout.html' %}
+{% load static %}
+{% block title %}
+تحديد فترة 
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col md-5" style="border: 1px solid black;">
+               <select name="tour_type" id="type">
+                   <option value="داخلية"> داخلية </option>
+                   <option value="خارجية">خارجية</option>
+               </select>
+               <input type="date" name="start_date" id="start-date">
+               <input type="date" name="end_date" id="end-date">
+               <button class="btn btn-primary" onclick="show_retrived()">بحث</button>
+            </div>
+        </div>
+    </div>
+    <div id="result">
+        <table class="table">
+            <thead>
+                <th>رقم التذكرة</th>
+                <th>اسم الموظف</th>
+                <th>اسم الجولة</th>
+                <th>نوع الجولة</th>
+                <th>تاريخ الجولة</th>
+                <th>عدد ايام الجولة</th>
+                <th>تاريخ نهاية الجولة</th>
+                <th>ملاحظات  الموظف</th>
+                
+            </thead>
+            <tbody id="content">
+
+            </tbody>
+
+        </table>
+        
+    </div>
+    <script type="text/javascript" src="{% static "eticket/specify_period.js" %}"></script>
+
+{% endblock %}

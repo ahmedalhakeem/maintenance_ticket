@@ -15,7 +15,10 @@ urlpatterns =[
     path("send_memo_status/<int:id>", views.send_memo_status, name="send_memo_status"),
     path('allocate_per_day/<int:id>', views.allocate_per_day, name='allocate_per_day'),
     path("check_allocation_status/<int:id>", views.check_allocation_status, name="check_allocation_status"),
-    path('show_replied_ticket/<int:id>', views.show_replied_ticket, name='show_replied_ticket')
+    path('show_replied_ticket/<int:id>', views.show_replied_ticket, name='show_replied_ticket'),
+    path('show_pdf/<int:id>', views.show_pdf, name='show_pdf'),
+    path('specify_period', views.specify_period, name="specify_period"),
+    path('show_specified/', views.show_specified, name="show_specified")
     # path('reply_ticket/', views.reply_ticket, name="reply_ticket")
     
     # path("profile_emp/<int:emp_id>", views.profile_emp, name="profile_emp"),
