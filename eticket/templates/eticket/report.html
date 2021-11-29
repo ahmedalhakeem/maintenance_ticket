@@ -13,7 +13,7 @@
     <style>
         @font-face {
             font-family: Amiri-Regular; 
-            src: url('E:\\maintenanceapp\\eticket\\static\\fonts\\Amiri-Regular.ttf');
+            src: url('D:\\maintenance_ticket\\eticket\static\\fonts\\Amiri-Regular.ttf');
                  
         }
         body{
@@ -24,6 +24,9 @@
   <body>
     <pdf:language name="arabic"/>
     <h1>pdf report</h1>
+    <h2>اسم الموظف :{{ticket.employee.username}}</h2>
+    <h2>الشعبة:{{ticket.employee.section}}</h2>
+
     <h2>رقم الجولة: {{ticket.id}}</h2>
     <h2>نوع الجولة: {{ticket.tour_type}}</h2>
     <h2>عنوان الجولة: {{ticket.tour_name}}</h2>

@@ -177,7 +177,7 @@ const check_allocation_status = (id)=>{
     })
     .then(data=>{
         data.forEach(value=>{
-            console.log(value.state);
+            console.log(value);
         })
     })
 }

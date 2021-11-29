@@ -193,7 +193,7 @@ def send_memo_status(request, id):
     elif memo_state == "خطأ في المذكرة":
         return JsonResponse({"msg": 'خطأ في المذكرة'})
     memo_ack = Ticket_Reply(ticket=ticket, notes=memo_note, memorandum_statue = memo_state)
-    memo_ack.save()
+    # memo_ack.save()
     ticket.status = True
     ticket.save()  
     list_memo_state = list(Ticket_Reply.objects.filter(id= memo_ack.id).values())  
@@ -215,7 +215,6 @@ def check_allocation_status(request, id):
     ticket= Tickets.objects.get(pk=id)
     ticket_reply = Ticket_Reply.objects.get(ticket=ticket)
     allocations = list(Allocation.objects.filter(reply=ticket_reply).values())
-    
 
     return JsonResponse(allocations, safe=False)
 def show_replied_ticket(request, id):

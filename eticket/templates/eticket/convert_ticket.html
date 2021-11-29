@@ -4,12 +4,12 @@
     تحويل تذكرة
 {% endblock %}
 {% block content %}
-    <h1>تحويل تذكرة</h1>
-    <div class="container">
+    <h1 id="subject">تحويل تذكرة</h1>
+    <div class="container-convert">
         <form action="{% url 'convert_ticket' %}" method="post" id="ticket-form">
             {% csrf_token %}
             {% for field in form %}
-            <label for="" class="col-sm-2 col-form-label col-form-label-sm">{{field.label}}</label>
+            <label  class="col-sm-2 col-form-label col-form-label-sm label">{{field.label}}</label>
             {{field}}
             <br>
             {% endfor %}
@@ -18,13 +18,13 @@
             <br>
             <textarea id='memo_info' name="memo" class="form-control" placeholder="الرجاء كتابة رقم المذكرة والتاريخ"></textarea>
             <label for="" class="col-sm-2 col-form-label col-form-label-sm">ملاحظات</label>
-            <input type="text" class="form-control-lg" name='notes' placeholder="ملاحظات اخرى">
-            <input type="submit" value="تحويل">
+            <input type="text" class="form-control-lg style-uniform" name='notes' placeholder="ملاحظات اخرى">
+            <input type="submit" value="تحويل" class="btn btn-warning">
         </form>        
     </div>
 
     <!--  -->
-    <div class="container">
+    <!-- <div class="container">
         <div class="title">تحويل تذكرة</div>
             <form action="">
                 <div class="user-details">
@@ -64,7 +64,7 @@
                 </div>
 
                 </div>
-            </form>
+            </form> -->
         
     </div>
     
