@@ -99,6 +99,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+DATE_INPUT_FORMATS = ('%d-%m-%Y','%Y-%m-%d')
 
 
 # Internationalization

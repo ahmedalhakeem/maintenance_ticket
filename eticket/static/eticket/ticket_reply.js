@@ -39,7 +39,7 @@ $('.send-memo-status').on('click', function(){
             
             
         })
-        // location.reload();
+        location.reload();
              
     })
  

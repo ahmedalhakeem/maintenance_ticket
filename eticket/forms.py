@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import fields, widgets
 from eticket.models import *
+from django.conf import settings
 
 class LoginForm(forms.Form):
     username = forms.CharField(label="اسم المستخدم",  required=True,widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your username',}))
@@ -30,10 +31,10 @@ class Register_Maintenance(forms.Form):
 class Ticket_Form(forms.Form):
     tour_type = forms.ChoiceField(required=True,label='نوع الجولة', widget=forms.Select(attrs={'class':'form-control-lg style-uniform', 'id':"",}), choices=[('داخلية', 'داخلية'),('خارجية','خارجية')])
     tour_name = forms.CharField( required=True,label='عنوان الجولة', widget=forms.TextInput(attrs={'class': 'form-control-lg style-uniform'}))
-    tour_date = forms.DateField(required=True,label='تاريخ بدايةالجولة', widget=widgets.DateInput(attrs={'class': 'form-control-lg style-uniform','type':'date', 'id':"start"}))
+    tour_date = forms.DateField(required=True,label='تاريخ بدايةالجولة', widget=widgets.DateInput(attrs={'class': 'form-control-lg style-uniform','type':'date', 'id':"start"}, format='%Y%mm%dd'),input_formats=['%Y%mm%dd'])
     tour_duration = forms.IntegerField(required=True,label='عدد ايام الجولة', widget=widgets.NumberInput(attrs={'class':'form-control-lg style-uniform', 'id':'tour-days', "lang":"ar_SA" }))  
     # expected_end_tour = forms.CharField(required=False,disabled=True,label='تاريخ نهاية الجولة المتوقع', widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'end'}))
-    expected_end_tour = forms.DateField(required=False,label='تاريخ نهاية الجولة المتوقع', widget=widgets.DateInput(attrs={'type': 'date','class': 'form-control-lg style-uniform', 'id': 'end'}))
+    expected_end_tour = forms.DateField(required=False,label='تاريخ نهاية الجولة المتوقع', widget=widgets.DateInput(attrs={'type': 'date','class': 'form-control-lg style-uniform', 'id': 'end'},format='%Y%mm%dd'),input_formats=['%Y%mm%dd'])
     
 class Send_memo_confirm(forms.Form):
     memo_statue= forms.ChoiceField(required=True, label='حالة المذكرة', widget=forms.Select(attrs={'class': 'memo-select form-control'}),choices=[('تم الاستلام', "تم الاستلام"), ('لم يتم استلام المذكرة', 'لم يتم استلام المذكرة'), ('خطأ في المذكرة', 'خطأ في المذكرة')])

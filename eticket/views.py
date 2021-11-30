@@ -186,6 +186,13 @@ def send_memo_status(request, id):
     ticket = Tickets.objects.get(pk=id)
     memo_state = request.GET.get('memo_state')
     memo_note = request.GET.get('memo_note')
+    if Ticket_Reply.objects.filter(ticket=ticket).exists():
+        reply= Ticket_Reply.objects.get(ticket=ticket)
+        reply.memorandum_statue= memo_state
+        reply.save()
+        ticket.status= True
+        ticket.save()
+        return JsonResponse({'msg':'تم تحديث حالة المذكرة'})
     memo_ack = Ticket_Reply(ticket=ticket, notes=memo_note, memorandum_statue = memo_state)
     memo_ack.save()
     if memo_state == "لم يتم استلام المذكرة":
@@ -266,5 +273,8 @@ def show_specified(request):
     start = request.GET.get('start')
     end = request.GET.get('end')
     tickets = list(Tickets.objects.filter(tour_type= type).filter(tour_date__range=[start, end]).values())
+    for ticket in tickets:
+        user = User.objects.get(id=ticket['employee_id'])
+        ticket['employee_id']=user.username
     print(tickets)
     return JsonResponse({'data':tickets}, safe=False)
