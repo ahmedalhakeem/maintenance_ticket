@@ -11,14 +11,15 @@
    
         <div class="container" >
             <h1>الجولات السابقة</h1>
-            <table class="table" style="border: 1px solid black;">
+            <table class="table table-bordered">
                 <thead>
-                    <tr>
+                    <tr class="table-primary">
                         <th scope="col">رقم الجولة</th>
                         <th scope="col">اسم الجولة</th>
                         <th scope="col">نوع الجولة</th>
                         <th scope="col">تاريخ الجولة</th>
                         <th scope="col">مدة الجولة</th>
+                        <th scope="col">ايام غير مخصصة</th>
                         <th scope="col"> معاينة التخصيص</th>
     
                     </tr>
@@ -31,18 +32,14 @@
                             <td>{{ticket.tour_type}}</td>
                             <td class="tour-date">{{ticket.tour_date}}</td>
                             <td>{{ticket.tour_duration}}</td>
-                            <td><a href="{% url 'show_replied_ticket' ticket.id%}" class="btn btn-primary">معاينة التخصيص</a></td>
+                            <td>{{ticket.unallocated_days}}</td>
+                            <td><a href="{% url 'show_replied_ticket' ticket.id%}" class="btn btn-primary" {% if ticket.unallocated_days != 0 %} style="background-color: brown;"{% endif %}>معاينة التخصيص</a></td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </thead>
             </table>
         </div>
-        
-    
-    
-
-    <a href="{% url 'logout_page' %}">تسجيل خروج</a>
    
     {% endblock %}
     {% block script %}

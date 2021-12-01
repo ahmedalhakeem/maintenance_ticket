@@ -26,7 +26,7 @@
                 
                 <tbody>
                     {% for tour in tours %}
-                    <tr {% if not tour.status %} style="background-color: brown;"{% endif %}>
+                    <tr {% if not tour.status %} style="border: 1px double #1266f1;"{% endif %}>
 
                         <td class="table-secondary">{{tour.id}}</td>
                         <td>{{tour.employee}}</td>
@@ -34,7 +34,7 @@
                         <td>{{tour.tour_type}}</td>
                         <td id="start-tour">{{tour.tour_date}}</td>
                         <td id="tour-duration">{{tour.tour_duration}}</td>
-                        <td style="background-color:yellowgreen;">{{tour.unallocated_days}}</td>
+                        <td class="unassigned" {% if tour.unallocated_days != 0 %} style="background-color: brown;"{% endif %} >{{tour.unallocated_days}}</td>
                         <td id="end-tour">{{tour.expected_end_tour}}</td>
                         <td> {{tour.notes}}</td>
                         {% if tour.status %}
@@ -43,7 +43,7 @@
                         <td><button type="button" class="send-memo-status btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">ارسال حالة المذكرة</button></td>
                         {% endif%}
 
-                        <td id="{{tour.id}}"><button class="allocate-btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">تخصيص</button></td>
+                        <td id="{{tour.id}}"><button class="allocate-btn btn btn-primary"  data-bs-toggle="modal" data-bs-target="#exampleModal">تخصيص</button></td>
                         <td><input type="checkbox" class="chk" /></td>
                     </tr>
                     {% endfor %}

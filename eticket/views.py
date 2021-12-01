@@ -190,8 +190,9 @@ def send_memo_status(request, id):
         reply= Ticket_Reply.objects.get(ticket=ticket)
         reply.memorandum_statue= memo_state
         reply.save()
-        ticket.status= True
-        ticket.save()
+        if memo_state == 'تم الاستلام':
+            ticket.status= True
+            ticket.save()
         return JsonResponse({'msg':'تم تحديث حالة المذكرة'})
     memo_ack = Ticket_Reply(ticket=ticket, notes=memo_note, memorandum_statue = memo_state)
     memo_ack.save()
@@ -199,8 +200,6 @@ def send_memo_status(request, id):
         return JsonResponse({'msg': 'حالة المذكرة معلقة'}, safe=False)
     elif memo_state == "خطأ في المذكرة":
         return JsonResponse({"msg": 'خطأ في المذكرة'})
-    memo_ack = Ticket_Reply(ticket=ticket, notes=memo_note, memorandum_statue = memo_state)
-    # memo_ack.save()
     ticket.status = True
     ticket.save()  
     list_memo_state = list(Ticket_Reply.objects.filter(id= memo_ack.id).values())  
@@ -228,14 +227,21 @@ def show_replied_ticket(request, id):
     ticket = Tickets.objects.get(pk=id)
     try:
         memo_replied = Ticket_Reply.objects.get(ticket=ticket)
-        allocation = Allocation.objects.filter(reply = memo_replied)
-    
+        if Allocation.objects.filter(reply = memo_replied).exists():    
+            allocation = Allocation.objects.filter(reply = memo_replied)    
         
-        return render(request, 'eticket/ticket_profile.html',{
-            "allocations": allocation,
-            'memo_replied': memo_replied,
-            'ticket' :ticket
-        })
+            return render(request, 'eticket/ticket_profile.html',{
+                "allocations": allocation,
+                'memo_replied': memo_replied,
+                'ticket' :ticket
+            })
+        else:
+            return render(request, 'eticket/ticket_profile.html',{
+                'memo_replied': memo_replied,
+                'ticket' :ticket,
+                'message': 'لم يتم تخصيص عجلة حتى الان.. يرجى الانتظار رجاءا'
+            })
+
 
         
     except 	Ticket_Reply.DoesNotExist:

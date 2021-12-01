@@ -4,7 +4,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
     wrap.style.display = 'none'
     // console.log(tour_wrapper);
     const tour_wrapper = document.querySelector('.tour_wrapper')
-    console.log(tour_wrapper.children);    
+    console.log(tour_wrapper.children);
+     
+    
+    
+     
 });
 $('.close-allocation_page').on('click', function(){
     location.reload()
@@ -92,7 +96,7 @@ for(i=1;i<=num;i++){
     })
     //     
     // assign_btn.onclick = allocation_per_day(e) 
-    assign_btn.innerHTML = 'تخصيص'
+    assign_btn.innerHTML = 'تخصيص جولة'
     const input_date = document.createElement('input')
     input_date.type = 'date'
     input_date.lang = 'ar_SA'
@@ -103,7 +107,7 @@ for(i=1;i<=num;i++){
     const str_end_date_value = end_date_value.getFullYear()+ '-'+ (end_date_value.getMonth()+1)+ '-'+ end_date_value.getDate();
     input_date.defaultValue = str_start_date_value
     input_date.setAttribute('min', str_start_date_value)
-    input_date.setAttribute('max', str_end_date_value+3)
+    input_date.setAttribute('max', str_end_date_value)
     const car_select= document.createElement('select')
     const driver_select = document.createElement('select')
     input_date.className= 'enter-date'
@@ -163,7 +167,8 @@ const get_reply_ticket = (e)=>{
         .then(data=>{
             console.log(data);
         })
-    }   
+    } 
+    alert('تم التخصيص')
 } 
 const check_allocation_status = (id)=>{
     console.log(id);
