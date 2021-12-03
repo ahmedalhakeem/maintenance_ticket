@@ -1,3 +1,161 @@
+body{
+    background-color: #F3EBF6;
+}
+.main{
+    background-color: #FFFFFF;
+    width: 400px;
+    height: 400px;
+    margin: 7em auto;
+    border-radius: 1.5em;
+    box-shadow: 0px 11px 35px 2px rgba(0,0,0,0.14);
+}
+.sign , .signup-title {
+    padding-top: 40px;
+    color: #565557;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: bold;
+    font-size: 23px;
+}
+.un{
+    width: 76%;
+    color: rgb(38,50,56);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+    background: rgba(136,126,126, 0.04);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    box-sizing: border-box;
+    border: 2px solid rgba(0, 0, 0, 0.02);
+    margin-bottom: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-family: 'Ubuntu', sans-serif;
+}
+form.form1{
+    padding-top: 40px;
+}
+.pass{
+    width: 76%;
+    color: rgb(38, 50, 56);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+    background: rgba(136, 126, 126, 0.04);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    box-sizing: border-box;
+    border: 2px solid rgba(0, 0, 0, 0.02);
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+    text-align: center;
+    margin-bottom: 27px;
+    font-family: 'Ubuntu', sans-serif;
+}
+.un:focus, .pass:focus{
+    border:2px solid rgba(0, 0, 0, 0.18) !important;
+}
+.submit{
+    cursor: pointer;
+    border-radius: 5em;
+    color: #fff;
+    background:linear-gradient(to right, #9C27B0, #E040FB);
+    border: 0;
+    padding-top:10px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 10px;
+    font-size: 13px;
+    box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
+
+}
+@media (max-width: 600px) {
+    .main {
+        border-radius: 0px;
+    }
+}
+#register-panel{
+    /* border: 1px solid black; */
+    /* grid-auto-rows: minmax(100px, auto); */
+    width: 800px;
+    height: 700px;
+    box-shadow: 0px 11px 35px 2px rgba(0,0,0,0.14);
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    background-color: #FFFFFF;
+    border-radius: 1.5em;
+    padding: 0px 20px;
+}
+#register-panel .inputform{
+    width: 70%;
+    height: 45px;
+    margin-top: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 5.5px 17.5px 1px rgba(0,0,0,0.14);
+
+}
+#register-panel label{
+    width: 25%;
+    height: 45px;
+    color: #000;
+    font-weight: 700;
+}
+
+#register-panel-mainten{
+    width: 800px;
+    height: 600px;
+    box-shadow: 0px 11px 35px 2px rgba(0,0,0,0.14);
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    background-color: #FFFFFF;
+    border-radius: 1.5em;
+    padding: 0px 20px;
+}
+#register-panel-mainten .inputform{
+    width: 70%;
+    height: 45px;
+    margin-top: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 5.5px 17.5px 1px rgba(0,0,0,0.14);
+}
+#register-panel-mainten label{
+    width: 25%;
+    height: 45px;
+    color: #000;
+    font-weight: 700;
+}
+#register-panel-ticket{
+    width: 800px;
+    height: 600px;
+    box-shadow: 0px 11px 35px 2px rgba(0,0,0,0.14);
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    background-color: #FFFFFF;
+    border-radius: 1.5em;
+    padding: 0px 20px;
+}
+#register-panel-ticket .inputform{
+    width: 70%;
+    height: 45px;
+    margin-top: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 5.5px 17.5px 1px rgba(0,0,0,0.14);
+}
+#register-panel-ticket label{
+    width: 25%;
+    height: 45px;
+    color: #000;
+    font-weight: 700;   
+}
 .counter-table{
     counter-reset: my-sec-counter;
 }
@@ -13,26 +171,19 @@
 .label{
     font-weight:800;
 }
-.container-convert{
+/* .container-convert{
     width: 500px;
     /* border: 1px solid black; */
-    padding: 10px;
-
-}
+    /* padding: 10px; */
+    
+/* }  */
 .style-uniform{
     width: 70%;
     margin: 5px;
 }
-/* body{
-    display: flex;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #71b7e6, #9b59b6);
-    padding: 10px;
-}
-.container{
-    max-width: 700px;
-    background: #fff;
 
-} */
+.loginpanel{
+    display: flex;
+    width: 100%;
+    border: 1px solid black;
+}

@@ -19,9 +19,9 @@ document.addEventListener('DOMContentLoaded', function(){
         const end_date = new Date(start.value)
         if(num > 1){
             end_date.setDate(end_date.getDate()+ num-1)
-            const x_format = end_date.getFullYear()+ '-'+ (end_date.getMonth()+1)+ '-'+ (end_date.getDate()<=9?'0'+end_date.getDate():end_date.getDate());
+            const x_format = end_date.getFullYear()+'-'+ ((end_date.getMonth()+1)<=9? '0'+ (end_date.getMonth()+1):+(end_date.getMonth()+1))+'-'+ (end_date.getDate()<=9?'0'+end_date.getDate():end_date.getDate());
             // const x_format = (end_date.getMonth()+1)+'-'+ end_date.getDate()+'-'+end_date.getFullYear();
-            console.log(typeof(x_format));
+            console.log(x_format);
             end.value = x_format
             // end.value = x_format
         }else{

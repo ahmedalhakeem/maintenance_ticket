@@ -4,17 +4,19 @@
     Login_manager
 {% endblock %}
 {% block content %}
-    <h1>صفحة تسجيل الدخول</h1>
     {% if message %}
         <h3>{{ message }}</h3>
     {% endif %}
-    <form action="{% url 'login_master' %}" method="POST">
-        {% csrf_token %}
-        <div class="form-group">
+    <div align='center' class="main">
+        <p class="sign" align="center">تسجيل دخول</p>
+        <form action="{% url 'login_master' %}" method="POST" class="form1">
             {% csrf_token %}
-            {{ loginform }}
-        </div>
-        
-        <button class="btn">تسجيل الدخول</button>
+                {{loginform}}
+        <input type="submit" align="center" href="" class="submit" value="تسجيل دخول">
     </form>
+    </div>
+    
+        
+        
+    
 {% endblock %}

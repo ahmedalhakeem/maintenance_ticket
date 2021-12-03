@@ -4,22 +4,26 @@
     تحويل تذكرة
 {% endblock %}
 {% block content %}
-    <h1 id="subject">تحويل تذكرة</h1>
+    <!-- <h1 id="subject">تحويل تذكرة</h1> -->
     <div class="container-convert">
         <form action="{% url 'convert_ticket' %}" method="post" id="ticket-form">
             {% csrf_token %}
-            {% for field in form %}
-            <label  class="col-sm-2 col-form-label col-form-label-sm label">{{field.label}}</label>
-            {{field}}
-            <br>
-            {% endfor %}
-            <!-- {{form}} -->
-            <label for="" class="col-sm-2 col-form-label col-form-label-sm"> هل توجد مذكرة رسمية ؟</label><input class="form-check-input" type="checkbox" onclick="show_memo()">
-            <br>
-            <textarea id='memo_info' name="memo" class="form-control" placeholder="الرجاء كتابة رقم المذكرة والتاريخ"></textarea>
-            <label for="" class="col-sm-2 col-form-label col-form-label-sm">ملاحظات</label>
-            <input type="text" class="form-control-lg style-uniform" name='notes' placeholder="ملاحظات اخرى">
-            <input type="submit" value="تحويل" class="btn btn-warning">
+            <div id="register-panel-ticket">
+                <p align='center' class="signup-title">ارسال تذكرة</p>
+                {% for field in form %}
+                <label  class="">{{field.label}}</label>
+                {{field}}
+                <br>
+                {% endfor %}
+                <label for="" class=""> هل توجد مذكرة رسمية ؟</label><input class="form-check-input" type="checkbox" onclick="show_memo()">
+                <br>
+                <textarea id='memo_info' name="memo" class="inputform" placeholder="الرجاء كتابة رقم المذكرة والتاريخ"></textarea>
+                <label for="" class="">ملاحظات</label>
+                <input type="text" class="inputform style-uniform" name='notes' placeholder="ملاحظات اخرى">
+                <input type="submit" href="" class="submit" value="ارسال تذكرة">
+                <!-- <input type="submit" value="تحويل" class="btn btn-warning">                 -->
+            </div>
+
         </form>        
     </div>
 

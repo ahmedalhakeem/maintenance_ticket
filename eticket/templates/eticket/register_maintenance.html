@@ -10,10 +10,14 @@
     {% if error %}
         <h1>{{error}}</h1>
     {% endif %}
-    <h1>صفحة تسجيل موظفي الصيانة</h1>
     <form action="{% url 'register_maintenance' %}" method="post">
         {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="حفظ" class="btn btn-primary">
+        <div id="register-panel-mainten">
+            <p align='center' class="signup-title">اضافة موظف صيانة</p>
+            {{ form }}
+            <input type="submit" href="" class="submit" value="تسجيل دخول">
+            <!-- <input type="submit" value="حفظ" class="btn btn-primary"> -->
+        </div>
+        
     </form>
 {% endblock %}
