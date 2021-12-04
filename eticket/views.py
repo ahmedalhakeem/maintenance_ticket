@@ -12,6 +12,7 @@ from .models import User, Section, Department, Tickets, Ticket_Reply, Allocation
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.cache import never_cache
 import datetime
 from django.template.loader import get_template
 from xhtml2pdf import pisa
@@ -25,6 +26,12 @@ def index(request):
     user = User.objects.get(username= request.user)
     user_tickets = Tickets.objects.filter(employee=user).all()
     if request.user.is_authenticated:
+        if request.user.is_superuser:
+            return render(request, 'eticket/index.html',{
+                'cars': Cars.objects.all(),
+                'drivers': Drivers.objects.all(),
+                'section': Section.objects.all()
+            })
         if user.groups.filter(name='Employees').exists():
             return render(request, 'eticket\profile_emp.html',{'user': user,'tickets': user_tickets})
         elif user.groups.filter(name='Maintenance').exists():
@@ -34,7 +41,7 @@ def index(request):
 
     
     return render(request, 'eticket/login_master.html')
-    
+@never_cache
 def login_master(request):
     # if post method!
     if request.method == "POST":
@@ -54,10 +61,12 @@ def login_master(request):
             })
     # if get method!
     
-    
-    return render(request, 'eticket/login_master.html',{
-        "loginform": LoginForm()
-        })
+    else:
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('index'))
+        return render(request, 'eticket/login_master.html',{
+            "loginform": LoginForm()
+            })
 
 def logout_page(request):
     logout(request)
@@ -112,6 +121,9 @@ def register_maintenance(request):
                 return render(request, 'eticket/register_maintenance.html',{'alert': 'تم ادخال اسم المستخدم مسبقا', 'form': Register_Maintenance()})
 
     return render(request, 'eticket/register_maintenance.html',{'form': Register_Maintenance()})
+
+def add_car(request):
+    pass
 @login_required()
 def employee(request, user_id):
     user = User.objects.get(pk=user_id)
@@ -284,3 +296,24 @@ def show_specified(request):
         ticket['employee_id']=user.username
     print(tickets)
     return JsonResponse({'data':tickets}, safe=False)
+def get_sections(request):
+    department = Department.objects.get(department_name='Communication')
+    department is not None
+    sections=list(Section.objects.filter(sections=department).values())
+    print(sections)
+    return JsonResponse(sections, safe=False)
+def get_all_non_dept_sections(request):
+    department = Department.objects.get(department_name='Communication')
+    sections = list(Section.objects.all().exclude(sections=department).values())
+    print(sections)
+    return JsonResponse(sections, safe=False)
+
+# Admin functions
+#  Add cars
+def add_car(request):
+    car = request.GET.get('car')
+    if Cars.objects.filter(car_type=car).exists():
+        return JsonResponse({'message': 'هذه المركبة تم اضافتها مسبقا'})
+    new_car= Cars(car_type=car)
+    new_car.save()
+    return JsonResponse({'message': 'تم اضافة مركبة جديدة الى القائمة'})

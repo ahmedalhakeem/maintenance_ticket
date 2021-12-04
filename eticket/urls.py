@@ -18,7 +18,10 @@ urlpatterns =[
     path('show_replied_ticket/<int:id>', views.show_replied_ticket, name='show_replied_ticket'),
     path('show_pdf/<int:id>', views.show_pdf, name='show_pdf'),
     path('specify_period', views.specify_period, name="specify_period"),
-    path('show_specified/', views.show_specified, name="show_specified")
+    path('show_specified/', views.show_specified, name="show_specified"),
+    path('get_sections/', views.get_sections, name="get_sections"),
+    path('get_all_non_dept_sections/', views.get_all_non_dept_sections, name="get_all_non_dept_sections"),
+    path('add_car/', views.add_car, name='add_car')
     # path('reply_ticket/', views.reply_ticket, name="reply_ticket")
     
     # path("profile_emp/<int:emp_id>", views.profile_emp, name="profile_emp"),

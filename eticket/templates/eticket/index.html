@@ -5,4 +5,23 @@
 {% endblock %}
 {% block content %}
     <h1>الصفحة الرئيسية</h1>
+    {% if user.is_authenticated and user.is_superuser %}
+    <button id="showcars" onclick="showCars()">المركبات المتوفرة</button>
+        <div id="add-car" style="display: none;">    
+            <div id="all-cars">
+                <ul>
+                    {% for car in cars %}
+                    <li> {{ car.car_type }}</li>
+                    {% endfor %}
+                </ul>
+                <button id="add-car" onclick="showInputcars()">اضافة سيارة</button>
+            </div>
+            <div id="show-Inputcars" style="display: none;">
+                <input type="text" name="car" id="carinput">
+                <button id="insert-car">اضافة</button>
+            </div>
+
+        </div>
+    <script type="text/javascript" src="{% static 'eticket/admin.js' %}"></script>
+    {% endif %}
 {% endblock %}

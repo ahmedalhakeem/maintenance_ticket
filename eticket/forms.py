@@ -11,14 +11,14 @@ class LoginForm(forms.Form):
 class Register_empForm(forms.Form):
     first_name = forms.CharField(label="الاسم الاول", required=True, widget=forms.TextInput(attrs={'class':'inputform', 'placeholder':'ادخل الاسم الاول',}))
     last_name = forms.CharField(label="الاسم الاخير", required=True, widget=forms.TextInput(attrs={'class': 'inputform', 'placeholder': "ادخل الاسم الاخير", }))
-    department = forms.ModelChoiceField(label="القسم", required=False, queryset=Department.objects.all(), widget=forms.Select(attrs={'class': 'inputform', 'placeholder':'',})) 
-    section = forms.ModelChoiceField(label="الشعبة", required=True, queryset=Section.objects.all(), widget=forms.Select(attrs={'class': 'inputform', 'placeholder':'',})) 
+    department = forms.ModelChoiceField(label="القسم", required=False,initial="choose_department", queryset=Department.objects.all(), widget=forms.Select(attrs={'class': 'inputform', 'placeholder':'','id': 'department'})) 
+    section = forms.ModelChoiceField(label="الشعبة", required=True,  queryset=Section.objects.all(), widget=forms.Select(attrs={'class': 'inputform', 'placeholder':'', 'id':'section'})) 
     email = forms.EmailField(label="البريد الالكتروني", required=True, widget=forms.EmailInput(attrs={'class': 'inputform', 'placeholder': 'ادخل البريد الالكتروني', }))
     username = forms.CharField(label="اسم المستخدم", required=True, widget=forms.TextInput(attrs={'class':'inputform', 'placeholder': 'ادخل اسم المستخدم',}))
     password = forms.CharField(label="كلمة السر", required=True, widget=forms.PasswordInput(attrs={'class':'inputform', 'placeholder': 'ادخل كلمة السر', }))
     confirm = forms.CharField(label="اعادة كلمة السر", required=True, widget=forms.PasswordInput(attrs={'class':'inputform', 'placeholder': 'اعد كتابة كلمة السر', }))
     
-    # pc_code = forms.CharField(label="", required=True, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'PC-code', }))
+    
 class Register_Maintenance(forms.Form):
     first_name = forms.CharField(label="الاسم الاول", required=True, widget=forms.TextInput(attrs={'class':'inputform', 'placeholder':'Enter your first name',}))
     last_name = forms.CharField(label="الاسم الاخير", required=True, widget=forms.TextInput(attrs={'class': 'inputform', 'placeholder': "Enter your last name", }))
