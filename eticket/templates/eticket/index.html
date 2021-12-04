@@ -14,11 +14,27 @@
                     <li> {{ car.car_type }}</li>
                     {% endfor %}
                 </ul>
-                <button id="add-car" onclick="showInputcars()">اضافة سيارة</button>
+                <button id="add-cars" onclick="showInputcars()">اضافة سيارة</button>
             </div>
             <div id="show-Inputcars" style="display: none;">
                 <input type="text" name="car" id="carinput">
                 <button id="insert-car">اضافة</button>
+            </div>
+
+        </div>
+        <button id="showdrivers" onclick="showDrivers()">اسماء سائقي المركبات</button>
+        <div id="show-driver-list" style="display: none;">    
+            <div id="all-cars">
+                <ul>
+                    {% for driver in drivers %}
+                    <li> {{ driver.driver_name }}</li>
+                    {% endfor %}
+                </ul>
+                <button id="add-car" onclick="showInputdrivers()">اضافة سائق جديد</button>
+            </div>
+            <div id="show-Inputdrivers" style="display: none;">
+                <input type="text" name="driver" id="driverinput">
+                <button id="insert-driver">اضافة</button>
             </div>
 
         </div>

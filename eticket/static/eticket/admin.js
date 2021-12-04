@@ -33,3 +33,22 @@ add_new_car.addEventListener('click', ()=>{
     })
     location.reload();
 })
+// show drivers
+function showDrivers(){
+    const car_button = document.querySelector('#showcars')
+    car_button.style.display="none";
+    const availabledrivers = document.querySelector('#show-driver-list')
+    if(availabledrivers.style.display==='none'){
+        availabledrivers.style.display='block'
+    }else{
+        availabledrivers.style.display='none'
+    }
+}
+function showInputdrivers(){
+    const showinputdriver = document.querySelector('#show-Inputdrivers')
+    if(showinputdriver.style.display==='none'){
+        showinputdriver.style.display='block'
+    }else{
+        showinputdriver.style.display='none'
+    }
+}
