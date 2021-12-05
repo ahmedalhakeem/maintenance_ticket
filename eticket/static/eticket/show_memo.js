@@ -25,7 +25,8 @@ document.addEventListener('DOMContentLoaded', function(){
             end.value = x_format
             // end.value = x_format
         }else{
-            x_format = end_date.getFullYear()+ '-'+ (end_date.getMonth()+1)+ '-'+ end_date.getDate();
+               x_format= end_date.getFullYear()+'-'+ ((end_date.getMonth()+1)<=9? '0'+ (end_date.getMonth()+1):+(end_date.getMonth()+1))+'-'+ (end_date.getDate()<=9?'0'+end_date.getDate():end_date.getDate());
+            // x_format = end_date.getFullYear()+ '-'+ (end_date.getMonth()+1)+ '-'+ end_date.getDate();
             end.value = x_format;
             console.log(x_format);
         }
