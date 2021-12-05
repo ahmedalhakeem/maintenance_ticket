@@ -1,14 +1,7 @@
 document.addEventListener('DOMContentLoaded', ()=>{
     console.log('loaded');
 })
-function showCars(){
-    const availablecars = document.querySelector('#add-car')
-    if(availablecars.style.display === 'none'){
-        availablecars.style.display='block';
-    }else{
-        availablecars.style.display='none';
-    }
-}
+
 function showInputcars(){
     const show_input_cars = document.querySelector('#show-Inputcars');
     if(show_input_cars.style.display==='none'){
@@ -29,21 +22,12 @@ add_new_car.addEventListener('click', ()=>{
         })
     })
     .then((data)=>{
-        alert(data.message);
+        alert(`اضافة المركبة(${carinput})الى قائمة المركبات`);
     })
     location.reload();
 })
 // show drivers
-function showDrivers(){
-    const car_button = document.querySelector('#showcars')
-    car_button.style.display="none";
-    const availabledrivers = document.querySelector('#show-driver-list')
-    if(availabledrivers.style.display==='none'){
-        availabledrivers.style.display='block'
-    }else{
-        availabledrivers.style.display='none'
-    }
-}
+
 function showInputdrivers(){
     const showinputdriver = document.querySelector('#show-Inputdrivers')
     if(showinputdriver.style.display==='none'){
@@ -52,3 +36,19 @@ function showInputdrivers(){
         showinputdriver.style.display='none'
     }
 }
+const insert_driver = document.querySelector('#insert-driver');
+insert_driver.addEventListener('click', ()=>{
+    const driver_input = document.querySelector('#driverinput').value;
+    fetch(`./add_driver?driver=${driver_input}`)
+    .then(res=>{
+        if(res.ok) return res.json()
+        return res.json()
+        .then(error=>{
+            console.log(error);
+        })
+    })
+    .then(data=>{
+        console.log(data);
+        alert(`تم اضافة ${driver_input} الى قائمة سائقي المركبات`)
+    })
+})

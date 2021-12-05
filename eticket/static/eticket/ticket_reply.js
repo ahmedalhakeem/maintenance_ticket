@@ -70,6 +70,10 @@ $('.send-memo-status').on('click', function(){
         const num = Number(col6)
         const id = Number(col1)
         tour_wrapper.innerHTML=''
+        if(col6 ==='0'){
+            const allocate_wrapper = document.querySelector('.tour_wrapper')
+            tour_wrapper.innerHTML='<h1> تم تخصيص الكل</h1>'
+        }
         
         for(i=1; i<=num; i++){
             const div = document.createElement('div')

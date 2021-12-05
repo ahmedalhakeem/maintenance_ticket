@@ -6,24 +6,37 @@
 {% block content %}
     <h1>الصفحة الرئيسية</h1>
     {% if user.is_authenticated and user.is_superuser %}
-    <button id="showcars" onclick="showCars()">المركبات المتوفرة</button>
-        <div id="add-car" style="display: none;">    
+    <!-- Toggle -->
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">المركبات المتوفرة</a>
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">اسماء سائقي المركبات</button>
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">معاينة الكل</button>
+</p>
+<div class="row">
+  <div class="col">
+    <div class="collapse multi-collapse" id="multiCollapseExample1">
+      <div class="card card-body">
+        <div id="add-car" style="display: block;">    
             <div id="all-cars">
                 <ul>
                     {% for car in cars %}
                     <li> {{ car.car_type }}</li>
                     {% endfor %}
                 </ul>
-                <button id="add-cars" onclick="showInputcars()">اضافة سيارة</button>
+                <button id="add-cars" onclick="showInputcars()">اضغط للاضافة</button>
             </div>
-            <div id="show-Inputcars" style="display: none;">
+            <div id="show-Inputcars" style="display: block;">
                 <input type="text" name="car" id="carinput">
-                <button id="insert-car">اضافة</button>
+                <button id="insert-car">اضافة مركبة</button>
             </div>
 
         </div>
-        <button id="showdrivers" onclick="showDrivers()">اسماء سائقي المركبات</button>
-        <div id="show-driver-list" style="display: none;">    
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="collapse multi-collapse" id="multiCollapseExample2">
+      <div class="card card-body">
+        <div id="show-driver-list" style="display: block;">    
             <div id="all-cars">
                 <ul>
                     {% for driver in drivers %}
@@ -32,12 +45,17 @@
                 </ul>
                 <button id="add-car" onclick="showInputdrivers()">اضافة سائق جديد</button>
             </div>
-            <div id="show-Inputdrivers" style="display: none;">
+            <div id="show-Inputdrivers" style="display: block;">
                 <input type="text" name="driver" id="driverinput">
                 <button id="insert-driver">اضافة</button>
             </div>
 
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
     <script type="text/javascript" src="{% static 'eticket/admin.js' %}"></script>
     {% endif %}
 {% endblock %}

@@ -19,6 +19,7 @@
                     <th scope="col">الايام غير المخصصة</th>
                     <th scope="col">تاريخ نهاية الجولة المتوقع</th>
                     <th scope="col"> ملاحظات الموظف</th>
+                    <th scope="col">المذكرة</th>
                     <th scope="col">أستلام المذكرة</th>
                     <th>تخصيص جولات</th>
                     <th>select</th>
@@ -36,7 +37,8 @@
                         <td id="tour-duration">{{tour.tour_duration}}</td>
                         <td class="unassigned" {% if tour.unallocated_days != 0 %} style="background-color: brown;"{% endif %} >{{tour.unallocated_days}}</td>
                         <td id="end-tour">{{tour.expected_end_tour}}</td>
-                        <td> {{tour.notes}}</td>
+                        <td> {% if tour.notes %}{{tour.notes}}{% else %} - {% endif %}</td>
+                        <td>{% if tour.memorandum%}{{tour.memorandum}}{% else %}لا توجد {% endif %}</td>
                         {% if tour.status %}
                         <td class="delivered">تم التسليم</td>
                         {% else %}
@@ -50,7 +52,7 @@
                 </tbody>
             </thead>
         </table>
-        <!-- <button id="get-data">Get Data</button> -->
+       
         <div class="container" id="wrap">
             
         </div>

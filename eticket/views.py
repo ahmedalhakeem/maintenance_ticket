@@ -253,8 +253,6 @@ def show_replied_ticket(request, id):
                 'ticket' :ticket,
                 'message': 'لم يتم تخصيص عجلة حتى الان.. يرجى الانتظار رجاءا'
             })
-
-
         
     except 	Ticket_Reply.DoesNotExist:
         return render(request, 'eticket/ticket_profile.html',{
@@ -294,7 +292,7 @@ def show_specified(request):
     for ticket in tickets:
         user = User.objects.get(id=ticket['employee_id'])
         ticket['employee_id']=user.username
-    print(tickets)
+    
     return JsonResponse({'data':tickets}, safe=False)
 def get_sections(request):
     department = Department.objects.get(department_name='Communication')
@@ -308,8 +306,11 @@ def get_all_non_dept_sections(request):
     print(sections)
     return JsonResponse(sections, safe=False)
 
+def non_memo(request):
+    tickets = Ticket_Reply.objects.exclude(memorandum_statue='تم الاستلام').all()
+    
 # Admin functions
-#  Add cars
+#  Add cars/
 def add_car(request):
     car = request.GET.get('car')
     if Cars.objects.filter(car_type=car).exists():
@@ -317,3 +318,11 @@ def add_car(request):
     new_car= Cars(car_type=car)
     new_car.save()
     return JsonResponse({'message': 'تم اضافة مركبة جديدة الى القائمة'})
+
+def add_driver(request):
+    driver = request.GET.get('driver')
+    if Drivers.objects.filter(driver_name=driver).exists():
+        return JsonResponse({'message': 'هذا الاسم تم اضافته مسبقا'})
+    new_driver = Drivers(driver_name=driver)
+    new_driver.save()
+    return JsonResponse({'message': 'تم اضافة سائق جديد'})
