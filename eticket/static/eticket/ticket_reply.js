@@ -66,7 +66,9 @@ $('.send-memo-status').on('click', function(){
         const col5 = currentRow.find('td:eq(5)').text();
         // The unallocated_remaining_days
         const col6 = currentRow.find('td:eq(6)').text()
-        const col10 = currentRow.find('td:eq(10)').attr('id')
+        // const col10 = currentRow.find('td:eq(10)').attr('id')
+        const col11 = currentRow.find('td:eq(11)').attr('id')
+
         const num = Number(col6)
         const id = Number(col1)
         tour_wrapper.innerHTML=''
@@ -81,11 +83,11 @@ $('.send-memo-status').on('click', function(){
             div.innerHTML +=  `اليوم ${i}`
             tour_wrapper.append(div)
         }
-        get_allocations(id, num, col10, parent_tr)
+        get_allocations(id, num, col11, parent_tr)
         check_allocation_status(id)
     })
 
-const get_allocations = (id, num, col10, parent_tr) =>{
+const get_allocations = (id, num, col11, parent_tr) =>{
 
 for(i=1;i<=num;i++){
     const cont = document.querySelector(`.day${i}`)
@@ -93,7 +95,7 @@ for(i=1;i<=num;i++){
     cont.style.margin= '50px'
     // ADD Car and Driver select, add input type date, and add assign btn
     const assign_btn= document.createElement('button')
-    assign_btn.className = `${col10}`
+    assign_btn.className = `${col11}`
 
     assign_btn.addEventListener('click', (e)=>{
         get_reply_ticket(e)

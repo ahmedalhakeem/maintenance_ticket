@@ -72,10 +72,12 @@ def logout_page(request):
     logout(request)
     return HttpResponseRedirect(reverse("login_master"))
 
+@login_required
 def register_emp(request):
     # if method is post!
     if request.method == "POST":
         new_user = Register_empForm(request.POST or None)
+        print(new_user.errors)
         if new_user.is_valid():
             first_name = new_user.cleaned_data['first_name']
             last_name = new_user.cleaned_data['last_name']
@@ -84,18 +86,20 @@ def register_emp(request):
             password = new_user.cleaned_data['password']
             confirm = new_user.cleaned_data['confirm']
             department = new_user.cleaned_data['department']
-            section = new_user.cleaned_data['section']
+            # section = new_user.cleaned_data['section']
+            role = new_user.cleaned_data['role']
+            print(role)
 
             if password != confirm:
                 return render(request, 'eticket/register_emp.html',{'error': 'الرمز السري غير مطابق', 'form': Register_empForm()})
             try:
-                employee = User.objects.create_user(first_name=first_name, last_name=last_name, email=email, username=username, password=password, department=department, section=section)
+                employee = User.objects.create_user(first_name=first_name, last_name=last_name, email=email, username=username, password=password, department=department, role=role)
                 employee.groups.add(2)
                 employee.save()
                 return HttpResponseRedirect(reverse('index'))
             except IntegrityError:
                 return render(request, 'eticket/register_emp.html',{'alert': 'تم ادخال اسم المستخدم مسبقا', 'form': Register_empForm()})
-
+    
     return render(request, 'eticket/register_emp.html',{'form': Register_empForm()})
 
 def register_maintenance(request):
@@ -295,13 +299,13 @@ def show_specified(request):
     
     return JsonResponse({'data':tickets}, safe=False)
 def get_sections(request):
-    department = Department.objects.get(department_name='Communication')
+    department = Department.objects.get(department_name='الاتصالات')
     department is not None
     sections=list(Section.objects.filter(sections=department).values())
     print(sections)
     return JsonResponse(sections, safe=False)
 def get_all_non_dept_sections(request):
-    department = Department.objects.get(department_name='Communication')
+    department = Department.objects.get(department_name='الاتصالات')
     sections = list(Section.objects.all().exclude(sections=department).values())
     print(sections)
     return JsonResponse(sections, safe=False)

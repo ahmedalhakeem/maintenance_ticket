@@ -51,4 +51,5 @@ insert_driver.addEventListener('click', ()=>{
         console.log(data);
         alert(`تم اضافة ${driver_input} الى قائمة سائقي المركبات`)
     })
+    location.reload();
 })
