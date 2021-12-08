@@ -56,7 +56,7 @@ def login_master(request):
                 return HttpResponseRedirect(reverse('index'))
             
             return render(request, 'eticket/login_master.html',{
-                'form': LoginForm(),
+                'loginform': LoginForm(request.POST or None),
                 'message':'خطأ في اسم المستخدم او كلمة المرور'
             })
     # if get method!
@@ -110,13 +110,14 @@ def register_maintenance(request):
             last_name = new_user.cleaned_data['last_name']
             email = new_user.cleaned_data['email']
             username = new_user.cleaned_data['username']
+            role = new_user.cleaned_data['role']
             password = new_user.cleaned_data['password']
             confirm = new_user.cleaned_data['confirm']
             
             if password != confirm:
                 return render(request, 'eticket/register_maintenance.html',{'error': 'الرمز السري غير مطابق', 'form': Register_Maintenance()})
             try:
-                employee = User.objects.create_user(first_name=first_name, last_name=last_name, email=email, username=username, password=password)
+                employee = User.objects.create_user(first_name=first_name, last_name=last_name, email=email, username=username, role=role, password=password)
                 employee.section = Section.objects.get(section_name="الصيانة")
                 employee.groups.add(1)
                 employee.save()
@@ -212,10 +213,11 @@ def send_memo_status(request, id):
         return JsonResponse({'msg':'تم تحديث حالة المذكرة'})
     memo_ack = Ticket_Reply(ticket=ticket, notes=memo_note, memorandum_statue = memo_state)
     memo_ack.save()
+    ser_memo_ack = list(memo_ack)
     if memo_state == "لم يتم استلام المذكرة":
         return JsonResponse({'msg': 'حالة المذكرة معلقة'}, safe=False)
     elif memo_state == "خطأ في المذكرة":
-        return JsonResponse({"msg": 'خطأ في المذكرة'})
+        return JsonResponse({'data': ser_memo_ack,"msg": 'خطأ في المذكرة'}, safe=False)
     ticket.status = True
     ticket.save()  
     list_memo_state = list(Ticket_Reply.objects.filter(id= memo_ack.id).values())  

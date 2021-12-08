@@ -25,6 +25,7 @@ class Register_Maintenance(forms.Form):
     last_name = forms.CharField(label="الاسم الاخير", required=True, widget=forms.TextInput(attrs={'class': 'inputform', 'placeholder': "Enter your last name", }))
     email = forms.EmailField(label="البريد الالكتروني", required=True, widget=forms.EmailInput(attrs={'class': 'inputform', 'placeholder': 'enter your email id', }))
     username = forms.CharField(label="اسم المستخدم", required=True, widget=forms.TextInput(attrs={'class':'inputform', 'placeholder': 'Enter your username',}))
+    role = forms.CharField(label="الموقع الوظيفي", required=False, widget=forms.TextInput(attrs={'class': 'inputform','placeholder': 'ادخل الموقع الوظيفي',})) 
     password = forms.CharField(label="الرمز السري", required=True, widget=forms.PasswordInput(attrs={'class':'inputform', 'placeholder': 'Enter your password', }))
     confirm = forms.CharField(label="اعادة كتابة الرمز", required=True, widget=forms.PasswordInput(attrs={'class':'inputform', 'placeholder': 'Enter your password', }))
     

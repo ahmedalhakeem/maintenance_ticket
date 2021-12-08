@@ -5,8 +5,9 @@
 {% endblock %}
 {% block content %}
     <h1>صفحة شعبة الصيانة</h1>
-    <h2>تسجيل دخول بأسم {{user.username}}</h2>
-   
+    <h3>تسجيل دخول بأسم : <b style="color:#1266f1;">{{user.first_name}} {{user.last_name}}</b> </h3>
+    <b>{{user.role}}</b>
+    <hr>
         <table class="table table-bordered" id="tableid">
             <thead>
                 <tr class="table-primary">
@@ -22,7 +23,7 @@
                     <th scope="col">المذكرة</th>
                     <th scope="col">أستلام المذكرة</th>
                     <th>تخصيص جولات</th>
-                    <th>select</th>
+                    <th>تاريخ التذكرة</th>
                 </tr>
                 
                 <tbody>
@@ -30,7 +31,7 @@
                     <tr {% if not tour.status %} style="border: 1px double #1266f1;"{% endif %}>
 
                         <td class="table-secondary">{{tour.id}}</td>
-                        <td>{{tour.employee}}</td>
+                        <td>{{tour.employee.first_name}} {{tour.employee.last_name}}</td>
                         <td>{{tour.tour_name}}</td>
                         <td>{{tour.tour_type}}</td>
                         <td id="start-tour">{{tour.tour_date}}</td>
@@ -46,7 +47,8 @@
                         {% endif%}
 
                         <td id="{{tour.id}}"><button class="allocate-btn btn btn-primary"  data-bs-toggle="modal" data-bs-target="#exampleModal">تخصيص</button></td>
-                        <td><input type="checkbox" class="chk" /></td>
+                        <td>{{ tour.ticket_date}}</td>
+                        <!-- <td><input type="checkbox" class="chk" /></td> -->
                     </tr>
                     {% endfor %}
                 </tbody>

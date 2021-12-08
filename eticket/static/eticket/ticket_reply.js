@@ -18,7 +18,8 @@ $('.send-memo-status').on('click', function(){
     const currentRow = $(this).closest('tr');
     const col1 = currentRow.find('td:eq(0)').text()
     const notes = currentRow.find('td:eq(7)').text()
-    const col9 = currentRow.find('td:eq(9)').text()
+    const col10 = currentRow.find('td:eq(10)').html()
+    console.log(col10);
     // const col9 = currentRow.find('td:eq(9)').attr('id')
     
     const id = Number(col1)
@@ -43,7 +44,7 @@ $('.send-memo-status').on('click', function(){
             
             
         })
-        location.reload();
+        // location.reload();
              
     })
  

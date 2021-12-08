@@ -1,15 +1,14 @@
 {% extends "eticket/layout.html" %}
 {% load static %}
     {% block title %}
-        صفحة الموظفين
+        صفحة الموظفين {{ user.first_name}}
     {% endblock %}
     {% block content %}
     <br>
-    <h2>{{user.first_name}} {{ user.last_name }}</h2>
-    <h2>{{user.email}}</h2>
-    <h2>تسجيل دخول بأسم: <span>{{user.username}}</span>
-   
-        <div class="container" >
+    <h3>تسجيل دخول بأسم : <b style="color:#1266f1;">{{user.first_name}} {{user.last_name}}</b> </h3>
+    <b>{{user.role}}</b>   
+    <hr>
+        <div class="container-fluid" >
             <h1>الجولات السابقة</h1>
             <table class="table table-bordered">
                 <thead>
