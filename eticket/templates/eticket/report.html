@@ -1,60 +1,99 @@
 {% load static %}
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="ltr">
     
   <head>
-    <!-- Required meta tags -->
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{% static 'eticket/bootstrap.rtl.min.css'%}">
+    
     <title>Show Report</title>
     <style>
-        @font-face {
-            font-family: Amiri-Regular; 
-            src: url('D:\maintenance_ticket\eticket\static\fonts\Amiri-Regular.ttf');
-                 
-        }
-        body{
-            font-family: Amiri-Regular;
-        }
+      
+      #emp_det{
+        text-align: right;
+      }
+      #table-content td, #table-content h1{
+        text-align: center;
+      }
+      #table-content table{
+        border: 1px solid black;
+        counter-reset: my-sec-counter;
+      }
+  
+      #table-content #counter-cell::after{
+        counter-increment: my-sec-counter;
+        content: counter(my-sec-counter, number);
+      }
+      
+      @font-face {
+          font-family: MyRightToLeftFont; 
+          src: url('E:\maintenanceapp\eticket\static\fonts\Amiri-Regular.ttf');
+      }
+      @page{
+        size: a4 portrait;
+          @frame header_frame{
+            -pdf-frame-content: header_content;
+            left: 60pt;
+            width: 512pt;
+            top: 60pt;
+            height: 50pt;    
+          }
+          @frame footer_frame{
+            -pdf-frame-content: footer_content;
+            left: 60pt;
+            width: 512pt;
+            top: 772pt;
+            height: 30pt;    
+          }
+          @frame content_frame{
+            left: 50pt;
+            width: 512pt;
+            top: 90pt;
+            height: 620pt;
+          }
+      }
+      body{
+        font-family: MyRightToLeftFont;
+      }
     </style>
   </head>
   <body>
     <pdf:language name="arabic"/>
-    <h1>pdf report</h1>
-    <h2>اسم الموظف :{{ticket.employee.username}}</h2>
-    <h2>الشعبة:{{ticket.employee.section}}</h2>
-
-    <h2>رقم الجولة: {{ticket.id}}</h2>
-    <h2>نوع الجولة: {{ticket.tour_type}}</h2>
-    <h2>عنوان الجولة: {{ticket.tour_name}}</h2>
-    <h2>عدد ايام الجولة: {{ticket.tour_duration}}</h2>
-    <h1>تفاصيل المذكرة</h1>
-    <h2>حالة المذكرة : {{reply.memorandum_statue}}</h2>
-    <h2>ملاحظات : {{reply.notes}}</h2>
-
-    <div class="contatiner">
+    <div id="header_content">
+      This is the header data
+    </div>
+    <div id="emp_det">
+        <h2>اسم الموظف:{{ticket.employee.first_name}} {{ticket.employee.last_name}} </h2>
+        <h2>{{ticket.employee.role}}</h2>
+        <h2>رقم الجولة: {{ticket.id}}</h2>
+        <h2>نوع الجولة: {{ticket.tour_type}}</h2>
+        <h2>عنوان الجولة: {{ticket.tour_name}}</h2>
+        <h2>عدد ايام الجولة: {{ticket.tour_duration}}</h2>
+        <h1>تفاصيل المذكرة</h1>
+        <h2>حالة المذكرة : {{reply.memorandum_statue}}</h2>
+        <h2>ملاحظات : {{reply.notes}}</h2>
+      </div>
+    <div id="table-content">
         <h1>التخصيص</h1>
-        <table class="table table-bordered  ">
+        <table id="table-details">
             <thead>
               <tr>
-                <th scope="col" class="col md-8">اليوم</th>
-                <th scope="col">تاريخ الواجب</th>
-                <th scope="col">اسم السائق</th>
-                <th scope="col">نوع المركبة</th>
-                <th scope="col">وقت التخصيص</th>
+                <th>وقت التخصيص</th>
+                <th>نوع المركبة</th>
+                <th>اسم السائق</th>
+                <th>تاريخ الواجب</th>
+                <th>اليوم</th>
               </tr>
             </thead>
             <tbody>
                 {% for allocation in allocations %}
-              <tr class="col md-8">
-                <td>{{allocation.id}}</td>
-                <td>{{allocation.allocate_date}}</td>
-                <td>{{allocation.driver_name}}</td>
-                <td>{{allocation.car}}</td>
+              <tr>
                 <td>{{allocation.allocation_time}}</td>
+                <td>{{allocation.car}}</td>
+                <td>{{allocation.driver_name}}</td>
+                <td>{{allocation.allocate_date}}</td>
+                <td>اليوم</td>
               </tr>
               {% endfor %}
             </tbody>
@@ -62,8 +101,10 @@
     </div>
 
 
-
-    <script src="{% static 'eticket/bootstrap.bundle.min.js' %}"></script>
+    <div id="footer_content">
+      This is the Footer , 
+      </div>
+    
 
   </body>
 </html>
