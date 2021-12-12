@@ -8,8 +8,11 @@
     <h3>تسجيل دخول بأسم : <b style="color:#1266f1;">{{user.first_name}} {{user.last_name}}</b> </h3>
     <b>{{user.role}}</b>   
     <hr>
+    <div style="text-align: left;">
+        <a href="{% url 'convert_ticket'%}" class="btn btn-lg btn-warning">تحويل تذكرة</a>
+    </div>
         <div class="container-fluid" >
-            <h1>الجولات السابقة</h1>
+            <h1 style="text-align: center;">قائمة الجولات السابقة</h1>
             <table class="table table-bordered">
                 <thead>
                     <tr class="table-primary">

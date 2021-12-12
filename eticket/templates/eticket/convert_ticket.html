@@ -4,7 +4,9 @@
     تحويل تذكرة
 {% endblock %}
 {% block content %}
-    <!-- <h1 id="subject">تحويل تذكرة</h1> -->
+<div style="text-align: right; margin-top: 20px; margin-right: 30px;">
+    <a href="{% url 'index' %}" class="btn btn-lg btn-warning">الصفحة الرئيسية</a>
+</div>
     <div class="container-convert">
         <form action="{% url 'convert_ticket' %}" method="post" id="ticket-form">
             {% csrf_token %}

@@ -8,6 +8,7 @@
     <h3>تسجيل دخول بأسم : <b style="color:#1266f1;">{{user.first_name}} {{user.last_name}}</b> </h3>
     <b>{{user.role}}</b>
     <hr>
+    <a href="{% url 'specify_period' %}" class="btn btn-primary" >تحديد فترة</a>
         <table class="table table-bordered" id="tableid">
             <thead>
                 <tr class="table-primary">
@@ -28,9 +29,9 @@
                 
                 <tbody>
                     {% for tour in tours %}
-                    <tr {% if not tour.status %} style="border: 1px double #1266f1;"{% endif %}>
+                    <tr {% if not tour.status %} style="background-color: #e1e5eb;"{% endif %}>
 
-                        <td class="table-secondary">{{tour.id}}</td>
+                        <td class="table-secondary">{% if tour.tickets %}<a href="{% url 'show_pdf' tour.id %}">{{tour.id}}</a>{% endif %}</td>
                         <td>{{tour.employee.first_name}} {{tour.employee.last_name}}</td>
                         <td>{{tour.tour_name}}</td>
                         <td>{{tour.tour_type}}</td>
@@ -56,7 +57,7 @@
         </table>
        
         <div class="container" id="wrap">
-            
+          
         </div>
         
  

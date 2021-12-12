@@ -32,6 +32,7 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item dropdown ">
@@ -40,9 +41,9 @@
                             <a href="{% url 'convert_ticket' %}" class="dropdown-item">تحويل تذكرة</a>
                             <a href="" class="dropdown-item">التذاكر المنجزة</a>
                             <a href="" class="dropdown-item">التذاكر قيد الانجاز</a>
-    
                         </div>
                     </li>
+                    {% if user.is_authenticated and user.is_superuser %}
                     <li class="nav-item dropdown ">
                         <a href="" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >الموظفين</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -56,10 +57,12 @@
                             <a href="" class="dropdown-item">موظفي الصيانة</a>
                             <a href="{% url 'register_maintenance' %}" class="dropdown-item">اضافة موظف صيانة</a>
                         </div>
+                        
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'specify_period' %}" class="nav-link">تحديد فترة</a>
-                    </li>        
+                    </li>  
+                    {% endif %}      
                 </ul>
                 
             </div>

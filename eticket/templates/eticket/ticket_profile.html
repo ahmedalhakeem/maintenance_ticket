@@ -12,9 +12,14 @@
 {% if state %}
 <span style="color: red;">{{state}}</span>
 {% endif %}
+<br>
+<a href="{% url 'index' %}" class="btn btn-primary" style="text-align: right;">العودة</a>
+<hr>
+
 <div class="container">
-    <table class="table counter-table">
-        <thead>
+    <h1 style="text-align: center;">تفاصيل تخصيص العجلات</h1>
+    <table class="table table-bordered counter-table">
+        <thead class="table-primary">
             <th scope="col">اليوم</th>
             <th scope="col">التاريخ</th>
             <th scope="col">اسم السائق</th>
@@ -34,7 +39,7 @@
         </tbody>
     </table>
     {% if message %}
-    <h2>{{ message }}</h2>
+    <h1>{{ message }}</h1>
     {% endif %}
   <a href="{% url 'show_pdf' ticket.id %}" class="btn btn-primary">تحويل الى صيغة PDF</a>
 </div>

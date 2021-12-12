@@ -24,7 +24,7 @@ def index(request):
     time = datetime.datetime.now().time()
     print(time)
     user = User.objects.get(username= request.user)
-    user_tickets = Tickets.objects.filter(employee=user).all()
+    user_tickets = Tickets.objects.filter(employee=user).all().order_by('-ticket_date')
     if request.user.is_authenticated:
         if request.user.is_superuser:
             return render(request, 'eticket/index.html',{
@@ -213,11 +213,11 @@ def send_memo_status(request, id):
         return JsonResponse({'msg':'تم تحديث حالة المذكرة'})
     memo_ack = Ticket_Reply(ticket=ticket, notes=memo_note, memorandum_statue = memo_state)
     memo_ack.save()
-    ser_memo_ack = list(memo_ack)
+    
     if memo_state == "لم يتم استلام المذكرة":
         return JsonResponse({'msg': 'حالة المذكرة معلقة'}, safe=False)
     elif memo_state == "خطأ في المذكرة":
-        return JsonResponse({'data': ser_memo_ack,"msg": 'خطأ في المذكرة'}, safe=False)
+        return JsonResponse({"msg": 'خطأ في المذكرة'}, safe=False)
     ticket.status = True
     ticket.save()  
     list_memo_state = list(Ticket_Reply.objects.filter(id= memo_ack.id).values())  
@@ -268,6 +268,8 @@ def show_replied_ticket(request, id):
    
 def show_pdf(request, id):
     ticket = Tickets.objects.get(id=id)
+    if not Ticket_Reply.objects.filter(ticket=ticket).exists():
+        return render(request, 'eticket/send_status.html')
     reply = Ticket_Reply.objects.get(ticket=ticket)
     allocations = Allocation.objects.filter(reply = reply)
     template_path = 'eticket/report.html'

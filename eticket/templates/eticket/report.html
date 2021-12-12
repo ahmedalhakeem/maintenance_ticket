@@ -13,6 +13,10 @@
       #emp_det{
         text-align: right;
       }
+      #emp_det #tick_title{
+        text-align: center;
+        font-size:14pt;
+      }
       #table-content td, #table-content h1{
         text-align: center;
       }
@@ -25,6 +29,14 @@
         counter-increment: my-sec-counter;
         content: counter(my-sec-counter, number);
       }
+      #head{
+        border: 1px solid black;
+        width:100%;
+        text-align:center
+      }
+      img{
+        zoom:100%;
+      }
       
       @font-face {
           font-family: MyRightToLeftFont; 
@@ -32,27 +44,31 @@
       }
       @page{
         size: a4 portrait;
+        background-image: url('E:\maintenanceapp\eticket\static\eticket\images\header_content2.jpg')
           @frame header_frame{
             -pdf-frame-content: header_content;
             left: 60pt;
             width: 512pt;
-            top: 60pt;
-            height: 50pt;    
+            top: 0pt;
+            height: 50pt; 
+  
           }
           @frame footer_frame{
             -pdf-frame-content: footer_content;
             left: 60pt;
             width: 512pt;
+            bottom: 0pt;
             top: 772pt;
-            height: 30pt;    
+            height: 30pt;   
           }
           @frame content_frame{
             left: 50pt;
             width: 512pt;
-            top: 90pt;
+            top: 160pt;
             height: 620pt;
           }
-      }
+        }
+      
       body{
         font-family: MyRightToLeftFont;
       }
@@ -61,18 +77,22 @@
   <body>
     <pdf:language name="arabic"/>
     <div id="header_content">
-      This is the header data
+      <div id="head">
+        
+      </div>
     </div>
     <div id="emp_det">
-        <h2>اسم الموظف:{{ticket.employee.first_name}} {{ticket.employee.last_name}} </h2>
-        <h2>{{ticket.employee.role}}</h2>
         <h2>رقم الجولة: {{ticket.id}}</h2>
+        <h2>التأريخ: {{ticket.ticket_date}}</h2>
+        <h2 id="tick_title">عنوان الجولة: {{ticket.tour_name}}</h2>
         <h2>نوع الجولة: {{ticket.tour_type}}</h2>
-        <h2>عنوان الجولة: {{ticket.tour_name}}</h2>
-        <h2>عدد ايام الجولة: {{ticket.tour_duration}}</h2>
-        <h1>تفاصيل المذكرة</h1>
-        <h2>حالة المذكرة : {{reply.memorandum_statue}}</h2>
+        <h2>تأريخ الجولة:{{ ticket.tour_date }}</h2>
+        <h2>عدد ايام الجولة: {{ticket.tour_duration}} أيام</h2>
+        <h2>تفاصيل المذكرة: {{reply.memorandum_statue}}</h2>
         <h2>ملاحظات : {{reply.notes}}</h2>
+        <br>
+        <h2>{{ticket.employee.first_name}} {{ticket.employee.last_name}} </h2>
+        <h2>{{ticket.employee.role}}</h2>
       </div>
     <div id="table-content">
         <h1>التخصيص</h1>
@@ -83,7 +103,6 @@
                 <th>نوع المركبة</th>
                 <th>اسم السائق</th>
                 <th>تاريخ الواجب</th>
-                <th>اليوم</th>
               </tr>
             </thead>
             <tbody>
@@ -93,18 +112,23 @@
                 <td>{{allocation.car}}</td>
                 <td>{{allocation.driver_name}}</td>
                 <td>{{allocation.allocate_date}}</td>
-                <td>اليوم</td>
               </tr>
               {% endfor %}
             </tbody>
           </table> 
     </div>
+    <br>
+    <br>
+    <br>
+    <h2 style="text-align:right;"> مسؤول شعبة الصيانة</h2>
+    <h2 style="text-align: left;">السيد مدير المكتب </h2>
+    
 
 
     <div id="footer_content">
-      This is the Footer , 
+      <hr>
+        <h5 style="text-align: right;">النجف - العراق </h5>
+        <span style="text-align: right;">هاتف : 00964(1) 7180009</span>
       </div>
-    
-
   </body>
 </html>
