@@ -13,9 +13,10 @@
       #emp_det{
         text-align: right;
       }
+      
       #emp_det #tick_title{
         text-align: center;
-        font-size:14pt;
+        font-size:16pt;
       }
       #table-content td, #table-content h1{
         text-align: center;
@@ -37,6 +38,7 @@
       img{
         zoom:100%;
       }
+      
       
       @font-face {
           font-family: MyRightToLeftFont; 
@@ -82,17 +84,16 @@
       </div>
     </div>
     <div id="emp_det">
-        <h2>رقم الجولة: {{ticket.id}}</h2>
-        <h2>التأريخ: {{ticket.ticket_date}}</h2>
-        <h2 id="tick_title">عنوان الجولة: {{ticket.tour_name}}</h2>
-        <h2>نوع الجولة: {{ticket.tour_type}}</h2>
-        <h2>تأريخ الجولة:{{ ticket.tour_date }}</h2>
-        <h2>عدد ايام الجولة: {{ticket.tour_duration}} أيام</h2>
-        <h2>تفاصيل المذكرة: {{reply.memorandum_statue}}</h2>
-        <h2>ملاحظات : {{reply.notes}}</h2>
-        <br>
-        <h2>{{ticket.employee.first_name}} {{ticket.employee.last_name}} </h2>
-        <h2>{{ticket.employee.role}}</h2>
+        <h1>العدد: {{ticket.id}}/{{ticket.employee.section}}</h1>
+        <h1>التأريخ: {{ticket.ticket_date}}</h1>
+        <h1 id="tick_title">عنوان الجولة: {{ticket.tour_name}}</h1>
+        <h1>نوع الجولة: {{ticket.tour_type}}</h1>
+        <h1>تأريخ الجولة:{{ ticket.tour_date }}</h1>
+        <h1>عدد ايام الجولة: {{ticket.tour_duration}} أيام</h1>
+        <h1>تفاصيل المذكرة: {{reply.memorandum_statue}}</h1>
+        <h1>فريق الجولة : {{reply.notes}}</h1>
+        <h1>{{ticket.employee.first_name}} {{ticket.employee.last_name}} </h1>
+        <h1>{{ticket.employee.role}}</h1>
       </div>
     <div id="table-content">
         <h1>التخصيص</h1>
@@ -117,12 +118,15 @@
             </tbody>
           </table> 
     </div>
-    <br>
-    <br>
-    <br>
-    <h2 style="text-align:right;"> مسؤول شعبة الصيانة</h2>
-    <h2 style="text-align: left;">السيد مدير المكتب </h2>
     
+    <div>
+      <br>
+      <br>
+      <br>
+      <h1 style="text-align: right; top: 100px;"> مسؤول شعبة الصيانة</h1>
+      <h1 style="left: 100px;">السيد مدير المكتب</h1>
+    </div>
+       
 
 
     <div id="footer_content">
