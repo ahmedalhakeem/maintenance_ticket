@@ -9,11 +9,20 @@
     
     <title>Show Report</title>
     <style>
-      
+      #table-details td{
+        font-size: 12pt;
+      }
       #emp_det{
         text-align: right;
       }
+<<<<<<< HEAD
       
+=======
+      #emp_det h2{
+        font-size: 14pt;
+
+      }
+>>>>>>> c57a0237dde4f19670be08e893e1051f5d94eb4b
       #emp_det #tick_title{
         text-align: center;
         font-size:16pt;
@@ -42,11 +51,11 @@
       
       @font-face {
           font-family: MyRightToLeftFont; 
-          src: url('E:\maintenanceapp\eticket\static\fonts\Amiri-Regular.ttf');
+          src: url('D:\maintenance_ticket\eticket\static\fonts\Amiri-Regular.ttf');
       }
       @page{
         size: a4 portrait;
-        background-image: url('E:\maintenanceapp\eticket\static\eticket\images\header_content2.jpg')
+        background-image: url('D:\maintenance_ticket\eticket\static\eticket\images\header_content2.jpg')
           @frame header_frame{
             -pdf-frame-content: header_content;
             left: 60pt;
@@ -84,6 +93,7 @@
       </div>
     </div>
     <div id="emp_det">
+<<<<<<< HEAD
         <h1>العدد: {{ticket.id}}/{{ticket.employee.section}}</h1>
         <h1>التأريخ: {{ticket.ticket_date}}</h1>
         <h1 id="tick_title">عنوان الجولة: {{ticket.tour_name}}</h1>
@@ -94,6 +104,18 @@
         <h1>فريق الجولة : {{reply.notes}}</h1>
         <h1>{{ticket.employee.first_name}} {{ticket.employee.last_name}} </h1>
         <h1>{{ticket.employee.role}}</h1>
+=======
+        <h3 style="font-weight: 700;">العدد:12/ف/11/</h3>
+        <h3 style="font-weight: 700;">التأريخ:</h3>
+        <h2 id="tick_title">م/ {{ticket.tour_name}}</h2>
+        <h2>نوع الجولة: {{ticket.tour_type}}</h2>
+        <h2>تأريخ الجولة:{{ ticket.tour_date }}</h2>
+        <h2>عدد ايام الجولة: {{ticket.tour_duration}} أيام</h2>
+        <h2>تفاصيل المذكرة: {{reply.memorandum_statue}}</h2>
+        <h2> <span>{{ticket.employee.role}}</span>{{ticket.employee.first_name}} {{ticket.employee.last_name}} /</h2>
+        <h2>اسماء القائمين بالجولة : {{ticket.notes}}</h2>
+        
+>>>>>>> c57a0237dde4f19670be08e893e1051f5d94eb4b
       </div>
     <div id="table-content">
         <h1>التخصيص</h1>
@@ -118,6 +140,7 @@
             </tbody>
           </table> 
     </div>
+<<<<<<< HEAD
     
     <div>
       <br>
@@ -128,6 +151,14 @@
     </div>
        
 
+=======
+    <br>
+    <br>
+    <br>
+    <h2 style="text-align:right; font-size: 16pt;"> مسؤول شعبة الصيانة</h2>
+    <h2 style="text-align: left; font-size: 16pt;">السيد مدير المكتب </h2>
+  
+>>>>>>> c57a0237dde4f19670be08e893e1051f5d94eb4b
 
     <div id="footer_content">
       <hr>
