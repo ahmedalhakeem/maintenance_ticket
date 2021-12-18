@@ -9,8 +9,31 @@
     
     <title>Show Report</title>
     <style>
+      #ticket-info{
+        border: 0.2px solid black;
+
+      }
+      #ticket-info th, #ticket-info td{
+        font-size: 12pt;
+        text-align: center;
+      }
+      #ticket-info th{
+        background-color: #d1cfc9;
+      }
       #table-details td{
         font-size: 12pt;
+      }
+      #table-details caption{
+        text-align: center;
+        font-size: 12pt;
+       
+      }
+      #table-details th{
+        background-color: #d1cfc9;
+        font-size: 12pt;
+      }
+      #table-details{
+        text-align: center;
       }
       #emp_det{
         text-align: right;
@@ -28,13 +51,9 @@
       }
       #table-content table{
         border: 1px solid black;
-        counter-reset: my-sec-counter;
+      
       }
   
-      #table-content #counter-cell::after{
-        counter-increment: my-sec-counter;
-        content: counter(my-sec-counter, number);
-      }
       #head{
         border: 1px solid black;
         width:100%;
@@ -43,15 +62,30 @@
       img{
         zoom:100%;
       }
+      #gap{
+        border: 1px solid black;
+        height: 400px;
+        width: 100%;
+        margin-top: 10px;
+      }
+      #maint-head::before{
+        content: "";
+        width: 300px;
+      }
+      #head-office{
+        margin: 100px;
+        text-align: center;
+        font-size: 14pt;
+      }
       
       
       @font-face {
           font-family: MyRightToLeftFont; 
-          src: url('D:\maintenance_ticket\eticket\static\fonts\Amiri-Regular.ttf');
+          src: url('E:\maintenanceapp\eticket\static\fonts\Amiri-Regular.ttf');
       }
       @page{
         size: a4 portrait;
-        background-image: url('D:\maintenance_ticket\eticket\static\eticket\images\header_content2.jpg')
+        background-image: url('E:\maintenanceapp\eticket\static\eticket\images\header_content2.jpg')
           @frame header_frame{
             -pdf-frame-content: header_content;
             left: 60pt;
@@ -89,20 +123,36 @@
       </div>
     </div>
     <div id="emp_det">
-        <h3 style="font-weight: 700;">العدد:12/ف/11/</h3>
-        <h3 style="font-weight: 700;">التأريخ:</h3>
+        <h2 style="text-align: left;">العدد:12/ف/11/</h2>
+        <h2 style="text-align: left; margin-left: 70px;">التأريخ:</h2>
         <h2 id="tick_title">م/ {{ticket.tour_name}}</h2>
-        <h2>نوع الجولة: {{ticket.tour_type}}</h2>
-        <h2>تأريخ الجولة:{{ ticket.tour_date }}</h2>
-        <h2>عدد ايام الجولة: {{ticket.tour_duration}} أيام</h2>
-        <h2>تفاصيل المذكرة: {{reply.memorandum_statue}}</h2>
-        <h2> <span>{{ticket.employee.role}}</span>{{ticket.employee.first_name}} {{ticket.employee.last_name}} /</h2>
-        <h2>اسماء القائمين بالجولة : {{ticket.notes}}</h2>
-        
+        <table id="ticket-info">
+          <thead>
+            <tr>
+              <th>المكلفين بالجولة</th>
+              <th>مقدم الطلب</th>
+              <th>حالة المذكرة</th>
+              <th>عدد ايام الجولة</th>
+              <th>تاريخ الجولة</th>
+              <th>نوع الجولة</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td style="font-size: 8pt;"> {{ticket.notes}}</td>
+            <td> {{ticket.employee.first_name}} {{ticket.employee.last_name}}</td>
+            <td> {{reply.memorandum_statue}}</td>
+            <td> {{ticket.tour_duration}} أيام</td>
+            <td> {{ ticket.tour_date }}</td>
+            <td> {{ticket.tour_type}}</td>
+          </tr>  
+          </tbody>
+        </table>
       </div>
+      <hr>
     <div id="table-content">
-        <h1>التخصيص</h1>
         <table id="table-details">
+          <caption>العجلات المخصصة</caption>
             <thead>
               <tr>
                 <th>وقت التخصيص</th>
@@ -123,11 +173,10 @@
             </tbody>
           </table> 
     </div>
-    <br>
-    <br>
-    <br>
-    <h2 style="text-align:right; font-size: 16pt;"> مسؤول شعبة الصيانة</h2>
-    <h2 style="text-align: left; font-size: 16pt;">السيد مدير المكتب </h2>
+    <div id="gap">
+      
+    </div>
+    <p id="head-office">السيد مدير المكتب <span style="color: white;">............................................................</span><span id="maint-head">مسؤول شعبة الصيانة</span></p>
   
 
     <div id="footer_content">
