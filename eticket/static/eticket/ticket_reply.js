@@ -6,9 +6,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const tour_wrapper = document.querySelector('.tour_wrapper')
     console.log(tour_wrapper.children);
      
-    
-    
-     
 });
 $('.close-allocation_page').on('click', function(){
     location.reload()
@@ -17,7 +14,7 @@ $('.close-allocation_page').on('click', function(){
 $('.send-memo-status').on('click', function(){
     const currentRow = $(this).closest('tr');
     const col1 = currentRow.find('td:eq(0)').text()
-    const notes = currentRow.find('td:eq(7)').text()
+   
     const col10 = currentRow.find('td:eq(10)').html()
     console.log(col10);
     // const col9 = currentRow.find('td:eq(9)').attr('id')
@@ -69,13 +66,13 @@ $('.send-memo-status').on('click', function(){
         const col6 = currentRow.find('td:eq(6)').text()
         // const col10 = currentRow.find('td:eq(10)').attr('id')
         const col11 = currentRow.find('td:eq(11)').attr('id')
-
         const num = Number(col6)
         const id = Number(col1)
         tour_wrapper.innerHTML=''
         if(col6 ==='0'){
             const allocate_wrapper = document.querySelector('.tour_wrapper')
             tour_wrapper.innerHTML='<h1> تم تخصيص الكل</h1>'
+
         }
         
         for(i=1; i<=num; i++){
@@ -161,7 +158,7 @@ const get_reply_ticket = (e)=>{
             console.log(parent.children[0].value);
             console.log(parent.children[1].value);
             if(parent.children[0].value===""){
-             alert('الرجاء ملء الحقول قبل التخصيص')    
+             alert('الرجاء ملء الحقول قبل الضغط على زر التخصيص')    
             }else{
                 fetch(`./allocate_per_day/${e.target.className}?date=${parent.children[0].value}&car=${parent.children[1].value}&driver=${parent.children[2].value}`)
             .then((res)=>{
@@ -176,6 +173,7 @@ const get_reply_ticket = (e)=>{
         })
     } 
     alert('تم التخصيص')
+    parent.style.type='disabled'
 } 
 const check_allocation_status = (id)=>{
     console.log(id);

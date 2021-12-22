@@ -1,0 +1,39 @@
+{% extends 'eticket/layout.html' %}
+{% load static %}
+{% block title %}
+    الجولات المنجزة 
+{% endblock %}
+{% block content %}
+    <div class="header">
+    <a href="{% url 'index' %}" class="btn btn-primary" style="margin: 30px;">الصفحة الرئيسية</a>
+    </div>
+    <table class="table table-bordered">
+        <caption>قائمة الجولات المخصصة</caption>
+        <thead>
+            <tr class="table-primary">
+                <th>رقم الجولة</th>
+                <th>اسم الموظف</th>
+                <th>اسم الجولة</th>
+                <th>نوع الجولة</th>
+                <th>تاريخ الجولة</th>
+                <th>عدد ايام الجولة</th>
+                <th>تاريخ نهاية الجولة</th>
+                <th>فريق الجولة</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticket in tickets %}
+            <tr>
+                <td><a href="{% url 'show_pdf' ticket.id %}" title="معاينة التخصيص">{{ticket.id}}</a></td>
+                <td>{{ticket.employee.first_name}} {{ticket.employee.last_name}}</td>
+                <td>{{ticket.tour_name}}</td>
+                <td>{{ticket.tour_type}}</td>
+                <td>{{ticket.tour_date}}</td>
+                <td>{{ticket.tour_duration}}</td>
+                <td>{{ticket.expected_end_tour}}</td>
+                <td>{{ticket.notes}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

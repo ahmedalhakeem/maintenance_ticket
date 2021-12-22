@@ -8,7 +8,9 @@
     <h3>تسجيل دخول بأسم : <b style="color:#1266f1;">{{user.first_name}} {{user.last_name}}</b> </h3>
     <b>{{user.role}}</b>
     <hr>
-    <a href="{% url 'specify_period' %}" class="btn btn-primary" >تحديد فترة</a>
+    <a href="{% url 'specify_period' %}" class="btn btn-primary" style="margin: 20px;">تحديد فترة</a>
+    <a href="{% url 'done_tickets' %}" class="btn btn-primary" style="margin: 20px;" >الجولات المنجزة</a>
+
         <table class="table table-bordered" id="tableid">
             <thead>
                 <tr class="table-primary">
@@ -37,7 +39,7 @@
                         <td>{{tour.tour_type}}</td>
                         <td id="start-tour">{{tour.tour_date}}</td>
                         <td id="tour-duration">{{tour.tour_duration}}</td>
-                        <td class="unassigned" {% if tour.unallocated_days != 0 %} style="background-color: brown;"{% endif %} >{{tour.unallocated_days}}</td>
+                        <td class="unassigned">{{tour.unallocated_days}}</td>
                         <td id="end-tour">{{tour.expected_end_tour}}</td>
                         <td> {% if tour.notes %}{{tour.notes}}{% else %} - {% endif %}</td>
                         <td>{% if tour.memorandum%}{{tour.memorandum}}{% else %}لا توجد {% endif %}</td>

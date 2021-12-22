@@ -35,7 +35,7 @@ def index(request):
         if user.groups.filter(name='Employees').exists():
             return render(request, 'eticket\profile_emp.html',{'user': user,'tickets': user_tickets})
         elif user.groups.filter(name='Maintenance').exists():
-            return render(request, 'eticket\maintenance.html', {'user': user, 'tours': Tickets.objects.all().order_by('-tour_date')})
+            return render(request, 'eticket\maintenance.html', {'user': user, 'tours': Tickets.objects.exclude(unallocated_days=0).order_by('-tour_date')})
             
         # if user.groups.filter(name='Employees').exists():
 
@@ -314,9 +314,19 @@ def get_all_non_dept_sections(request):
     print(sections)
     return JsonResponse(sections, safe=False)
 
-def non_memo(request):
-    tickets = Ticket_Reply.objects.exclude(memorandum_statue='تم الاستلام').all()
-    
+
+def done_tickets(request):
+    tickets = Tickets.objects.filter(unallocated_days=0).all().order_by('-id')
+    if tickets=="":
+        return render(request, 'eticket/done_tickets.html',{
+            'message': 'لا يوجد تذاكر منجزة حاليا'
+        })
+    else:
+        return render(request, 'eticket/done_tickets.html',{
+            'tickets': tickets
+        })
+
+            
 # Admin functions
 #  Add cars/
 def add_car(request):

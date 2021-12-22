@@ -22,7 +22,8 @@ urlpatterns =[
     path('get_sections/', views.get_sections, name="get_sections"),
     path('get_all_non_dept_sections/', views.get_all_non_dept_sections, name="get_all_non_dept_sections"),
     path('add_car/', views.add_car, name='add_car'),
-    path('add_driver/', views.add_driver, name='add_driver')
+    path('add_driver/', views.add_driver, name='add_driver'),
+    path('done_tickets/', views.done_tickets, name='done_tickets')
     # path('reply_ticket/', views.reply_ticket, name="reply_ticket")
     
     # path("profile_emp/<int:emp_id>", views.profile_emp, name="profile_emp"),
