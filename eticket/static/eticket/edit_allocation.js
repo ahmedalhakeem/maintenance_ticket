@@ -1,0 +1,55 @@
+document.addEventListener('DOMContentLoaded', ()=>{
+    console.log('worked!');
+})
+$('.edit-btn').on('click', function(e){
+    const wrapping_content = document.querySelector('#wrapping-content')
+    wrapping_content.innerHTML='';
+
+    const currentRow = $(this).closest('tr')
+    const id = currentRow.find('td:eq(0)').text();
+    const tour_days= currentRow.find('td:eq(5)').text();
+    days = Number(tour_days)
+    // console.log();
+    for(i=1; i<=days; i++){
+        const day = document.createElement('div')
+        day.id = `day${i}`
+        day.innerHTML = `اليوم ${i}`
+        day.style.display = 'flex'
+        day.style.margin = '50px'
+        wrapping_content.append(day)
+        const button = document.createElement('button')
+        button.innerHTML = 'تعديل'
+        const select_car = document.createElement('select')
+        const select_driver = document.createElement('select')
+        const car_choices = document.createElement('option')
+        car_choices.value = '0'
+        car_choices.innerHTML='اختر نوع المركبة من القائمة'
+        const driver_choices = document.createElement('option')
+        driver_choices.value = '0'
+        driver_choices.innerHTML = "اختر اسم السائق من القائمة"
+        select_car.append(car_choices)
+        select_driver.append(driver_choices)
+        fetch(`./display_allocations/${id}`)
+        .then(res=>{
+            if(res.ok) return res.json()
+            return res.json()
+            .then(error=>{
+                console.log(error);
+            })
+        })
+        .then(data=>{
+            // adding  a select driver list 
+            data.drivers.forEach(value=>{
+                select_driver.innerHTML += `<option>${value.driver_name}</option>`
+            })
+            day.append(select_driver)
+            //  adding a select car list
+            data.cars.forEach(value=>{
+                select_car.innerHTML += `<option>${value.car_type}</option>`
+            })
+            day.append(select_car)
+            day.append(button)
+        })
+    }
+    
+})

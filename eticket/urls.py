@@ -23,17 +23,6 @@ urlpatterns =[
     path('get_all_non_dept_sections/', views.get_all_non_dept_sections, name="get_all_non_dept_sections"),
     path('add_car/', views.add_car, name='add_car'),
     path('add_driver/', views.add_driver, name='add_driver'),
-    path('done_tickets/', views.done_tickets, name='done_tickets')
-    # path('reply_ticket/', views.reply_ticket, name="reply_ticket")
-    
-    # path("profile_emp/<int:emp_id>", views.profile_emp, name="profile_emp"),
-    # path("manager_profile/<int:user_id>", views.manager_profile, name="manager_profile"),
-    # path("it_profile/<int:user_id>", views.it_profile, name="it_profile"),
-    # path("dept_mgr_profile/<int:user_id>", views.dept_mgr_profile, name="dept_mgr_profile"),
-    # path("sec_mgr_profile/<int:user_id>", views.sec_mgr_profile, name="sec_mgr_profile"),
-
-    # API routes
-    # path("profile_emp/<int:emp_id>/tickets", views.tickets, name="tickets"),
-    # path("sec_mgr_profile/<int:user_id>/convert_ticket", views.convert_ticket, name="convert_ticket"),
-    # path("it_profile/<int:user_id>/submit_ticket", views.submit_ticket, name='submit_ticket')
+    path('done_tickets', views.done_tickets, name='done_tickets'),
+    path('display_allocations/<int:id>', views.display_allocations, name="display_allocations")
 ]

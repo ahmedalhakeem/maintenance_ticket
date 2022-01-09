@@ -71,4 +71,4 @@ class Allocation(models.Model):
    allocation_time = models.DateTimeField(auto_now=True)
    
    def __str__(self):
-      return f" {self.allocation_time}"
+      return f" {self.id}, {self.reply}"

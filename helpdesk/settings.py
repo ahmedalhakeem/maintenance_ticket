@@ -30,6 +30,7 @@ ALLOWED_HOSTS = ['172.20.60.111','127.0.0.1' ,'192.168.88.23']
 
 # Application definition
 
+
 INSTALLED_APPS = [
     'eticket',
     'django.contrib.admin',

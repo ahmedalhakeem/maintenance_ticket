@@ -125,7 +125,6 @@ for(i=1;i<=num;i++){
     default_d_choice.innerHTML = 'اختر اسم السائق من القائمة'
     driver_select.append(default_d_choice)
     car_select.append(default_c_choice)
-
     // fetch the required query object from the server
     fetch(`./get_allocations?id=${id}`)
     .then((res)=>{

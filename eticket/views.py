@@ -326,9 +326,25 @@ def done_tickets(request):
             'tickets': tickets
         })
 
-            
-# Admin functions
-#  Add cars/
+#edit allocations
+def display_allocations(request, id):
+    ticket = Tickets.objects.get(id=id)
+    drivers = list(Drivers.objects.all().values())
+    cars = list(Cars.objects.all().values())
+    if Ticket_Reply.objects.filter(ticket=ticket).exists():
+        ticket_reply = Ticket_Reply.objects.get(ticket=ticket)
+        print(ticket_reply.memorandum_statue)
+        if Allocation.objects.filter(reply= ticket_reply).exists():
+            allocations = list(Allocation.objects.filter(reply=ticket_reply).values())
+            for item in allocations:
+                car = Cars.objects.get(id=item['car_id'])
+                item['car_id'] = car.car_type
+                driver = Drivers.objects.get(id=item['driver_name_id'])
+                item['driver_name_id'] = driver.driver_name
+    
+    return JsonResponse({'drivers': drivers, 'cars': cars}, safe=False)
+
+
 def add_car(request):
     car = request.GET.get('car')
     if Cars.objects.filter(car_type=car).exists():
@@ -344,3 +360,4 @@ def add_driver(request):
     new_driver = Drivers(driver_name=driver)
     new_driver.save()
     return JsonResponse({'message': 'تم اضافة سائق جديد'})
+
