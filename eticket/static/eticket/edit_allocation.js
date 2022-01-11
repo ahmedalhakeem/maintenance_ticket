@@ -1,6 +1,47 @@
 document.addEventListener('DOMContentLoaded', ()=>{
     console.log('worked!');
 })
+$('.view-btn').on('click', function(e){
+    const wrap_allocations = document.querySelector('#wrap-allocations')
+    wrap_allocations.innerHTML=""
+    wrap_allocations.style.display = 'flex'
+    const this_row = $(this).closest('tr')
+    const index_0 = this_row.find('td:eq(0)').text()
+    ticket_id = Number(index_0)
+    fetch(`./view_allocations/${ticket_id}`)
+    .then(res=>{
+        if(res.ok) return res.json()
+        return res.json()
+        .then(error=>{
+            console.log(error);
+        })
+    })
+    .then(data=>{
+        const table = document.createElement('table')
+        table.className = 'table table-bordered'
+        const thead = document.createElement('thead')
+        thead.innerHTML = '<tr class="table-primary"><th>تاريخ الجولة</th><th>اسم السائق </th> <th>نوع المركبة</th><th>تعديل</th></tr>'
+        table.append(thead)
+        data.data.forEach(value=>{
+            const tr= document.createElement('tr')
+            tr.innerHTML +=`<td id="date_${value.id}">${value.allocate_date}</td><td id="driver_name_${value.id}">${value.driver_name_id}</td><td id="car_${value.id}">${value.car_id}</td><td><a class=${value.id} onclick="edit_allocation(${value.id},this)" href="#" type="button"><i class='far fa-edit' style='font-size:24px'></i></a></td>`
+            table.append(tr)
+        })
+        
+        wrap_allocations.append(table)
+    })
+    
+})
+function edit_allocation(id,e){
+
+    const driver= document.querySelector(`#driver_name_${id}`)
+    const car = document.querySelector(`#car_${id}`)
+    const allocate_date = document.querySelector(`#date_${id}`)
+    const input_date = document.createElement('input')
+
+    allocate_date.innerHTML= '<input type="date">'
+
+}
 $('.edit-btn').on('click', function(e){
     const wrapping_content = document.querySelector('#wrapping-content')
     wrapping_content.innerHTML='';
@@ -29,7 +70,7 @@ $('.edit-btn').on('click', function(e){
         driver_choices.innerHTML = "اختر اسم السائق من القائمة"
         select_car.append(car_choices)
         select_driver.append(driver_choices)
-        fetch(`./display_allocations/${id}`)
+        fetch(`./get_allocations`)
         .then(res=>{
             if(res.ok) return res.json()
             return res.json()

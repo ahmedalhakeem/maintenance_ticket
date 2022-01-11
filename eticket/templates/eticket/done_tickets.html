@@ -19,6 +19,7 @@
                 <th>عدد ايام الجولة</th>
                 <th>تاريخ نهاية الجولة</th>
                 <th>فريق الجولة</th>
+                <th>معاينة</th>
                 <th>تعديل</th>
             </tr>
         </thead>
@@ -33,17 +34,36 @@
                 <td>{{ticket.tour_duration}}</td>
                 <td>{{ticket.expected_end_tour}}</td>
                 <td>{{ticket.notes}}</td>
+                <td><a type="button" class="view-btn" data-bs-toggle="modal" data-bs-target="#exampleModal1"><i class="far fa-eye"></i></a></td>
                 <td><a type="button" class="edit-btn" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class='far fa-edit' style='font-size:24px'></i> </a></td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
     <!-- Modal -->
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel1">معاينة التخصيص</h5>
+      </div>
+      <div class="modal-body">
+         <div id="wrap-allocations">
+           
+         </div>
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">معاينة التخصيص</h5>
+          <h5 class="modal-title" id="exampleModalLabel">تعديل التخصيص</h5>
           <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
         </div>
         <div class="modal-body">

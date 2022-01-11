@@ -192,11 +192,8 @@ def allocate_tour(request, tour_id):
     })
 
 def get_allocations(request):
-    ticket = Tickets.objects.get(pk=request.GET.get('id'))
     drivers = list(Drivers.objects.all().values())
     cars = list(Cars.objects.all().values())
-    # reply = list(Ticket_Reply.objects.filter(ticket=ticket).values())
-    # print(reply)
     return JsonResponse({'cars': cars, 'drivers':drivers}, safe=False)
  
 def send_memo_status(request, id):
@@ -325,26 +322,21 @@ def done_tickets(request):
         return render(request, 'eticket/done_tickets.html',{
             'tickets': tickets
         })
+#  View allocated ticket
+def view_allocations(request, ticket_id):
+    ticket = Tickets.objects.get(id= ticket_id)
+    ticket_reply = Ticket_Reply.objects.get(ticket=ticket)
+    allocations = list(Allocation.objects.filter(reply= ticket_reply).values())
+    for allocation in allocations:
+        driver = Drivers.objects.get(id = allocation['driver_name_id'])
+        allocation['driver_name_id'] = driver.driver_name
+        car = Cars.objects.get(id=allocation['car_id'])
+        allocation['car_id'] = car.car_type
+    return JsonResponse({'data': allocations}, safe=False)
+
+
 
 #edit allocations
-def display_allocations(request, id):
-    ticket = Tickets.objects.get(id=id)
-    drivers = list(Drivers.objects.all().values())
-    cars = list(Cars.objects.all().values())
-    if Ticket_Reply.objects.filter(ticket=ticket).exists():
-        ticket_reply = Ticket_Reply.objects.get(ticket=ticket)
-        print(ticket_reply.memorandum_statue)
-        if Allocation.objects.filter(reply= ticket_reply).exists():
-            allocations = list(Allocation.objects.filter(reply=ticket_reply).values())
-            for item in allocations:
-                car = Cars.objects.get(id=item['car_id'])
-                item['car_id'] = car.car_type
-                driver = Drivers.objects.get(id=item['driver_name_id'])
-                item['driver_name_id'] = driver.driver_name
-    
-    return JsonResponse({'drivers': drivers, 'cars': cars}, safe=False)
-
-
 def add_car(request):
     car = request.GET.get('car')
     if Cars.objects.filter(car_type=car).exists():
