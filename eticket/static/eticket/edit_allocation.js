@@ -33,15 +33,53 @@ $('.view-btn').on('click', function(e){
     
 })
 function edit_allocation(id,e){
-
+    e.innerHTML=''
+    const save_button = document.createElement('button')
+    save_button.id = 
+    save_button.innerHTML = 'حفظ'
+    e.append(save_button)
     const driver= document.querySelector(`#driver_name_${id}`)
     const car = document.querySelector(`#car_${id}`)
+    driver.innerHTML=""
+    car.innerHTML= ""
     const allocate_date = document.querySelector(`#date_${id}`)
-    const input_date = document.createElement('input')
-
-    allocate_date.innerHTML= '<input type="date">'
-
+    allocate_date.innerHTML= `<input id='allocate_date_${id}' type="date" class="inputform style-uniform">`
+    const select_car = document.createElement('select')
+    select_car.id = `car_selected_${id}`
+    const select_driver = document.createElement('select')
+    select_driver.id =`driver_selected_${id}`
+    car.append(select_car)
+    driver.append(select_driver)
+    fetch(`./get_allocations`)
+    .then(res=>{
+    if(res.ok) return res.json()
+    return res.json()
+    .then(error=>{
+        console.log(error);
+        })
+    })
+    .then(data=>{
+        data.drivers.forEach(value=>{
+            select_driver.innerHTML += `<option>${value.driver_name}</option>`
+        })
+        data.cars.forEach(value=>{
+            select_car.innerHTML += `<option>${value.car_type}</option>`
+        })
+    })
+    save_button.addEventListener('click', (x)=>{
+        save_after_edit(x, id)
+    })
 }
+// Save after edit
+const save_after_edit = (e, id)=>{
+    const parent = e.target.parentElement
+    const grand_parent = parent.parentElement
+    console.log(grand_parent);
+    const date = document.querySelector(`#allocate_date_${id}`)
+    const driver = document.querySelector(`#driver_selected_${id}`)
+    console.log(driver.value, id);
+}
+
 $('.edit-btn').on('click', function(e){
     const wrapping_content = document.querySelector('#wrapping-content')
     wrapping_content.innerHTML='';
