@@ -334,6 +334,17 @@ def view_allocations(request, ticket_id):
         allocation['car_id'] = car.car_type
     return JsonResponse({'data': allocations}, safe=False)
 
+def edit_allocated_saved(request, id):
+    allocation = Allocation.objects.get(pk=id)
+    car = Cars.objects.get(car_type= request.GET.get('car'))
+    driver = Drivers.objects.get(driver_name=request.GET.get('driver'))
+    allocation.driver_name = driver
+    allocation.car = car
+    allocation.allocate_date = request.GET.get('date')
+    allocation.save()
+    print(allocation)
+    return JsonResponse({'data': 'success'}, safe=False)
+    
 
 
 #edit allocations

@@ -27,23 +27,29 @@ $('.view-btn').on('click', function(e){
             tr.innerHTML +=`<td id="date_${value.id}">${value.allocate_date}</td><td id="driver_name_${value.id}">${value.driver_name_id}</td><td id="car_${value.id}">${value.car_id}</td><td><a class=${value.id} onclick="edit_allocation(${value.id},this)" href="#" type="button"><i class='far fa-edit' style='font-size:24px'></i></a></td>`
             table.append(tr)
         })
-        
         wrap_allocations.append(table)
     })
     
 })
 function edit_allocation(id,e){
     e.innerHTML=''
+    console.log(e.parentElement);
+    const parent = e.parentElement
+    
     const save_button = document.createElement('button')
-    save_button.id = 
+    const cancel_button = document.querySelector('button')
     save_button.innerHTML = 'حفظ'
+    cancel_button.innerHTML = 'الغاء'
     e.append(save_button)
+    e.append(cancel_button)
     const driver= document.querySelector(`#driver_name_${id}`)
     const car = document.querySelector(`#car_${id}`)
     driver.innerHTML=""
     car.innerHTML= ""
     const allocate_date = document.querySelector(`#date_${id}`)
-    allocate_date.innerHTML= `<input id='allocate_date_${id}' type="date" class="inputform style-uniform">`
+    console.log(allocate_date.innerHTML);
+    allocate_date.innerHTML= `<input id='allocate_date_${id}' type="date" class="inputform style-uniform" value=${allocate_date.innerHTML}>`
+    allocate_date.style.border = 'none'
     const select_car = document.createElement('select')
     select_car.id = `car_selected_${id}`
     const select_driver = document.createElement('select')
@@ -69,6 +75,14 @@ function edit_allocation(id,e){
     save_button.addEventListener('click', (x)=>{
         save_after_edit(x, id)
     })
+    cancel_button.addEventListener('click', (z)=>{
+        cancel_change(z)
+    })
+}
+// cancel button
+const cancel_change = (e)=>{
+    window.location
+    return false
 }
 // Save after edit
 const save_after_edit = (e, id)=>{
@@ -77,7 +91,20 @@ const save_after_edit = (e, id)=>{
     console.log(grand_parent);
     const date = document.querySelector(`#allocate_date_${id}`)
     const driver = document.querySelector(`#driver_selected_${id}`)
-    console.log(driver.value, id);
+    const car = document.querySelector(`#car_selected_${id}`)
+    
+    fetch(`./edit_allocated_saved/${id}?date=${date.value}&car=${car.value}&driver=${driver.value}`)
+    .then(res=>{
+        if(res.ok) return res.json()
+        return res.json()
+        .then(error=>{
+            console.log(error);
+        })
+    })
+    .then(data=>{
+        console.log(data);
+    })
+
 }
 
 $('.edit-btn').on('click', function(e){

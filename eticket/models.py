@@ -71,4 +71,4 @@ class Allocation(models.Model):
    allocation_time = models.DateTimeField(auto_now=True)
    
    def __str__(self):
-      return f" {self.id}, {self.reply}"
+      return f" {self.id}, {self.driver_name}, {self.car}, on {self.allocate_date} related_to:{self.reply}"
