@@ -52,14 +52,20 @@ function edit_allocation(id,e){
     const new_car = tr_row.children[2]
     const btn = tr_row.children[3]
     // create a new save btn and append it to the event element <a>
-    const save_link = document.createElement('a')
+    const save_link = document.createElement('a')    
+    const cancel_link = document.createElement('a')
+    save_link.id = `save_${id}`
+    cancel_link.id = `cancel_${id}`
+    cancel_link.innerHTML = '<i class="fa fa-times" style="font-size=24px"></i>'
     save_link.innerHTML = '<i class="fa fa-save" style="font-size=24px"></i>'
-    btn.append(save_link)
-    // // get all span elements from allocation row and assign each one to a variable, and then hide them
-
-    // // allocate_date.style.display= 'none'
-    // // Create new elements, then append them to the row elements
-    // new_date.innerHTML = `<input id='allocate_date_${id}' type="date" class="inputform style-uniform" value="${allocate_date.innerHTML}">`
+    cancel_link.title = 'الغاء'
+    save_link.title='حفظ'
+    save_link.style.cursor= 'pointer'
+    cancel_link.style.cursor= 'pointer'
+    btn.append(save_link, cancel_link)
+    cancel_link.addEventListener('click', (e)=>{
+        cancel_operation(e,id)
+    })
     const select_car = document.createElement('select')
     const select_driver = document.createElement('select')
     const date = document.createElement('input')
@@ -93,7 +99,21 @@ function edit_allocation(id,e){
    
 }
 // cancel button
+const cancel_operation = (e,id)=>{
+    console.log(e, id);
+    // Hide all existing elements
+    document.querySelector(`#new_date_${id}`).style.display = 'none'
+    document.querySelector(`#driver_selected_${id}`).style.display = 'none'
+    document.querySelector(`#car_selected_${id}`).style.display = 'none'
+    document.querySelector(`#save_${id}`).style.display = 'none'
+    document.querySelector(`#cancel_${id}`).style.display = 'none'
+    // Show all previous elements
+    document.querySelector(`#date_${id}`).style.display = 'block'
+    document.querySelector(`#driver_name_${id}`).style.display = 'block'
+    document.querySelector(`#car_${id}`).style.display = 'block'
+    document.querySelector(`#edit_${id}`).style.display = 'block'
 
+}
 // Save after edit
 const save_after_edit = (id)=>{
     console.log(id);    
