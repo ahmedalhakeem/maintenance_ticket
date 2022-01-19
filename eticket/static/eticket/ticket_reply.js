@@ -156,8 +156,9 @@ const get_reply_ticket = (e)=>{
             console.log(e.target.className);
             console.log(parent.children[0].value);
             console.log(parent.children[1].value);
-            if(parent.children[0].value===""){
-             alert('الرجاء ملء الحقول قبل الضغط على زر التخصيص')    
+            if((parent.children[0].value==="")||(parent.children[1].value==='0')||(parent.children[2].value==='0')){
+             alert('الرجاء ملء الحقول قبل الضغط على زر التخصيص')   
+             return false 
             }else{
                 fetch(`./allocate_per_day/${e.target.className}?date=${parent.children[0].value}&car=${parent.children[1].value}&driver=${parent.children[2].value}`)
             .then((res)=>{
@@ -171,8 +172,9 @@ const get_reply_ticket = (e)=>{
             console.log(data);
         })
     } 
-    alert('تم التخصيص')
-    parent.style.type='disabled'
+    
+    e.target.setAttribute('disabled', '')
+    alert('تم تخصيص الجولة ')
 } 
 const check_allocation_status = (id)=>{
     console.log(id);
