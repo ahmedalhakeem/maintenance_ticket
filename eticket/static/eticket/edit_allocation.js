@@ -3,7 +3,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
 })
 $('.view-btn').on('click', function(e){
     const wrap_allocations = document.querySelector('#wrap-allocations')
-    wrap_allocations.innerHTML=""
+    const allocation_rows = document.querySelector('#allocation-rows')
+    // const view_info = document.querySelector('#view-info')
+    console.log(allocation_rows);
+    allocation_rows.innerHTML=''    
     wrap_allocations.style.display = 'flex'
     const this_row = $(this).closest('tr')
     const index_0 = this_row.find('td:eq(0)').text()
@@ -16,67 +19,52 @@ $('.view-btn').on('click', function(e){
             console.log(error);
         })
     })
-    .then(data=>{
-        const table = document.createElement('table')
-        table.className = 'table table-bordered'
-        const thead = document.createElement('thead')
-        thead.innerHTML = '<tr class="table-primary"><th>تاريخ الجولة</th><th>اسم السائق </th> <th>نوع المركبة</th><th>تعديل</th></tr>'
-        table.append(thead)
-        data.data.forEach(value=>{
-            const tr= document.createElement('tr')
-            tr.innerHTML +=`<td><span id="date_${value.id}">${value.allocate_date}</span></td><td><span id="driver_name_${value.id}">${value.driver_name_id}</span></td><td><span id="car_${value.id}">${value.car_id}</span></td><td><a id="edit_${value.id}" onclick="edit_allocation(${value.id},this)" href="#" type="button"><i class='far fa-edit' style='font-size:24px'></i></a></td>`
-            table.append(tr)
-        })
-        wrap_allocations.append(table)
-    })
     
+    .then(data=>{
+       data.data.forEach(value=>{
+        allocation_rows.innerHTML +=`<tr id="row-${value.id}"><td id="date-${value.id}">${value.allocate_date}</td><td id="driver-${value.id}">${value.driver_name_id}</td><td id="car-${value.id}">${value.car_id}</td>
+        <td id="edit-btn-${value.id}"><a id="edit-${value.id}" onclick="edit_allocation(${value.id},this)" href="#" type="button"><i class='far fa-edit' style='font-size:24px'></i></a>
+        <a id="save-${value.id}" type="button" style="display:none"><i class="fa fa-save" style="font-size=24px"></i></a><a id="cancel-${value.id}" type="button" style="display:none"><i class="fa fa-times" style="font-size=24px"></i></a></tr>`
+       })
+    })
 })
 function edit_allocation(id,e){
-    const driver= document.querySelector(`#driver_name_${id}`)
-    const car = document.querySelector(`#car_${id}`)
-    const allocate_date = document.querySelector(`#date_${id}`)
-    const edit_btn = document.querySelector(`#edit_${id}`)
-    console.log(edit_btn);
-    driver.style.display= 'none'
-    car.style.display = 'none'
-    allocate_date.style.display = 'none'
+    // collect all innerHTML
+    const eidted_row = document.querySelector(`#row-${id}`)
+    const date_info = document.querySelector(`#date-${id}`).innerHTML
+    const driver_info = document.querySelector(`#driver-${id}`).innerHTML
+    const car_info = document.querySelector(`#car-${id}`).innerHTML
+    const edit_info = document.querySelector(`#edit-btn-${id}`).innerHTML
+    const save_btn = document.querySelector(`#save-${id}`)
+    const cancel_btn = document.querySelector(`#cancel-${id}`)
+    const edit_btn = document.querySelector(`#edit-${id}`)
     edit_btn.style.display = 'none'
-    const td_button = e.parentElement
-    const tr_row = td_button.parentElement
-    console.log(tr_row.children);
-    // e.innerHTML=''
-    // console.log(id);
-    // // Take all td elements
-    const new_date = tr_row.children[0];
-    const new_driver = tr_row.children[1]
-    const new_car = tr_row.children[2]
-    const btn = tr_row.children[3]
-    // create a new save btn and append it to the event element <a>
-    const save_link = document.createElement('a')    
-    const cancel_link = document.createElement('a')
-    save_link.id = `save_${id}`
-    cancel_link.id = `cancel_${id}`
-    cancel_link.innerHTML = '<i class="fa fa-times" style="font-size=24px"></i>'
-    save_link.innerHTML = '<i class="fa fa-save" style="font-size=24px"></i>'
-    cancel_link.title = 'الغاء'
-    save_link.title='حفظ'
-    save_link.style.cursor= 'pointer'
-    cancel_link.style.cursor= 'pointer'
-    btn.append(save_link, cancel_link)
-    cancel_link.addEventListener('click', (e)=>{
-        cancel_operation(e,id)
+    cancel_btn.style.display = 'block'
+    save_btn.style.display = 'block'
+    cancel_btn.addEventListener('click', ()=>{
+        cancel_btns(e, id, driver_info, car_info, date_info )
     })
-    const select_car = document.createElement('select')
-    const select_driver = document.createElement('select')
-    const date = document.createElement('input')
-    date.id = `new_date_${id}`
-    date.value = allocate_date.innerHTML
-    date.type = 'date'
-    new_date.append(date)
-    select_car.id = `car_selected_${id}`
-    new_car.append(select_car)
-    select_driver.id =`driver_selected_${id}`
-    new_driver.append(select_driver)
+    // collect all tds
+    const date = document.querySelector(`#date-${id}`)
+    const driver = document.querySelector(`#driver-${id}`)
+    const car = document.querySelector(`#car-${id}`)
+    const edit = document.querySelector(`#edit-btn-${id}`)
+    // date.style.display = 'none'
+    // driver.style.display = 'none'
+    // car.style.display = 'none'
+    date.innerHTML = ""
+    driver.innerHTML = ""
+    car.innerHTML = ""
+    console.log(date_info);
+    console.log(typeof(date_info));
+    console.log(typeof(edit_info));
+    date.innerHTML = `<input id="selected-date-${id}" type='date' value=${date_info}>`
+    const driver_select = document.createElement('select')
+    const car_select = document.createElement('select')
+    driver_select.id = `driver-select-${id}`
+    car_select.id  = `car-select-${id}`
+    driver.append(driver_select)
+    car.append(car_select)
     fetch(`./get_allocations`)
     .then(res=>{
     if(res.ok) return res.json()
@@ -87,42 +75,48 @@ function edit_allocation(id,e){
     })
     .then(data=>{
         data.drivers.forEach(value=>{
-            select_driver.innerHTML += `<option>${value.driver_name}</option>`
+            driver_select.innerHTML += `<option>${value.driver_name}</option>`
         })
         data.cars.forEach(value=>{
-            select_car.innerHTML += `<option>${value.car_type}</option>`
+            car_select.innerHTML += `<option>${value.car_type}</option>`
         })
     })
-    save_link.addEventListener('click', ()=>{
+    save_btn.addEventListener('click', ()=>{
         save_after_edit(id)
-    })
-   
-}
+    })    
+
+}   
+
+
 // cancel button
-const cancel_operation = (e,id)=>{
-    console.log(e, id);
-    // Hide all existing elements
-    document.querySelector(`#new_date_${id}`).style.display = 'none'
-    document.querySelector(`#driver_selected_${id}`).style.display = 'none'
-    document.querySelector(`#car_selected_${id}`).style.display = 'none'
-    document.querySelector(`#save_${id}`).style.display = 'none'
-    document.querySelector(`#cancel_${id}`).style.display = 'none'
-    // Show all previous elements
-    document.querySelector(`#date_${id}`).style.display = 'block'
-    document.querySelector(`#driver_name_${id}`).style.display = 'block'
-    document.querySelector(`#car_${id}`).style.display = 'block'
-    document.querySelector(`#edit_${id}`).style.display = 'block'
+const cancel_btns= (e, id, driver_info, car_info, date_info)=>{
+    console.log(id);
+    console.log(driver_info);
+    console.log(car_info);
+    console.log(date_info);
+    document.querySelector(`#cancel-${id}`).style.display='none'
+    document.querySelector(`#save-${id}`).style.display='none'
+    document.querySelector(`#edit-${id}`).style.display='block'
+    
+
+    const driver = document.querySelector(`#driver-${id}`)
+    const car = document.querySelector(`#car-${id}`)
+    const date = document.querySelector(`#date-${id}`)
+    car.innerHTML = car_info
+    driver.innerHTML = driver_info
+    date.innerHTML = date_info
 
 }
+
 // Save after edit
 const save_after_edit = (id)=>{
-    console.log(id);    
-    const date = document.querySelector(`#new_date_${id}`)
-    // console.log(date.value);
-    const driver = document.querySelector(`#driver_selected_${id}`)
-    const car = document.querySelector(`#car_selected_${id}`)
-    console.log(car.value);
-    fetch(`./edit_allocated_saved/${id}?date=${date.value}&car=${car.value}&driver=${driver.value}`)
+    // console.log(id);    
+    const selcted_driver = document.querySelector(`#driver-select-${id}`)
+    const selcted_car = document.querySelector(`#car-select-${id}`)
+    const selected_date = document.querySelector(`#selected-date-${id}`)
+    console.log(selcted_car);
+    // console.log(selcted_driver.value, selcted_car.value, selected_date.value);
+    fetch(`./edit_allocated_saved/${id}?date=${selected_date.value}&car=${selcted_car.value}&driver=${selcted_driver.value}`)
     .then(res=>{
         if(res.ok) return res.json()
         return res.json()
@@ -131,9 +125,21 @@ const save_after_edit = (id)=>{
         })
     })
     .then(data=>{
-        console.log(data);
-    })
+        // console.log(data);
 
+    })
+    const row = document.querySelector(`#row-${id}`)
+    console.log(row);
+    document.querySelector(`#edit-${id}`).style.display = 'block'
+    document.querySelector(`#cancel-${id}`).style.display = 'none'
+    document.querySelector(`#save-${id}`).style.display = 'none'
+
+    row.children['0'].innerHTML = selected_date.value
+    row.children['1'].innerHTML = selcted_driver.value
+    row.children['2'].innerHTML = selcted_car.value
+    selected_date.style.display= 'none'
+    selcted_driver.style.display = 'none'
+    selcted_car.style.display = 'none'
 }
 
 $('.edit-btn').on('click', function(e){

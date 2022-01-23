@@ -314,13 +314,17 @@ def get_all_non_dept_sections(request):
 
 def done_tickets(request):
     tickets = Tickets.objects.filter(unallocated_days=0).all().order_by('-id')
+    cars = Cars.objects.all()
+    drivers = Drivers.objects.all()
     if tickets=="":
         return render(request, 'eticket/done_tickets.html',{
             'message': 'لا يوجد تذاكر منجزة حاليا'
         })
     else:
         return render(request, 'eticket/done_tickets.html',{
-            'tickets': tickets
+            'tickets': tickets,
+            'cars': cars,
+            'drivers': drivers
         })
 #  View allocated ticket
 def view_allocations(request, ticket_id):
