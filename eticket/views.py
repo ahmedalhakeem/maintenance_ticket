@@ -24,7 +24,7 @@ def index(request):
     time = datetime.datetime.now().time()
     print(time)
     user = User.objects.get(username= request.user)
-    user_tickets = Tickets.objects.filter(employee=user).all().order_by('-ticket_date')
+    user_tickets = Tickets.objects.filter(employee=user).all().order_by('-id')
     if request.user.is_authenticated:
         if request.user.is_superuser:
             return render(request, 'eticket/index.html',{
@@ -349,7 +349,9 @@ def edit_allocated_saved(request, id):
     print(allocation)
     return JsonResponse({'data': 'success'}, safe=False)
     
-
+def ticket_info(request, id):
+    ticket = list(Tickets.objects.filter(pk = id).values())
+    return JsonResponse(ticket[0], safe=False)
 
 #edit allocations
 def add_car(request):

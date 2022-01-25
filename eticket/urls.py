@@ -25,6 +25,7 @@ urlpatterns =[
     path('add_driver/', views.add_driver, name='add_driver'),
     path('done_tickets', views.done_tickets, name='done_tickets'),
     path('view_allocations/<int:ticket_id>', views.view_allocations, name="view_allocations"),
-    path('edit_allocated_saved/<int:id>', views.edit_allocated_saved, name='edit_allocated_saved')
+    path('edit_allocated_saved/<int:id>', views.edit_allocated_saved, name='edit_allocated_saved'),
+    path('ticket_info/<int:id>', views.ticket_info, name="ticket_info")
     # path('display_allocations', views.display_allocations, name="display_allocations")
 ]

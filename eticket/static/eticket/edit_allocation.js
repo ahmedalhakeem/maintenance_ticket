@@ -60,9 +60,19 @@ function edit_allocation(id,e){
     console.log(typeof(edit_info));
     date.innerHTML = `<input id="selected-date-${id}" type='date' value=${date_info}>`
     const driver_select = document.createElement('select')
+    // 
+    const driver_value = document.createElement('option')
+    driver_value.value = driver_info
+    driver_value.innerHTML = driver_info
+    driver_select.append(driver_value)
+    const car_value = document.createElement('option')
+    car_value.value = car_info
+    car_value.innerHTML = car_info
+    // 
     const car_select = document.createElement('select')
     driver_select.id = `driver-select-${id}`
     car_select.id  = `car-select-${id}`
+    car_select.append(car_value)
     driver.append(driver_select)
     car.append(car_select)
     fetch(`./get_allocations`)
@@ -142,55 +152,55 @@ const save_after_edit = (id)=>{
     selcted_car.style.display = 'none'
 }
 
-$('.edit-btn').on('click', function(e){
-    const wrapping_content = document.querySelector('#wrapping-content')
-    wrapping_content.innerHTML='';
+// $('.edit-btn').on('click', function(e){
+//     const wrapping_content = document.querySelector('#wrapping-content')
+//     wrapping_content.innerHTML='';
 
-    const currentRow = $(this).closest('tr')
-    const id = currentRow.find('td:eq(0)').text();
-    const tour_days= currentRow.find('td:eq(5)').text();
-    days = Number(tour_days)
-    // console.log();
-    for(i=1; i<=days; i++){
-        const day = document.createElement('div')
-        day.id = `day${i}`
-        day.innerHTML = `اليوم ${i}`
-        day.style.display = 'flex'
-        day.style.margin = '50px'
-        wrapping_content.append(day)
-        const button = document.createElement('button')
-        button.innerHTML = 'تعديل'
-        const select_car = document.createElement('select')
-        const select_driver = document.createElement('select')
-        const car_choices = document.createElement('option')
-        car_choices.value = '0'
-        car_choices.innerHTML='اختر نوع المركبة من القائمة'
-        const driver_choices = document.createElement('option')
-        driver_choices.value = '0'
-        driver_choices.innerHTML = "اختر اسم السائق من القائمة"
-        select_car.append(car_choices)
-        select_driver.append(driver_choices)
-        fetch(`./get_allocations`)
-        .then(res=>{
-            if(res.ok) return res.json()
-            return res.json()
-            .then(error=>{
-                console.log(error);
-            })
-        })
-        .then(data=>{
-            // adding  a select driver list 
-            data.drivers.forEach(value=>{
-                select_driver.innerHTML += `<option>${value.driver_name}</option>`
-            })
-            day.append(select_driver)
-            //  adding a select car list
-            data.cars.forEach(value=>{
-                select_car.innerHTML += `<option>${value.car_type}</option>`
-            })
-            day.append(select_car)
-            day.append(button)
-        })
-    }
+//     const currentRow = $(this).closest('tr')
+//     const id = currentRow.find('td:eq(0)').text();
+//     const tour_days= currentRow.find('td:eq(5)').text();
+//     days = Number(tour_days)
+//     // console.log();
+//     for(i=1; i<=days; i++){
+//         const day = document.createElement('div')
+//         day.id = `day${i}`
+//         day.innerHTML = `اليوم ${i}`
+//         day.style.display = 'flex'
+//         day.style.margin = '50px'
+//         wrapping_content.append(day)
+//         const button = document.createElement('button')
+//         button.innerHTML = 'تعديل'
+//         const select_car = document.createElement('select')
+//         const select_driver = document.createElement('select')
+//         const car_choices = document.createElement('option')
+//         car_choices.value = '0'
+//         car_choices.innerHTML='اختر نوع المركبة من القائمة'
+//         const driver_choices = document.createElement('option')
+//         driver_choices.value = '0'
+//         driver_choices.innerHTML = "اختر اسم السائق من القائمة"
+//         select_car.append(car_choices)
+//         select_driver.append(driver_choices)
+//         fetch(`./get_allocations`)
+//         .then(res=>{
+//             if(res.ok) return res.json()
+//             return res.json()
+//             .then(error=>{
+//                 console.log(error);
+//             })
+//         })
+//         .then(data=>{
+//             // adding  a select driver list 
+//             data.drivers.forEach(value=>{
+//                 select_driver.innerHTML += `<option>${value.driver_name}</option>`
+//             })
+//             day.append(select_driver)
+//             //  adding a select car list
+//             data.cars.forEach(value=>{
+//                 select_car.innerHTML += `<option>${value.car_type}</option>`
+//             })
+//             day.append(select_car)
+//             day.append(button)
+//         })
+//     }
     
-})
+// })

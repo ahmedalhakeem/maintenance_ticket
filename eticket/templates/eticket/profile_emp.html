@@ -23,7 +23,7 @@
                         <th scope="col">مدة الجولة</th>
                         <th scope="col">ايام غير مخصصة</th>
                         <th scope="col"> معاينة التخصيص</th>
-    
+                        <th scope="col">تعديل التذكرة</th>
                     </tr>
                     
                     <tbody>
@@ -36,16 +36,49 @@
                             <td>{{ticket.tour_duration}}</td>
                             <td>{{ticket.unallocated_days}}</td>
                             <td><a href="{% url 'show_replied_ticket' ticket.id%}" class="btn btn-primary" {% if ticket.unallocated_days != 0 %} style="background-color: brown;"{% endif %}>معاينة التخصيص</a></td>
+                            <td><a type="button" class="edit-ticket" onclick="view_edit_ticket({{ticket.id}})" data-bs-toggle="modal" data-bs-target="#exampleModal1"><i class="far fa-eye"></i></a></td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </thead>
             </table>
         </div>
-   
-    {% endblock %}
-    {% block script %}
-        <script src="{% static 'eticket/index.js' %}"></script>
+        <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel1">معاينة المذكرة</h5>
+                </div>
+                <div class="modal-body">
+                   <form action="">
+                    <div id="register-panel-ticket">
+                        <label for="">نوع الجولة</label>
+                        <select class="inputform" name="" id="ticket-type">
+                            <option value="داخلية"> داخلية</option>
+                            <option value="خارجية"> خارجية</option>
+                        </select>
+                        <label for="tour-title">عنوان الجولة</label>
+                        <input type="text" class="inputform" id="ticket-title" value="" placeholder="عنوان الجولة">
+                        <label for="tour-start-date">تاريخ بداية الجولة</label>
+                        <input type="date"  class="inputform" id="ticket-start-date">
+                        <label for="tour-days">عدد ايام الجولة</label>
+                        <input type="number" class="inputform" min="0" id="tour-days">
+                        <label for="tour-end-date">نهاية الجولةالمتوقع</label>
+                        <input type="date" class="inputform" id="ticket-end-date">
+                        <label for="tour-team">اسماء المكلفين بالجولة</label>
+                        <input type="text" value="" class="inputform" id="tour-team" placeholder="اسماء المكلفين بالجولة">
+                        <input type="submit" name="" id="" value="تعديل المذكرة"> 
+                    </div>
+                   </form>
+                </div>
+                <div class="modal-footer">
+          
+                </div>
+              </div>
+            </div>
+          </div>
+        <script src="{% static 'eticket/edit_ticket.js' %}"></script>
+
     {% endblock %}
 
     
