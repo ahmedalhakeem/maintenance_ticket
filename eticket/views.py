@@ -1,4 +1,5 @@
 import json
+from time import strptime
 from django import http
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
@@ -14,6 +15,7 @@ from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.cache import never_cache
 import datetime
+from datetime import datetime
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from io import StringIO, BytesIO
@@ -21,8 +23,8 @@ from io import StringIO, BytesIO
 @login_required
 def index(request):
     # print(datetime.time)
-    time = datetime.datetime.now().time()
-    print(time)
+    # time = datetime.datetime.now().time()
+    # print(time)
     user = User.objects.get(username= request.user)
     user_tickets = Tickets.objects.filter(employee=user).all().order_by('-id')
     if request.user.is_authenticated:
@@ -352,6 +354,25 @@ def edit_allocated_saved(request, id):
 def ticket_info(request, id):
     ticket = list(Tickets.objects.filter(pk = id).values())
     return JsonResponse(ticket[0], safe=False)
+
+def saved_edited_ticket(request, id):
+    
+    ticket = Tickets.objects.get(pk=id)
+    ticket.tour_name = request.GET.get('title')
+    ticket.tour_title = request.GET.get('tic_type')
+    # ticket.tour_date = request.GET.get('st_date')
+    date_string_format = request.GET.get('st_date')
+    end_date_string_format = request.GET.get('end_date')
+    end_date_strip = end_date_string_format.rstrip()
+    st_date_strip = date_string_format.rstrip()
+    ticket.tour_date = st_date_strip
+    ticket.expected_end_tour = end_date_strip
+    ticket.tour_duration = request.GET.get('days')
+    # ticket.expected_end_tour = request.GET.get('end_date')
+    ticket.notes = request.GET.get('team')
+    ticket.save()
+    print(ticket)
+    return JsonResponse({'data': 'success'}, safe=False)
 
 #edit allocations
 def add_car(request):

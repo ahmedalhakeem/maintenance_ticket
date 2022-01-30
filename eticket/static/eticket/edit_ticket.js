@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     console.log('working');
 })
 function view_edit_ticket(id){
+    const submit_btn = document.querySelector('#submit-edit-ticket')
     const ticket_type = document.querySelector('#ticket-type')
     const ticket_title = document.querySelector('#ticket-title')
     const ticket_st_date = document.querySelector('#ticket-start-date')
@@ -26,4 +27,19 @@ function view_edit_ticket(id){
         ticket_end_date.value = `${data.expected_end_tour}`
         tour_team.value = `${data.notes}`
     })
+      submit_btn.addEventListener('click', (e)=>{
+          fetch(`saved_edited_ticket/${id}?title=${ticket_title.value}&tic_type=${ticket_type.value}&st_date=${ticket_st_date.value}
+          &days=${tour_days.value}&end_date=${ticket_end_date.value}&team=${tour_team.value}`)
+          .then(res=>{
+              if(res.ok) return res.json()
+              return res.json()
+              then(error=>{
+                  console.log(error);
+              })
+          })
+          .then(data=>{
+              console.log(data);
+          })
+        //   e.preventDefault()
+      }) 
 }
