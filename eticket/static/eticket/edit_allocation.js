@@ -64,7 +64,7 @@ function edit_allocation(id,e){
     const driver_value = document.createElement('option')
     driver_value.value = driver_info
     driver_value.innerHTML = driver_info
-    driver_select.append(driver_value)
+    // driver_select.append(driver_value)
     const car_value = document.createElement('option')
     car_value.value = car_info
     car_value.innerHTML = car_info
@@ -85,7 +85,10 @@ function edit_allocation(id,e){
     })
     .then(data=>{
         data.drivers.forEach(value=>{
-            driver_select.innerHTML += `<option>${value.driver_name}</option>`
+            if (value.driver_name===driver_info){
+                driver_select.innerHTML += `<option selected>${value.driver_name}</option>`
+            }
+            else {driver_select.innerHTML += `<option>${value.driver_name}</option>`}
         })
         data.cars.forEach(value=>{
             car_select.innerHTML += `<option>${value.car_type}</option>`

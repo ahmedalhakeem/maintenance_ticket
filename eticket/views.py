@@ -167,8 +167,8 @@ def convert_ticket(request):
                 tour.notes= notes
         
             tour.save()
-        
-        return HttpResponseRedirect(reverse('employee', args=(request.user.id,)))
+        return HttpResponseRedirect(reverse('index'))
+        # return HttpResponseRedirect(reverse('employee', args=(request.user.id,)))
 
     return render(request, 'eticket\convert_ticket.html',{
         'form': Ticket_Form()
@@ -367,6 +367,7 @@ def saved_edited_ticket(request, id):
     st_date_strip = date_string_format.rstrip()
     ticket.tour_date = st_date_strip
     ticket.expected_end_tour = end_date_strip
+    
     ticket.tour_duration = request.GET.get('days')
     # ticket.expected_end_tour = request.GET.get('end_date')
     ticket.notes = request.GET.get('team')
