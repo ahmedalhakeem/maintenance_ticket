@@ -49,9 +49,7 @@ function edit_allocation(id,e){
     const driver = document.querySelector(`#driver-${id}`)
     const car = document.querySelector(`#car-${id}`)
     const edit = document.querySelector(`#edit-btn-${id}`)
-    // date.style.display = 'none'
-    // driver.style.display = 'none'
-    // car.style.display = 'none'
+    
     date.innerHTML = ""
     driver.innerHTML = ""
     car.innerHTML = ""
@@ -60,9 +58,19 @@ function edit_allocation(id,e){
     console.log(typeof(edit_info));
     date.innerHTML = `<input id="selected-date-${id}" type='date' value=${date_info}>`
     const driver_select = document.createElement('select')
+    // 
+    const driver_value = document.createElement('option')
+    driver_value.value = driver_info
+    driver_value.innerHTML = driver_info
+    // driver_select.append(driver_value)
+    const car_value = document.createElement('option')
+    car_value.value = car_info
+    car_value.innerHTML = car_info
+    // 
     const car_select = document.createElement('select')
     driver_select.id = `driver-select-${id}`
     car_select.id  = `car-select-${id}`
+    // car_select.append(car_value)
     driver.append(driver_select)
     car.append(car_select)
     fetch(`./get_allocations`)
@@ -75,10 +83,19 @@ function edit_allocation(id,e){
     })
     .then(data=>{
         data.drivers.forEach(value=>{
-            driver_select.innerHTML += `<option>${value.driver_name}</option>`
+            if(value.driver_name===driver_info){
+                driver_select.innerHTML += `<option selected>${value.driver_name}</option>`
+            }else{
+                driver_select.innerHTML += `<option>${value.driver_name}</option>`
+            }
         })
         data.cars.forEach(value=>{
-            car_select.innerHTML += `<option>${value.car_type}</option>`
+            if(value.car_type === car_info){
+            car_select.innerHTML += `<option selected>${value.car_type}</option>`
+
+            }else{
+                car_select.innerHTML += `<option>${value.car_type}</option>`
+            }
         })
     })
     save_btn.addEventListener('click', ()=>{

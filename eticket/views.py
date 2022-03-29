@@ -13,6 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.cache import never_cache
+from datetime import datetime
 import datetime
 from django.template.loader import get_template
 from xhtml2pdf import pisa
@@ -21,8 +22,6 @@ from io import StringIO, BytesIO
 @login_required
 def index(request):
     # print(datetime.time)
-    time = datetime.datetime.now().time()
-    print(time)
     user = User.objects.get(username= request.user)
     user_tickets = Tickets.objects.filter(employee=user).all().order_by('-ticket_date')
     if request.user.is_authenticated:
@@ -166,7 +165,7 @@ def convert_ticket(request):
         
             tour.save()
         
-        return HttpResponseRedirect(reverse('employee', args=(request.user.id,)))
+        return HttpResponseRedirect(reverse('index'))
 
     return render(request, 'eticket\convert_ticket.html',{
         'form': Ticket_Form()
@@ -294,10 +293,32 @@ def show_specified(request):
     start = request.GET.get('start')
     end = request.GET.get('end')
     tickets = list(Tickets.objects.filter(tour_type= type).filter(tour_date__range=[start, end]).values())
-    for ticket in tickets:
-        user = User.objects.get(id=ticket['employee_id'])
-        ticket['employee_id']=user.username
+    result = []
+    new_ticket = {'tickets': tickets}
+    # print(new_ticket)   
     
+    for ticket in tickets:
+        # print(ticket['id'])
+        user = User.objects.get(id=ticket['employee_id'])
+        ticket['employee_id']=user.first_name
+        result.append(ticket)
+        if Ticket_Reply.objects.filter(ticket=ticket['id']).exists():
+            ticket_reply = Ticket_Reply.objects.get(ticket=ticket['id'])
+            if Allocation.objects.filter(reply=ticket_reply).exists():
+                allocation =list(Allocation.objects.filter(reply=ticket_reply).values())
+                # print(allocation[0]) 
+                for item in allocation:
+                    for value in item.values():
+                        print(value)
+                    # driver_name = item["driver_name_id"]
+                # result.append(driver_name)
+                
+            else:
+                print("B")
+                    
+            
+    print(result)   
+    # return JsonResponse({'data':result}, safe=False) 
     return JsonResponse({'data':tickets}, safe=False)
 def get_sections(request):
     department = Department.objects.get(department_name='الاتصالات')
@@ -349,9 +370,29 @@ def edit_allocated_saved(request, id):
     print(allocation)
     return JsonResponse({'data': 'success'}, safe=False)
     
+def ticket_info(request, id):
+    ticket = list(Tickets.objects.filter(pk = id).values())
+    return JsonResponse(ticket[0], safe=False)
+
+def saved_edited_ticket(request, id):
+    ticket = Tickets.objects.get(pk=id)
+    ticket.tour_name = request.GET.get('title')
+    ticket.tour_title = request.GET.get('type')
+    # ticket.tour_date = request.GET.get('st_date')
+    date_string_format = request.GET.get('st_date')
+    end_date_string_format = request.GET.get('end_date')
+    end_date_strip = end_date_string_format.rstrip()
+    st_date_strip = date_string_format.rstrip()
+    ticket.tour_date = st_date_strip
+    ticket.expected_end_tour = end_date_strip
+    ticket.tour_duration = request.GET.get('days')
+    # ticket.expected_end_tour = request.GET.get('end_date')
+    ticket.notes = request.GET.get('team')
+    ticket.save()
+    print(ticket)
+    return JsonResponse({'data': 'success'}, safe=False)
 
 
-#edit allocations
 def add_car(request):
     car = request.GET.get('car')
     if Cars.objects.filter(car_type=car).exists():

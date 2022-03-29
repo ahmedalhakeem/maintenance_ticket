@@ -143,12 +143,37 @@ form.form1{
     border-radius: 1.5em;
     padding: 0px 20px;
 }
+#register-panel-ticket-modal{
+    width: 600px;
+    height: 600px;
+    /* box-shadow: 0px 11px 35px 2px rgba(0,0,0,0.14); */
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    background-color: #FFFFFF;
+    /* border-radius: 1.5em; */
+    padding: 0px 20px;
+}
 #register-panel-ticket .inputform{
     width: 70%;
     height: 45px;
     margin-top: 10px;
     border-radius: 10px;
     box-shadow: 0px 5.5px 17.5px 1px rgba(0,0,0,0.14);
+}
+
+#register-panel-ticket-modal .inputform-modal{
+    width: 70%;
+    height: 45px;
+    margin-top: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 5.5px 17.5px 1px rgba(0,0,0,0.14);
+}
+#register-panel-ticket-modal label{
+    width: 25%;
+    height: 45px;
+    color: #000;
+    font-weight: 700;
 }
 #register-panel-ticket label{
     width: 25%;
