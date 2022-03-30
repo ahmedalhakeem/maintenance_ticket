@@ -24,7 +24,7 @@ function show_retrived(){
             const tr = document.createElement('tr')
             tr.innerHTML=''
             tr.innerHTML = `<td> ${value.id}</td> <td>${value.employee_id}</td> <td> ${value.tour_name}</td><td>${value.tour_type}</td><td>${value.tour_date}</td><td>${value.tour_duration}</td>
-                            <td>${value.expected_end_tour}</td><td>${value.notes}</td>`
+                            <td>${value.expected_end_tour}</td><td>${value.notes}</td><td>${value.drivers}</td>`
             content.append(tr)
         })
         

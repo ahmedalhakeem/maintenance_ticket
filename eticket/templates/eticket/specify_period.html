@@ -4,6 +4,9 @@
 تحديد فترة 
 {% endblock %}
 {% block content %}
+<a href="{% url 'done_tickets' %}" class="btn btn-primary" style="margin: 20px;" >الجولات المنجزة</a>
+<a href="{% url 'index' %}" class="btn btn-primary" style="margin: 20px;" >الصفحة الرئيسية</a>
+
     <div class="container">
         <div class="row">
             <div class="col md-5" style="border: 1px solid black;">
@@ -18,7 +21,7 @@
         </div>
     </div>
     <div id="result">
-        <table class="table">
+        <table class="table table-hover table-bordered">
             <thead>
                 <th>رقم التذكرة</th>
                 <th>اسم الموظف</th>
@@ -28,7 +31,7 @@
                 <th>عدد ايام الجولة</th>
                 <th>تاريخ نهاية الجولة</th>
                 <th>فريق الجولة</th>
-                
+                <th>اسماء السواق</th>
             </thead>
             <tbody id="content">
 

@@ -301,15 +301,20 @@ def show_specified(request):
         # print(ticket['id'])
         user = User.objects.get(id=ticket['employee_id'])
         ticket['employee_id']=user.first_name
-        result.append(ticket)
+        # result.append(ticket)
         if Ticket_Reply.objects.filter(ticket=ticket['id']).exists():
             ticket_reply = Ticket_Reply.objects.get(ticket=ticket['id'])
             if Allocation.objects.filter(reply=ticket_reply).exists():
                 allocation =list(Allocation.objects.filter(reply=ticket_reply).values())
                 # print(allocation[0]) 
+                drivers = []
                 for item in allocation:
-                    for value in item.values():
-                        print(value)
+                    driver = Drivers.objects.get(id=item['driver_name_id'])
+                    item['driver_name_id']= driver.driver_name
+                    drivers.append(item['driver_name_id'])
+                ticket['drivers'] = drivers
+                result.append(ticket)
+                    # result.append(item['driver_name_id'])
                     # driver_name = item["driver_name_id"]
                 # result.append(driver_name)
                 
@@ -318,8 +323,8 @@ def show_specified(request):
                     
             
     print(result)   
-    # return JsonResponse({'data':result}, safe=False) 
-    return JsonResponse({'data':tickets}, safe=False)
+    return JsonResponse({'data':result}, safe=False) 
+    # return JsonResponse({'data':tickets}, safe=False)
 def get_sections(request):
     department = Department.objects.get(department_name='الاتصالات')
     department is not None
